@@ -1,0 +1,122 @@
+version: '3.4'
+
+services:
+  discountdb:
+   container_name: discountdb
+   restart: always
+   ports:
+        - "27017:27017"
+   volumes:
+        - mongo_data:/data/db
+  basketdb:
+   container_name: basketdb
+   restart: always    
+   ports:
+        - "6379:6379"
+  catalogdb:
+   container_name: catalogdb
+   environment:
+        SA_PASSWORD: "774078haT&"
+        ACCEPT_EULA: "Y"
+   restart: always
+   ports:
+        - "1433:1433"
+  orderdb:
+   container_name: catalogdb
+   environment:
+        SA_PASSWORD: "774078haT&"
+        ACCEPT_EULA: "Y"
+   restart: always
+   ports:
+        - "4022:4022"
+  rabbitmq:
+   container_name: rabbitmq
+   restart: always
+   ports:
+        - "5672:5672"
+        - "15672:15672"
+  portainer:
+   container_name: portainer
+   restart: always
+   ports:
+      - "8080:8000"
+      - "9000:9000"
+   volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+  basket.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+     
+      - "CacheSettings:ConnectionString=basketdb:6379"
+      - "GrpcSettings:DiscountUrl=http://discount.grpc"
+      - "EventBusSettings:HostAddress=amqp://guest:guest@rabbitmq:5672"
+    depends_on:
+      - basketdb
+      - rabbitmq
+    ports:
+      - "8000:80"
+      
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+  catalog.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+     
+      - "ConnectionStrings:OrderingConnectionString=Server=orderdb;Database=CatalogDb;User Id=sa;Password=SwN12345678" 
+    depends_on:
+      - catalogdb
+    ports:
+      - "8001:80"
+      
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+
+  discount.grpc:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+     
+      - "DatabaseSettings:ConnectionString=mongodb://discountdb:27017"
+     
+    depends_on:
+      - discountdb
+    ports:
+      - "8002:80"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+
+  ordering.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+     
+      - "ConnectionStrings:OrderingConnectionString=Server=orderdb;Database=OrderDb;User Id=sa;Password=SwN12345678"            
+      - "EventBusSettings:HostAddress=amqp://guest:guest@rabbitmq:5672"
+      - "ElasticConfiguration:Uri=http://elasticsearch:9200"
+    depends_on:
+        - orderdb
+        - rabbitmq
+    ports:
+     - "8004:80"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+
+  OcelotApiGw:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+     
+     
+    depends_on:
+        - discount.grpc
+        - ordering.api
+        - catalog.api
+        - basket.api
+       
+    ports:
+     - "8010:80"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
