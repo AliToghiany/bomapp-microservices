@@ -37,18 +37,8 @@ namespace Chat.Application.Feature.Messages.Commands
             {
                 throw new UnauthorizedAccessException($"{nameof(User)}:{request.User_Id} do not have acssess to this {nameof(Group)}:{request.Group_Id}");
             }
-            var message = new Message
-            {
-                Gif_Id = request.Gif_Id,
-                Message_Id = (await _groupRepository.GetCountOfMessageGroup(request.Group_Id) + 1).ToString(),
-                Group_Id = request.Group_Id,
-                Reply_To_MessageId = request.Reply_To_MessageId,
-                Sticker_Id = request.Sticker_Id,
-                User_Id = request.User_Id,
-                ToUser_Id = request.ToUser_Id,
-                Text = request.Text,
-
-            };
+            var message = _mapper.Map<Message>(request);
+            message.Message_Id = (await _groupRepository.GetCountOfMessageGroup(request.Group_Id) + 1).ToString();
             var result = await _messageRepository.AddNewMessage(message);
             List<File> files = new List<File>();
 

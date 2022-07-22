@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Chat.Application.Exceptions
+namespace Common.Services.Exceptions
 {
     public class NotFoundException : ApplicationException
     {

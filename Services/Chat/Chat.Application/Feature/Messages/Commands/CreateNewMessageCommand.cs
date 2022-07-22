@@ -27,5 +27,6 @@ namespace Chat.Application.Feature.Messages.Commands
     {
       public  IFormFile Upload { get; set; }
       
+      
     }
 }
