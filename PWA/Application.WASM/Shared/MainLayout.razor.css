@@ -1,0 +1,71 @@
+/* Google Font Import - Poppins */
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+:root {
+    /* ===== Colors ===== */
+    --body-color: #E4E9F7;
+    --sidebar-color: #FFF;
+    --primary-color: #695CFE;
+    --primary-color-light: #6033CA;
+    --toggle-color: #DDD;
+    --text-color: #707070;
+    /* ====== Transition ====== */
+    --tran-03: all 0.2s ease;
+    --tran-03: all 0.3s ease;
+    --tran-04: all 0.3s ease;
+    --tran-05: all 0.3s ease;
+}
+
+body {
+    min-height: 100vh;
+    background-color: var(--body-color);
+    transition: var(--tran-05);
+}
+
+::selection {
+    background-color: var(--primary-color);
+    color: #fff;
+}
+
+body.dark {
+    --body-color: #18191a;
+    --sidebar-color: #1A1B1F;
+    --primary-color: #3a3b3c;
+    --primary-color-light: #6033CA;
+    --toggle-color: #fff;
+    --text-color: #ccc;
+}
+
+/* ===== Sidebar ===== */
+
+.home {
+    position: absolute;
+    top: 0;
+    top: 0;
+    left: 250px;
+    height: 100vh;
+    width: calc(100% - 250px);
+    background-color: var(--body-color);
+    transition: var(--tran-05);
+}
+
+  
+
+.sidebar.close ~ .home {
+    left: 78px;
+    height: 100vh;
+    width: calc(100% - 78px);
+}
+
+body.dark .home .text {
+    color: var(--text-color);
+}
+
+
