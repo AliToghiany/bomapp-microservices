@@ -1,4 +1,5 @@
 ﻿using Common.Services.DTO;
+
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ namespace Identity.Application.Feature.Users.Command.EditUser
 {
     public class EditUserCommand:IRequest<ResultResponse>
     {
+
         public long Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

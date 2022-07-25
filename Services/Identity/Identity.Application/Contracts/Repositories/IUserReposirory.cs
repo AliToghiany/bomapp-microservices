@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Identity.Application.Contracts.Repositories
 {
-    public interface IUserReposirory
+    public interface IUserRepository
     {
         Task<Confirm> CreateNewConfirm(Confirm confirm);
         Task<Confirm> ConfirmCode(Guid id,string code);

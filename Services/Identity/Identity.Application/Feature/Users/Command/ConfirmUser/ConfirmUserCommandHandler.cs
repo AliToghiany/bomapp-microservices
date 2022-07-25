@@ -13,11 +13,11 @@ namespace Identity.Application.Feature.Users.Command.ConfirmUser
 {
     internal class ConfirmUserCommandHandler : IRequestHandler<ConfirmUserCommand, Guid>
     {
-        private readonly ILogger _logger;
+        private readonly ILogger<ConfirmUserCommandHandler> _logger;
         private readonly IMapper _mapper;
-        private readonly IUserReposirory _userReposirory;
+        private readonly IUserRepository _userReposirory;
 
-        public ConfirmUserCommandHandler(ILogger logger, IMapper mapper, IUserReposirory userReposirory)
+        public ConfirmUserCommandHandler(ILogger<ConfirmUserCommandHandler> logger, IMapper mapper, IUserRepository userReposirory)
         {
             _logger = logger;
             _mapper = mapper;

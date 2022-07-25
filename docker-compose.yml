@@ -5,8 +5,9 @@ services:
    image: mongo
   basketdb:
    image: redis
-  orderdb:
+  mssqldbs:
    image: mcr.microsoft.com/mssql/server:2019-latest
+ 
   rabbitmq:
    image: rabbitmq:3-management-alpine
   portainer:
@@ -15,32 +16,42 @@ services:
     image: ${DOCKER_REGISTRY-}basketapi
     build:
       context: .
-      dockerfile: Basket.Api/Dockerfile
+      dockerfile: Services/Product/Basket/Basket.Api/Dockerfile
 
   catalog.api:
     image: ${DOCKER_REGISTRY-}catalogapi
     build:
       context: .
-      dockerfile: Catalog.Api/Dockerfile
+      dockerfile: Services/Product/Catalog/Catalog.Api/Dockerfile
 
 
   discount.grpc:
     image: ${DOCKER_REGISTRY-}discountgrpc
     build:
       context: .
-      dockerfile: Discount.Grpc/Dockerfile
+      dockerfile: Services/Product/Discount/Discount.Grpc/Dockerfile
 
 
   ordering.api:
     image: ${DOCKER_REGISTRY-}orderingapi
     build:
       context: .
-      dockerfile: Ordering.Api/Dockerfile
-  OcelotApiGw:
-    image: ${DOCKER_REGISTRY-}OcelotApiGw
+      dockerfile: Services/Product/Ordering/Ordering.Api/Dockerfile 
+  identity.api:
+    image: ${DOCKER_REGISTRY-}identityapi
     build:
       context: .
-      dockerfile: OcelotApiGw/Dockerfile
+      dockerfile: Services/Identity/Identity.Api/Dockerfile
+  ocelotapigw:
+    image: ${DOCKER_REGISTRY-}ocelotapigw
+    build:
+      context: .
+      dockerfile: ApiGateways/OcelotApiGw/Dockerfile
+  webappapigw:
+    image: ${DOCKER_REGISTRY-}webappapigw
+    build:
+      context: .
+      dockerfile: ApiGateways/WebAppApiGW/Dockerfile
 volumes:
   mongo_data:
   portainer_data:

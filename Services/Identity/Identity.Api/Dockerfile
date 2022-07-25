@@ -7,10 +7,14 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["Identity.Api/Identity.Api.csproj", "Identity.Api/"]
-RUN dotnet restore "Identity.Api/Identity.Api.csproj"
+COPY ["Services/Identity/Identity.Api/Identity.Api.csproj", "Services/Identity/Identity.Api/"]
+COPY ["Services/Identity/Identity.Application/Identity.Application.csproj", "Services/Identity/Identity.Application/"]
+COPY ["Services/Identity/Identity.Domain/Identity.Domain.csproj", "Services/Identity/Identity.Domain/"]
+COPY ["BuildingBlocks/Common.Services/Common.Services.csproj", "BuildingBlocks/Common.Services/"]
+COPY ["Services/Identity/Identity.Infrastructure/Identity.Infrastructure.csproj", "Services/Identity/Identity.Infrastructure/"]
+RUN dotnet restore "Services/Identity/Identity.Api/Identity.Api.csproj"
 COPY . .
-WORKDIR "/src/Identity.Api"
+WORKDIR "/src/Services/Identity/Identity.Api"
 RUN dotnet build "Identity.Api.csproj" -c Release -o /app/build
 
 FROM build AS publish

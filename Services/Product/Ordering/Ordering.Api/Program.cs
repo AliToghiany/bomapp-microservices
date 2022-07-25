@@ -1,11 +1,13 @@
 using EventBus.Message.Common;
 using MassTransit;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Ordering.Api.EventBusConsumer;
 using System;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +18,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddScoped<BasketCheckoutConsumer>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 builder.Services.AddMassTransit(config =>
 {
     config.AddConsumer<BasketCheckoutConsumer>();

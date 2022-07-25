@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Identity.Application.Feature.User.Command.ConfirmUser;
+using Identity.Application.Feature.Users.Command.ConfirmUser;
 using Identity.Domain.User;
 using System;
 using System.Collections.Generic;

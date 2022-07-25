@@ -15,9 +15,9 @@ namespace Identity.Application.Feature.Users.Command.EditUser
     {
        // private readonly ILogger _logger;
         // private readonly IMapper _mapper;
-        private readonly IUserReposirory _userReposirory;
+        private readonly IUserRepository _userReposirory;
 
-        public EditUserCommandHandler(/*ILogger logger*//*, IMapper mapper*/ IUserReposirory userReposirory)
+        public EditUserCommandHandler(/*ILogger logger*//*, IMapper mapper*/ IUserRepository userReposirory)
         {
           //  _logger = logger;
             //_mapper = mapper;

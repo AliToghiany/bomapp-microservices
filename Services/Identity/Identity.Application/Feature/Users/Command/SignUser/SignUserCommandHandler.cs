@@ -13,11 +13,11 @@ namespace Identity.Application.Feature.Users.Command.SignUser
 {
     public class SignUserCommandHandler : IRequestHandler<SignUserCommand, SignUserResponse>
     {
-        private readonly ILogger _logger;
+        private readonly ILogger<SignUserCommandHandler> _logger;
        // private readonly IMapper _mapper;
-        private readonly IUserReposirory _userReposirory;
+        private readonly IUserRepository _userReposirory;
 
-        public SignUserCommandHandler(ILogger logger/*, IMapper mapper*/, IUserReposirory userReposirory)
+        public SignUserCommandHandler(ILogger<SignUserCommandHandler> logger/*, IMapper mapper*/, IUserRepository userReposirory)
         {
             _logger = logger;
             //_mapper = mapper;

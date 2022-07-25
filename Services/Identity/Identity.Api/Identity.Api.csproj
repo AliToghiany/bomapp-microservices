@@ -6,15 +6,19 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>759c42e2-b481-455b-b55c-ed42bc4eeceb</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\..\..</DockerfileContext>
   </PropertyGroup>
 
   <ItemGroup>
+	  
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.15.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <ProjectReference Include="..\Identity.Domain\Identity.Domain.csproj" />
+    <ProjectReference Include="..\Identity.Infrastructure\Identity.Infrastructure.csproj" />
+	  <ProjectReference Include="..\Identity.Application\Identity.Application.csproj" />
   </ItemGroup>
 
 </Project>
