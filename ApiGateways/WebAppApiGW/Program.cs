@@ -9,9 +9,16 @@ builder.Configuration.SetBasePath(builder.Environment.ContentRootPath)
 builder.Services.AddOcelot(builder.Configuration);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+var maso = "CorsPolicy";
+builder.Services.AddCors(option =>
+{
+    option.AddPolicy(name: maso, policy =>
+    {
+        policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+    });
+});
 
 var app = builder.Build();
 
@@ -22,6 +29,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
    
 }
+app.UseCors(maso);
 app.UseOcelot().Wait();
 app.UseHttpsRedirection();
 

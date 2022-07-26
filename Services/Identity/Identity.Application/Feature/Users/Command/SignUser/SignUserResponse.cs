@@ -4,6 +4,7 @@
     {
         public long UserId { get; set; }
         public bool IsNew { get; set; }
+        public string? Token { get; set; }
     }
 
 }

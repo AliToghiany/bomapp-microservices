@@ -183,11 +183,11 @@ html {
         bottom: 100%;
     }
 }
+
 .home .text {
     font-size: 30px;
     font-weight: 500;
     color: var(--text-color);
     padding: 12px 60px;
-    margin:auto;
+    margin: auto;
 }
-

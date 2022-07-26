@@ -1,31 +1,28 @@
-﻿@page "/login"
+﻿@page "/confirmcode/{codeid:guid}"
 @using Application.WASM.Services
-
 @inject IUserService userService
 @inject NavigationManager nav;
 <div style="background-image: url('/wallpaperflare.com_wallpaper.jpg');height:100%;">
   <div class="text">Login</div>
         <div class="login-box">
-            <h2>Your Phone Number</h2>
+            <h2>Enter The Code Sent </h2>
             <form>
                 <div class="user-box">
-                    <input @bind="Phone" type="tel"  name="" required="">
-                    <label>Phone Number</label>
+                    <input @bind="Code" type="tel">
+                    <label>Code Sent</label>
                 </div>
                
             </form>
         </div>
         <button @onclick="SendPhone" class="button"><i class='bx bx-right-arrow-alt icon'></i></button>
 </div>
-@code {
-    private string? Phone{ get; set; }
-    private async  void SendPhone()
-    {
-        var res = await userService.SendCode(Phone);
 
-        if (res.Success)
-        {
-            nav.NavigateTo($"/confirmcode?codeid={res.Data}");
-        }
+@code {
+    [Parameter]
+    public Guid CodeId{ get; set; }
+    public string Code{ get; set; }
+    async Task SendPhone()
+    {
+        var res = await userService.ConfirmCode(CodeId, Code);
     }
 }

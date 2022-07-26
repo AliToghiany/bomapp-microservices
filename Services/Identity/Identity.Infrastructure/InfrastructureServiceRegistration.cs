@@ -1,4 +1,6 @@
 ﻿using Identity.Application.Contracts.Repositories;
+using Identity.Domain.User;
+using Identity.Infrastructure.Context;
 using Identity.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -16,7 +18,9 @@ namespace Identity.Infrastructure
     {
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<IdentityDbContext>(options =>
+            services.AddIdentity<User, Role>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddEntityFrameworkStores<IdentityDBContext>();
+            services.AddDbContext<IdentityDBContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("IdentityDbContextConnectionString")));
 
        

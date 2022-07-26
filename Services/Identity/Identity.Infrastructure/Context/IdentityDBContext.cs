@@ -13,8 +13,16 @@ namespace Identity.Infrastructure.Context
     {
         public DbSet<Confirm> Confirms { get; set; }
         public DbSet<UserImages> UserImages  { get; set; }
+        public IdentityDBContext(DbContextOptions options):base(options)
+        {
+          
+        }
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Entity<Role>().HasData(new Role { Id = 1, Name = "Admin" });
+            builder.Entity<Role>().HasData(new Role { Id = 2, Name = "Operator" });
+            builder.Entity<Role>().HasData(new Role { Id = 3, Name = "Customer" });
+            builder.Entity<User>().HasIndex(p => p.PhoneNumber).IsUnique();
             base.OnModelCreating(builder);
         }
     }

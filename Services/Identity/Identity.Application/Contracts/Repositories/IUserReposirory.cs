@@ -10,10 +10,10 @@ namespace Identity.Application.Contracts.Repositories
     public interface IUserRepository
     {
         Task<Confirm> CreateNewConfirm(Confirm confirm);
-        Task<Confirm> ConfirmCode(Guid id,string code);
+        Task<Confirm?> ConfirmCode(Guid id,string code);
         Task<User> FindUserByPhone(string code);
         Task<long> CreateUserByPhone(string phone);
-        Task<User> FindUserById(long id);
+        Task<User?> FindUserById(long id);
         Task<bool> IsFreeUserName(string userName);
         Task EditUser(User user);
     }

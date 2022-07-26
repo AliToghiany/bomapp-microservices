@@ -25,7 +25,7 @@ namespace Identity.Application.Feature.Users.Command.SignUser
         }
         public async Task<SignUserResponse> Handle(SignUserCommand request, CancellationToken cancellationToken)
         {
-            var confirmRes = await _userReposirory.ConfirmCode(request.ConfirmUserId, request.Code);
+            var confirmRes = await _userReposirory.ConfirmCode(request.ConfirmId, request.Code);
             if (confirmRes == null)
             {
                 throw new NotFoundException(nameof(Confirm),request.Code );

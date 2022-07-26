@@ -9,7 +9,7 @@ namespace Identity.Application.Feature.Users.Command.SignUser
 {
     public class SignUserCommand:IRequest<SignUserResponse>
     {
-        public Guid ConfirmUserId { get; set; }
+        public Guid ConfirmId { get; set; }
         public string Code { get; set; }
     }
 

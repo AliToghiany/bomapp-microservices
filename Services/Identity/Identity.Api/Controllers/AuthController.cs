@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using Identity.Application.Feature.Users.Command.ConfirmUser;
+using Identity.Application.Feature.Users.Command.SignUser;
 
 namespace Identity.Api.Controllers
 {
@@ -19,10 +20,21 @@ namespace Identity.Api.Controllers
         [HttpPost]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<ActionResult<Guid>> SendCode(string phone,string ip)
+        public async Task< ActionResult<Guid>> SendCode([FromBody]string phone)
         {
-          //  var res = await _mediator.Send(new ConfirmUserCommand {Phone=phone,IP=ip });
-            return Ok();
+            var res = await _mediator.Send(new ConfirmUserCommand {Phone=phone,IP="192.168.42.27" });
+            return Ok(res);
+            
+
+        }
+        [Route("[action]")]
+        [HttpPost]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public async Task< ActionResult<SignUserResponse>> ConfirmCode([FromBody]Guid id, [FromBody] string code)
+        {
+            var res = await _mediator.Send(new SignUserCommand() { Code=code,ConfirmId=id});
+            return Ok(res);
             
 
         }

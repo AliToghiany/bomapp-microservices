@@ -101,7 +101,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
      
-      - "ConnectionStrings:IdentityDbContextConnectionString=Server=orderdb;Database=OrderDb;User Id=sa;Password=SwN12345678"            
+      - "ConnectionStrings:IdentityDbContextConnectionString=Server=orderdb;Database=IdentityDb;User Id=sa;Password=SwN12345678"            
      
 
     depends_on:
