@@ -1,7 +1,11 @@
+using Identity.Api.Utilities;
 using Identity.Application;
 using Identity.Infrastructure;
 using Identity.Infrastructure.Context;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,8 +18,27 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddApplicationServices();
 builder.Services.AddDbContext<IdentityDBContext>();
-              
-
+builder.Services.AddAuthentication(options =>
+             {
+                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+             })
+              .AddJwtBearer(cfg =>
+              {
+                  cfg.RequireHttpsMetadata = true;
+                  cfg.SaveToken = true;
+                  cfg.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
+                  {
+                      IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("OurUserIdentity")),
+                      ValidateAudience = false,
+                      ValidateIssuer = false,
+                      ValidateLifetime = false,
+                      RequireExpirationTime = false,
+                      ClockSkew = TimeSpan.Zero,
+                      ValidateIssuerSigningKey = true
+                  };
+              });
+builder.Services.AddScoped<ITokenService, TokenService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

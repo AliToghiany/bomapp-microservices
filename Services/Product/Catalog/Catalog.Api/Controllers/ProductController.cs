@@ -21,11 +21,11 @@ namespace Catalog.Api.Controllers
             _logger=logger?? throw new ArgumentNullException(nameof(logger));
         }
         [HttpGet("{id}",Name ="GetProduct")]
-        [ProducesResponseType(typeof(Product), (int)HttpStatusCode.OK)]
-        [ProducesResponseType(typeof(Product), (int)HttpStatusCode.NotFound)]
-        public async Task<ActionResult<Product>> GetProduct(long id)
+        [ProducesResponseType(typeof(Game), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(Game), (int)HttpStatusCode.NotFound)]
+        public async Task<ActionResult<Game>> GetProduct(long id)
         {
-            var product = await _productRepository.GetProduct(id);
+            var product = await _productRepository.GetGame(id);
             if (product==null)
             {
                 _logger.LogError($"Product with id: {id}, not found.");
@@ -39,29 +39,29 @@ namespace Catalog.Api.Controllers
         [ProducesResponseType(typeof(ProductListResult), (int)HttpStatusCode.OK)]
         public ActionResult<ProductListResult> GetProducts(Ordering ordering, string SearchKey, long? catid, int pagesize = 20, int page = 1)
         {
-            return Ok(_productRepository.GetProducts(ordering, SearchKey, pagesize, page, catid));
+            return Ok(_productRepository.GetGames(ordering, SearchKey, pagesize, page, catid));
         }
         [HttpPost]
-        [ProducesResponseType(typeof(Product), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<ResultDto<Product>>> CreateProduct([FromBody] Product product, [FromForm] Microsoft.AspNetCore.Http.IFormFile Files)
+        [ProducesResponseType(typeof(Game), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult<ResultDto<Game>>> CreateProduct([FromBody] Game product, [FromForm] Microsoft.AspNetCore.Http.IFormFile Files)
         {
-          var res=  await _productRepository.CreateProduct(product,new List<Microsoft.AspNetCore.Http.IFormFile> { Files});
+          var res=  await _productRepository.CreateGame(product,new List<Microsoft.AspNetCore.Http.IFormFile> { Files});
 
             return CreatedAtRoute("GetProduct", new { id = res.Data}, res);
         }
         [HttpPut]
-        [ProducesResponseType(typeof(ResultDto<Product>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ResultDto<Game>), (int)HttpStatusCode.OK)]
       
-        public async Task<ActionResult<ResultDto<Product>>> UpdateProduct([FromBody] Product product, [FromForm] Microsoft.AspNetCore.Http.IFormFile Files)
+        public async Task<ActionResult<ResultDto<Game>>> UpdateProduct([FromBody] Game product, [FromForm] Microsoft.AspNetCore.Http.IFormFile Files)
         {
-            return Ok(await _productRepository.UpdateProduct(product, new List<Microsoft.AspNetCore.Http.IFormFile> { Files }));
+            return Ok(await _productRepository.UpdateGame(product, new List<Microsoft.AspNetCore.Http.IFormFile> { Files }));
         }
 
         [HttpDelete("{id}", Name = "DeleteProduct")]
         [ProducesResponseType(typeof(ResultDto), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<ResultDto>> DeleteProductById(long id)
         {
-            return Ok(await _productRepository.DeleteProduct(id));
+            return Ok(await _productRepository.DeleteGame(id));
         }
     }
 }

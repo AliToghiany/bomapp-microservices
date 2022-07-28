@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Catalog.Api.Entities
 {
-    public class Product:BaseEntity
+    public class Game:BaseEntity
     {
        
         public string Name { get; set; }

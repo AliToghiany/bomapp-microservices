@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using Identity.Application.Feature.Users.Command.ConfirmUser;
 using Identity.Application.Feature.Users.Command.SignUser;
+using Common.Services.Exceptions;
+using Identity.Api.Utilities;
 
 namespace Identity.Api.Controllers
 {
@@ -10,10 +12,12 @@ namespace Identity.Api.Controllers
     public class AuthController : Controller
     {
         private readonly IMediator _mediator;
+        private readonly ITokenService _tokenService;
 
-        public AuthController(IMediator mediator)
+        public AuthController(IMediator mediator, ITokenService tokenService)
         {
             _mediator = mediator;
+            _tokenService = tokenService;
         }
 
         [Route("[action]")]
@@ -31,12 +35,24 @@ namespace Identity.Api.Controllers
         [HttpPost]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task< ActionResult<SignUserResponse>> ConfirmCode([FromBody]Guid id, [FromBody] string code)
+        public async Task< ActionResult<SignUserResponse>> ConfirmCode([FromBody] RequestConfirmCode requestConfirmCode)
         {
-            var res = await _mediator.Send(new SignUserCommand() { Code=code,ConfirmId=id});
-            return Ok(res);
-            
+            try
+            {
+                var res = await _mediator.Send(new SignUserCommand() { Code = requestConfirmCode.Code, ConfirmId = requestConfirmCode.Id });
+                res.Token =  _tokenService.BuildToken(res.UserId);
+                return Ok(res);
+            }
+            catch (NotFoundException ex)
+            {
+                return BadRequest(ex.Message);
+            }
 
+        }
+        public class RequestConfirmCode
+        {
+            public Guid Id { get; set; }
+            public string Code { get; set; }
         }
     }
 }

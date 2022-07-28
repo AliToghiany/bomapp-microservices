@@ -13,7 +13,9 @@ namespace Catalog.Api.DB
         {
 
         }
-        public DbSet<Product> Products { get; set; }
+        public DbSet<Game> Games { get; set; }
         public DbSet<Image> Images { get; set; }
+        public DbSet<Votes> Votes { get; set; }
+        public DbSet<Category> Categories { get; set; }
     }
 }

@@ -11,17 +11,24 @@
                     <input @bind="Code" type="tel">
                     <label>Code Sent</label>
                 </div>
-               
+               <a @onclick="SendCode" >
+<span > </span >
+<span > </span >
+<span > </span >
+<span > </span >
+Confirm
+</a >
             </form>
         </div>
-        <button @onclick="SendPhone" class="button"><i class='bx bx-right-arrow-alt icon'></i></button>
+       
+
 </div>
 
 @code {
     [Parameter]
     public Guid CodeId{ get; set; }
     public string Code{ get; set; }
-    async Task SendPhone()
+    async Task SendCode()
     {
         var res = await userService.ConfirmCode(CodeId, Code);
     }

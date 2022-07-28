@@ -16,6 +16,7 @@
     --primary-color-light: #6033CA;
     --toggle-color: #DDD;
     --text-color: #707070;
+    --bs-body-bg: #1C1D1F;
     /* ====== Transition ====== */
     --tran-03: all 0.2s ease;
     --tran-03: all 0.3s ease;
@@ -24,7 +25,7 @@
 }
 
 body {
-    min-height: 100vh;
+  
     background-color: var(--body-color);
     transition: var(--tran-05);
 }
@@ -35,12 +36,13 @@ body {
 }
 
 body.dark {
-    --body-color: #18191a;
+    --body-color: #1C1D1F;
     --sidebar-color: #1C1D1F;
     --primary-color: #3a3b3c;
     --primary-color-light: #6033CA;
     --toggle-color: #fff;
     --text-color: #ccc;
+    --bs-body-bg: #1C1D1F;
 }
 
 /* ===== Sidebar ===== */
@@ -50,17 +52,17 @@ body.dark {
     top: 0;
     top: 0;
     left: 250px;
-    height: 100vh;
+    height: 50vh;
     width: calc(100% - 250px);
     background-color: var(--body-color);
     transition: var(--tran-05);
 }
 
-  
+
 
 .sidebar.close ~ .home {
     left: 78px;
-    height: 100vh;
+    height:auto;
     width: calc(100% - 78px);
 }
 

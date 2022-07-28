@@ -13,6 +13,7 @@
     --primary-color-light: #F6F5FF;
     --toggle-color: #DDD;
     --text-color: #707070;
+    --bs-body-bg: #1C1D1F;
     /* ====== Transition ====== */
     --tran-03: all 0.2s ease;
     --tran-03: all 0.3s ease;
@@ -38,6 +39,7 @@ body.dark {
     --primary-color-light: #0D81EC;
     --toggle-color: #fff;
     --text-color: #ccc;
+    --bs-body-bg: #1C1D1F;
 }
 
 .sidebar {
@@ -54,6 +56,7 @@ body.dark {
 
     .sidebar.close {
         width: 88px;
+     
     }
 
     /* ===== Reusable code - Here ===== */
@@ -304,7 +307,7 @@ body.dark .switch::before {
     left: 250px;
     height: 100vh;
     width: calc(100% - 250px);
-    background-color: var(--body-color);
+    background-color: #1C1D1F;
     transition: var(--tran-05);
 }
 

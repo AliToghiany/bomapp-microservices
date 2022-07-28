@@ -10,7 +10,7 @@ namespace Catalog.Api.Entities
         public long Id { get; set; }
         public string ImagePath { get; set; }
         public string Name { get; set; }
-        public virtual Product Product { get; set; }
+        public virtual Game Product { get; set; }
         public long ProductId { get; set; }
     }
 }

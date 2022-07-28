@@ -4,6 +4,7 @@ using Identity.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Identity.Infrastructure.Migrations
 {
     [DbContext(typeof(IdentityDBContext))]
-    partial class IdentityDBContextModelSnapshot : ModelSnapshot
+    [Migration("20220727082749_mdb3")]
+    partial class mdb3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -41,9 +43,6 @@ namespace Identity.Infrastructure.Migrations
 
                     b.Property<DateTime>("InsertTime")
                         .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsUsed")
-                        .HasColumnType("bit");
 
                     b.Property<string>("Phone")
                         .IsRequired()
@@ -87,19 +86,19 @@ namespace Identity.Infrastructure.Migrations
                         new
                         {
                             Id = 1L,
-                            ConcurrencyStamp = "45e5ff47-b921-413f-aef7-0bdc6419993c",
+                            ConcurrencyStamp = "71adf589-18f1-4a10-be52-346cfeea4c71",
                             Name = "Admin"
                         },
                         new
                         {
                             Id = 2L,
-                            ConcurrencyStamp = "237271b8-5d5d-4e18-8a08-72710b8d9987",
+                            ConcurrencyStamp = "5713d66a-709b-4c6c-9fb4-c3e51c4cab15",
                             Name = "Operator"
                         },
                         new
                         {
                             Id = 3L,
-                            ConcurrencyStamp = "2ba1ddb0-c896-42e3-ae3c-24407f096e1c",
+                            ConcurrencyStamp = "9a86cad8-d80a-48bb-a503-af2758b0304c",
                             Name = "Customer"
                         });
                 });

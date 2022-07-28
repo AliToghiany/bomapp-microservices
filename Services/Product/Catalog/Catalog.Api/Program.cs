@@ -16,7 +16,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ProductDbContext>(options =>
-  options.UseSqlServer(builder.Configuration.GetConnectionString("OrderingConnectionString")));
+  options.UseSqlServer(builder.Configuration.GetConnectionString("CatalogConnectionString")));
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 var app = builder.Build();
 

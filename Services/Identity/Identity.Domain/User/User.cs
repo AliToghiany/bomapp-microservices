@@ -13,8 +13,8 @@ namespace Identity.Domain.User
         public DateTime UpdateTime { get; set; }
          public DateTime RemoveTime { get; set; }
           public bool IsActive { get; set; }
-          public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Description { get; set; }
+          public string? FirstName { get; set; }
+        public string? LastName { get; set; }
+        public string? Description { get; set; }
     }
 }

@@ -11,7 +11,7 @@ namespace Identity.Domain.User
         public Guid Id { get; set; }
         public DateTime InsertTime { get; set; } = DateTime.Now;
         public DateTime ExpireTime { get; set; } = DateTime.Now.AddMinutes(4);
-
+        public bool IsUsed { get; set; }
         public string Code { get; set; }
         public string IP { get; set; }          
         public string Phone { get; set; }

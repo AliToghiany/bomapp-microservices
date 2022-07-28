@@ -12,10 +12,19 @@
                     <input @bind="Phone" type="tel"  name="" required="">
                     <label>Phone Number</label>
                 </div>
-               
+                <a @onclick="SendPhone" >
+<span > </span >
+<span > </span >
+<span > </span >
+<span > </span >
+Next
+</a >
+          
+      
+       
             </form>
         </div>
-        <button @onclick="SendPhone" class="button"><i class='bx bx-right-arrow-alt icon'></i></button>
+       
 </div>
 @code {
     private string? Phone{ get; set; }
@@ -25,7 +34,7 @@
 
         if (res.Success)
         {
-            nav.NavigateTo($"/confirmcode?codeid={res.Data}");
+            nav.NavigateTo($"/confirmcode/{res.Data}");
         }
     }
 }

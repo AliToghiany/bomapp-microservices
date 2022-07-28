@@ -9,13 +9,13 @@ namespace Catalog.Api.Repositories.Interface
 {
     public interface IProductRepository
     {
-        ProductListResult GetProducts(Ordering ordering, string SearchKey, int PageSize, int Page, long? Catid);
-        Task<Product> GetProduct(long id);
+        ProductListResult GetGames(Ordering ordering, string SearchKey, int PageSize, int Page, long? Catid);
+        Task<Game> GetGame(long id);
 
       
 
-        Task<ResultDto<long>> CreateProduct(Product product, List<IFormFile> Upload);
-        Task<ResultDto<long>> UpdateProduct(Product product, List<IFormFile> Upload);
-        Task<ResultDto> DeleteProduct(long id);
+        Task<ResultDto<long>> CreateGame(Game product, List<IFormFile> Upload);
+        Task<ResultDto<long>> UpdateGame(Game product, List<IFormFile> Upload);
+        Task<ResultDto> DeleteGame(long id);
     }
 }

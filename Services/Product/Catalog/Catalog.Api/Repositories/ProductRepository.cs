@@ -18,7 +18,7 @@ namespace Catalog.Api.Repositories
         {
             _dbContext = dbContext;
         }
-        public async Task<ResultDto<long>> CreateProduct(Product product,List<IFormFile> Upload)
+        public async Task<ResultDto<long>> CreateGame(Game product,List<IFormFile> Upload)
         {
             try
             {
@@ -40,7 +40,7 @@ namespace Catalog.Api.Repositories
 
                     };
                 }
-                await _dbContext.Products.AddAsync(product);
+                await _dbContext.Games.AddAsync(product);
                 await _dbContext.SaveChangesAsync();
                 List<Image> image = new List<Image>();
                 foreach (var item in Upload)
@@ -71,11 +71,11 @@ namespace Catalog.Api.Repositories
             }
         }
 
-        public async Task<ResultDto> DeleteProduct(long id)
+        public async Task<ResultDto> DeleteGame(long id)
         {
             try
             {
-                var product = await _dbContext.Products.FindAsync(id);
+                var product = await _dbContext.Games.FindAsync(id);
                 product.IsRemoved = true;
            
                 await _dbContext.SaveChangesAsync();
@@ -96,18 +96,18 @@ namespace Catalog.Api.Repositories
             }
         }
 
-        public async Task<Product> GetProduct(long id)
+        public async Task<Game> GetGame(long id)
         {
-            return await _dbContext.Products.FindAsync(id);
+            return await _dbContext.Games.FindAsync(id);
         }
 
 
 
 
-        public ProductListResult GetProducts(Ordering ordering, string SearchKey, int PageSize, int Page, long? Catid)
+        public ProductListResult GetGames(Ordering ordering, string SearchKey, int PageSize, int Page, long? Catid)
         {
             int totalRow = 0;
-            var productquery = _dbContext.Products.Include(p => p.Category).AsQueryable();
+            var productquery = _dbContext.Games.Include(p => p.Category).AsQueryable();
             if (Catid != null)
             {
                 productquery = productquery.Where(p => p.CategoryId == Catid);
@@ -148,7 +148,7 @@ namespace Catalog.Api.Repositories
 
         }
 
-        public async Task<ResultDto<long>> UpdateProduct(Product product, List<IFormFile> Upload)
+        public async Task<ResultDto<long>> UpdateGame(Game product, List<IFormFile> Upload)
         {
             try
             {
@@ -170,7 +170,7 @@ namespace Catalog.Api.Repositories
 
                     };
                 }
-                var pr = await _dbContext.Products.FindAsync(product.Id);
+                var pr = await _dbContext.Games.FindAsync(product.Id);
                 pr.Name = product.Name;
                 pr.Price = product.Price;
                 pr.Summary = pr.Summary;
@@ -208,7 +208,7 @@ namespace Catalog.Api.Repositories
     }
     public class ProductListResult
     {
-        public List<Product> Products { get; set; }
+        public List<Game> Products { get; set; }
         public int Row { get; set; }
     }
     public enum Ordering

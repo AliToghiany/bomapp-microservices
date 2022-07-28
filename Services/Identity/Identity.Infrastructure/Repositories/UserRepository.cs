@@ -1,6 +1,7 @@
 ﻿using Identity.Application.Contracts.Repositories;
 using Identity.Domain.User;
 using Identity.Infrastructure.Context;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,10 +21,19 @@ namespace Identity.Infrastructure.Repositories
         public async Task<Confirm?> ConfirmCode(Guid id, string code)
         {
             var res = await _identityDBContext.Confirms.FindAsync(id);
-            if (res==null || res.Code != code)
+            if (res == null)
                 return null;
 
-            return res; 
+            var confirms =_identityDBContext.Confirms.Where(p => p.Phone == res.Phone && p.IsUsed == false);
+            if (confirms == null)
+                return null;
+            var confirm=await confirms.FirstOrDefaultAsync(p=>p.Code == code);
+            if (confirm == null)
+                return null;
+            confirm.IsUsed = true;
+            _identityDBContext.SaveChanges();
+
+            return confirm; 
 
         }
 
@@ -36,16 +46,23 @@ namespace Identity.Infrastructure.Repositories
 
         public async Task<long> CreateUserByPhone(string phone)
         {
-            var user = new User { PhoneNumber = phone };
-           await _identityDBContext.Users.AddAsync(user);
-           await _identityDBContext.UserRoles.AddAsync(new Microsoft.AspNetCore.Identity.IdentityUserRole<long>
+            try
             {
-                UserId = user.Id,
-                RoleId = 3
-            });
-           await _identityDBContext.SaveChangesAsync();
-            return user.Id;
-          
+                var user = new User { PhoneNumber = phone };
+                await _identityDBContext.Users.AddAsync(user);
+                await _identityDBContext.SaveChangesAsync();
+                await _identityDBContext.UserRoles.AddAsync(new Microsoft.AspNetCore.Identity.IdentityUserRole<long>
+                {
+                    UserId = user.Id,
+                    RoleId = 3
+                });
+                await _identityDBContext.SaveChangesAsync();
+                return user.Id;
+            }
+            catch (Exception ex)
+            {
+                return 0;
+            }
         }
 
         public Task EditUser(User user)
@@ -59,9 +76,10 @@ namespace Identity.Infrastructure.Repositories
             return res;
         }
 
-        public Task<User> FindUserByPhone(string code)
+        public async Task<User?> FindUserByPhone(string phone)
         {
-            throw new NotImplementedException();
+            var res =await _identityDBContext.Users.FirstOrDefaultAsync(p=>p.PhoneNumber==phone);
+            return res;
         }
 
         public Task<bool> IsFreeUserName(string userName)

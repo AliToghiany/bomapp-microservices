@@ -11,7 +11,7 @@ namespace Identity.Application.Contracts.Repositories
     {
         Task<Confirm> CreateNewConfirm(Confirm confirm);
         Task<Confirm?> ConfirmCode(Guid id,string code);
-        Task<User> FindUserByPhone(string code);
+        Task<User?> FindUserByPhone(string phone);
         Task<long> CreateUserByPhone(string phone);
         Task<User?> FindUserById(long id);
         Task<bool> IsFreeUserName(string userName);
