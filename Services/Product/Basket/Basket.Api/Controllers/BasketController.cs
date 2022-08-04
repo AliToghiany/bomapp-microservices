@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Basket.Api.Entities;
 using Basket.Api.Repositories.Interface;
-using EventBus.Message.Events;
+using EventBus.Message.Events.BasketCheckOutEvent;
 using MassTransit;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;

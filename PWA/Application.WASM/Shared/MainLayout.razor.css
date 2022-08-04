@@ -62,7 +62,7 @@ body.dark {
 
 .sidebar.close ~ .home {
     left: 78px;
-    height:auto;
+    height:100%;
     width: calc(100% - 78px);
 }
 

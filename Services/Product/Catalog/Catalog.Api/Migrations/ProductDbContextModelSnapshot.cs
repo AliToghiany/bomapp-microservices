@@ -87,6 +87,9 @@ namespace Catalog.Api.Migrations
                     b.Property<DateTime?>("RemoveDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("Saled")
+                        .HasColumnType("int");
+
                     b.Property<string>("Summary")
                         .HasColumnType("nvarchar(max)");
 
@@ -135,6 +138,9 @@ namespace Catalog.Api.Migrations
                     b.Property<long>("UserId")
                         .HasColumnType("bigint");
 
+                    b.Property<int>("Voet")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("GameId");
@@ -176,7 +182,7 @@ namespace Catalog.Api.Migrations
             modelBuilder.Entity("Catalog.Api.Entities.Votes", b =>
                 {
                     b.HasOne("Catalog.Api.Entities.Game", "Game")
-                        .WithMany()
+                        .WithMany("Votes")
                         .HasForeignKey("GameId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -192,6 +198,8 @@ namespace Catalog.Api.Migrations
             modelBuilder.Entity("Catalog.Api.Entities.Game", b =>
                 {
                     b.Navigation("Images");
+
+                    b.Navigation("Votes");
                 });
 #pragma warning restore 612, 618
         }

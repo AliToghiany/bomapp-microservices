@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using EventBus.Message.Events;
+using EventBus.Message.Events.BasketCheckOutEvent;
 using Ordering.Applicaion.Features.Orders.Commands.CreateOrder;
 using System;
 using System.Collections.Generic;

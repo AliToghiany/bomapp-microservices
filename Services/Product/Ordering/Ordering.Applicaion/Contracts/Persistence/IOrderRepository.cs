@@ -1,4 +1,5 @@
-﻿using Ordering.Domain.Entities.Order;
+﻿
+using Ordering.Domain.Entities.Order;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +12,6 @@ namespace Ordering.Applicaion.Contracts.Persistence
     {
         Task<Order> AddNewOrder(Order order);
         Task AddOrderDetails(List<OrderDetail> order);
+       
     }
 }

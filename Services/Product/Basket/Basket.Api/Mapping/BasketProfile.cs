@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Basket.Api.Entities;
-using EventBus.Message.Events;
+using EventBus.Message.Events.BasketCheckOutEvent;
 using System;
 using System.Collections.Generic;
 using System.Linq;

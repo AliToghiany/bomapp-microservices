@@ -9,7 +9,7 @@ namespace Chat.Domain.Common
     public abstract  class BaseEntity
     {
       
-            public long Id { get; protected set; }
+       
             public DateTime CreatedDate { get; set; } = DateTime.Now;
             public bool IsRemoved { get; set; }
             public DateTime? RemoveDate { get; set; }

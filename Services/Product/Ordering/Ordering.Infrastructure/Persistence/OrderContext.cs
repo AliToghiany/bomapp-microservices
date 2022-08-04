@@ -19,6 +19,7 @@ namespace Ordering.Infrastructure.Persistence
         }
     
         public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderDetail> Details { get; set; }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {

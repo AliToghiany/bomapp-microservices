@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <Folder Include="Contracts\Infrastructure\" />
+    <Folder Include="Feature\Messages\Commands\EditMessage\" />
     <Folder Include="Feature\Messages\Queries\" />
   </ItemGroup>
 
@@ -14,11 +15,13 @@
     <PackageReference Include="FluentValidation" Version="11.1.0" />
     <PackageReference Include="MediatR" Version="10.0.1" />
     <PackageReference Include="MediatR.Contracts" Version="1.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.17" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.1" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\BuildingBlocks\Common.Services\Common.Services.csproj" />
     <ProjectReference Include="..\Chat.Domain\Chat.Domain.csproj" />
   </ItemGroup>
 

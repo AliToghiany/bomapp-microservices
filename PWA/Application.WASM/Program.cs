@@ -12,10 +12,11 @@ var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
 builder.Services.AddHttpClient<IUserService, UserService>(c =>
     c.BaseAddress = new Uri(builder.Configuration["ApiSettings:GatewayAddress"]));
-
-    //.AddHttpMessageHandler<LoggingDelegatingHandler>()
-    //.AddPolicyHandler(GetRetryPolicy())
-    //.AddPolicyHandler(GetCircuitBreakerPolicy());
+builder.Services.AddHttpClient<IGameService, GameService>(c =>
+    c.BaseAddress = new Uri(builder.Configuration["ApiSettings:GatewayAddress"]));
+//.AddHttpMessageHandler<LoggingDelegatingHandler>()
+//.AddPolicyHandler(GetRetryPolicy())
+//.AddPolicyHandler(GetCircuitBreakerPolicy());
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 

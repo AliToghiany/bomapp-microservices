@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using EventBus.Message.Events;
+using EventBus.Message.Events.BasketCheckOutEvent;
 using MassTransit;
 using MediatR;
 using Microsoft.Extensions.Logging;

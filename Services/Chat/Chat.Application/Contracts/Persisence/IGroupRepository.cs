@@ -9,8 +9,9 @@ namespace Chat.Application.Contracts.Persisence
 {
     public interface IGroupRepository
     {
-        Task<Group> GetGroupById(long Id);
-        Task<bool> CheckBanInGroup(long UserId, long GroupId);
-        Task<long> GetCountOfMessageGroup(long GroupId);
+        Task<Group> GetGroupById(string Id);
+        Task<bool> CheckBanInGroup(long UserId, string GroupId);
+        Task<long> GetCountOfMessageGroup(string GroupId);
+        Task<bool> JoinInGroup(string groupId, long UserId);
     }
 }

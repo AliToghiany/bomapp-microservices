@@ -11,11 +11,13 @@ using System.Threading.Tasks;
 
 namespace Catalog.Api.Controllers
 {
-    public class ProductController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class GameController : Controller
     {
         private readonly IProductRepository _productRepository;
-        private readonly ILogger<ProductController> _logger;
-        public ProductController(IProductRepository productRepository, ILogger<ProductController> logger)
+        private readonly ILogger<GameController> _logger;
+        public GameController(IProductRepository productRepository, ILogger<GameController> logger)
         {
             _productRepository = productRepository?? throw new ArgumentNullException(nameof(productRepository));
             _logger=logger?? throw new ArgumentNullException(nameof(logger));
@@ -23,7 +25,7 @@ namespace Catalog.Api.Controllers
         [HttpGet("{id}",Name ="GetProduct")]
         [ProducesResponseType(typeof(Game), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(Game), (int)HttpStatusCode.NotFound)]
-        public async Task<ActionResult<Game>> GetProduct(long id)
+        public async Task<ActionResult<Game>> GetGame(long id)
         {
             var product = await _productRepository.GetGame(id);
             if (product==null)
@@ -34,16 +36,16 @@ namespace Catalog.Api.Controllers
             return Ok(product);
 
         }
-        [Route("[action]/{ordering}/{SearchKey}/{catid}/{pagesize}/{page}", Name = "GetProducts")]
+        [Route("[action]/{ordering}/{SearchKey}/{catid}/{pagesize}/{page}", Name = "GetGames")]
         [HttpGet]
         [ProducesResponseType(typeof(ProductListResult), (int)HttpStatusCode.OK)]
-        public ActionResult<ProductListResult> GetProducts(Ordering ordering, string SearchKey, long? catid, int pagesize = 20, int page = 1)
+        public ActionResult<ProductListResult> GetGames(Ordering ordering, string SearchKey, long? catid, int pagesize = 20, int page = 1)
         {
             return Ok(_productRepository.GetGames(ordering, SearchKey, pagesize, page, catid));
         }
         [HttpPost]
         [ProducesResponseType(typeof(Game), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<ResultDto<Game>>> CreateProduct([FromBody] Game product, [FromForm] Microsoft.AspNetCore.Http.IFormFile Files)
+        public async Task<ActionResult<ResultDto<Game>>> CreateGame([FromBody] Game product, [FromForm] Microsoft.AspNetCore.Http.IFormFile Files)
         {
           var res=  await _productRepository.CreateGame(product,new List<Microsoft.AspNetCore.Http.IFormFile> { Files});
 
@@ -52,16 +54,17 @@ namespace Catalog.Api.Controllers
         [HttpPut]
         [ProducesResponseType(typeof(ResultDto<Game>), (int)HttpStatusCode.OK)]
       
-        public async Task<ActionResult<ResultDto<Game>>> UpdateProduct([FromBody] Game product, [FromForm] Microsoft.AspNetCore.Http.IFormFile Files)
+        public async Task<ActionResult<ResultDto<Game>>> UpdateGame([FromBody] Game product, [FromForm] Microsoft.AspNetCore.Http.IFormFile Files)
         {
             return Ok(await _productRepository.UpdateGame(product, new List<Microsoft.AspNetCore.Http.IFormFile> { Files }));
         }
 
         [HttpDelete("{id}", Name = "DeleteProduct")]
         [ProducesResponseType(typeof(ResultDto), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<ResultDto>> DeleteProductById(long id)
+        public async Task<ActionResult<ResultDto>> DeleteGameById(long id)
         {
             return Ok(await _productRepository.DeleteGame(id));
         }
+       
     }
 }

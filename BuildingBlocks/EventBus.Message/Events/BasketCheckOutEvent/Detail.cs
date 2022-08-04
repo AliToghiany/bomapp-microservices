@@ -1,4 +1,4 @@
-﻿namespace EventBus.Message.Events
+﻿namespace EventBus.Message.Events.BasketCheckOutEvent
 {
     public class Detail
     {

@@ -101,13 +101,12 @@ namespace Catalog.Api.Repositories
             return await _dbContext.Games.FindAsync(id);
         }
 
-
-
+      
 
         public ProductListResult GetGames(Ordering ordering, string SearchKey, int PageSize, int Page, long? Catid)
         {
             int totalRow = 0;
-            var productquery = _dbContext.Games.Include(p => p.Category).AsQueryable();
+            var productquery = _dbContext.Games.Include(p=>p.Category).Include(p => p.Votes).Include(p => p.Images).AsQueryable();
             if (Catid != null)
             {
                 productquery = productquery.Where(p => p.CategoryId == Catid);
@@ -137,16 +136,34 @@ namespace Catalog.Api.Repositories
                 case Ordering.NotOrder:
                     productquery = productquery.OrderByDescending(p => p.Id).AsQueryable();
                     break;
+                case Ordering.Saled:
+                    productquery = productquery.OrderByDescending(p => p.Saled).AsQueryable();
+                    break;
             }
-            var products = productquery.ToPaged(Page, PageSize, out totalRow);
+            var products = productquery.ToPaged(Page, PageSize, out totalRow).Select(p=>new GamesResponse
+            {
+                Name = p.Name,
+      
+                CategoryName=p.Category.Name,
+               
+                Price=p.Price,
+                CategoryId=p.CategoryId,
+                Voet=(p.Votes.Sum(t=>t.Voet))/p.Votes.Count,
+
+               
+
+            }).ToList();
+           
             return new ProductListResult
             {
-                Products = products.ToList(),
+                Products = products,
                 Row = totalRow
             };
 
 
         }
+
+        
 
         public async Task<ResultDto<long>> UpdateGame(Game product, List<IFormFile> Upload)
         {
@@ -208,7 +225,7 @@ namespace Catalog.Api.Repositories
     }
     public class ProductListResult
     {
-        public List<Game> Products { get; set; }
+        public List<GamesResponse> Products { get; set; }
         public int Row { get; set; }
     }
     public enum Ordering
@@ -217,7 +234,28 @@ namespace Catalog.Api.Repositories
         Cheapset,
         Expensive,
         theNewest,
-        theoldest
+        theoldest,
+        Saled
+
+    }
+    public class GamesResponse
+    {
+        public string Name { get; set; }
+        public string Image { get; set; }
+        public decimal Price { get; set; }
+        public string CategoryName { get; set; }
+        public long CategoryId{ get; set; }
+        public decimal Voet { get; set; }
+    }
+    public class GameResponse
+    {
+        public string Name { get; set; }
+        public List<string> Images { get; set; }
+        public decimal Price { get; set; }
+        public string CategoryName { get; set; }
+        public long CategoryId { get; set; }
+        public decimal Voet { get; set; }
+        public string Decription { get; set; }
 
     }
 }

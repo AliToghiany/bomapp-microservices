@@ -1,22 +1,57 @@
 ﻿@page "/games"
 
+@using Application.WASM.Model
+@using Application.WASM.Services
+@inject IGameService gameServic
 
 	<div style="background-image: url('/wallpaperflare.com_wallpaper_black.jpg');height:100%;background-repeat: no-repeat;
   background-attachment: fixed;">
-<div class="wrapper" >
+	<div style="z-index:2;position:fixed;width:250px;height:400px; right:0;top:0;margin:35px 15px 0px 0px;box-shadow: 0 15px 25px rgb(0 0 0 / 60%);border-radius: 10px;background-image: linear-gradient(#1c1d1fe0, #1C1D1F);padding-left:15px;padding-right:15px; padding-top:5px" >
+	    <h1 style="font-size:20px;color:white;">Search</h1>
+		<input style="background-color:#383838;border-radius:5px;color:white;width:100%;" placeholder="please write text 'GTA'"/>
+		<h1 style="margin-top:5px;font-size:20px;color:white;">Filter</h1>
+	<div>
+		<label class="container" >By New Games
+			<input type="radio" name="radio" />
+			<span class="checkmark"></span>
+		</label>
+		<label class="container" >By Old Games
+			<input type="radio" name="radio" />
+			<span class="checkmark"></span>
+		</label>
+		<label class="container" >By Expensive Games
+			<input type="radio" name="radio" />
+			<span class="checkmark"></span>
+		</label>
+		<label class="container" >By Cheapset Games
+			<input type="radio" name="radio" />
+			<span class="checkmark"></span>
+		</label>
+		<label class="container" >By Saled Games
+			<input type="radio" name="radio" />
+			<span class="checkmark"></span>
+		</label>
+		
+	
+	</div>
+	<input type="button" style="width:100%;background-color:#6033CA;border-color:#6033CA;color:white;border-radius:5px;" value="Filter" />
+	</div>
+	
 
-	<h2><strong>All Games<span>( 4 )</span></strong></h2>
+<div class="wrapper" >
+	
+	  <h1 style="font-size:20px;color:white;">Search</h1>
 
 	<div class="cards" >
+		
+		<figure class="card"  >
 
-		<figure class="card">
+			<img   src="https://image.api.playstation.com/gs2-sec/appkgo/prod/CUSA05847_00/2/i_156be5fdc23a961f0e2b05974c0df5ecfd6169b09aa25e5c510ec7e6e1ad683f/i/icon0.png" />
 
-			<img src="https://image.api.playstation.com/gs2-sec/appkgo/prod/CUSA05847_00/2/i_156be5fdc23a961f0e2b05974c0df5ecfd6169b09aa25e5c510ec7e6e1ad683f/i/icon0.png" />
-
-			<figcaption>Dota 2</figcaption>
+			<figcaption >Dota 2</figcaption>
 
 		</figure>
-
+	
 		<figure class="card">
 
 			<img src="https://i1.sndcdn.com/artworks-kb2KdSqUgEytRcfh-VkRYyg-t500x500.jpg" />
@@ -33,56 +68,56 @@
 
 		</figure>
 
-		<figure class="card">
+		<figure class="card"  >
 
-			<img src="https://mrreiha.keybase.pub/codepen/hover-fx/4.jpg" />
+			<img   src="https://image.api.playstation.com/gs2-sec/appkgo/prod/CUSA05847_00/2/i_156be5fdc23a961f0e2b05974c0df5ecfd6169b09aa25e5c510ec7e6e1ad683f/i/icon0.png" />
 
-			<figcaption>KoseBoz!</figcaption>
-
-		</figure>
-		<figure class="card">
-
-			<img src="https://mrreiha.keybase.pub/codepen/hover-fx/4.jpg" />
-
-			<figcaption>KoseBoz!</figcaption>
+			<figcaption >Dota 2</figcaption>
 
 		</figure>
+	
 		<figure class="card">
 
-			<img src="https://mrreiha.keybase.pub/codepen/hover-fx/4.jpg" />
+			<img src="https://i1.sndcdn.com/artworks-kb2KdSqUgEytRcfh-VkRYyg-t500x500.jpg" />
 
-			<figcaption>KoseBoz!</figcaption>
+			<figcaption>Stick Fight</figcaption>
 
 		</figure>
+
 		<figure class="card">
 
-			<img src="https://mrreiha.keybase.pub/codepen/hover-fx/4.jpg" />
+			<img src="http://media.rockstargames.com/rockstargames/img/global/news/upload/actual_1364906194.jpg" />
 
-			<figcaption>KoseBoz!</figcaption>
+			<figcaption>Minion Masters</figcaption>
 
 		</figure>
+<figure class="card"  >
+
+			<img   src="https://image.api.playstation.com/gs2-sec/appkgo/prod/CUSA05847_00/2/i_156be5fdc23a961f0e2b05974c0df5ecfd6169b09aa25e5c510ec7e6e1ad683f/i/icon0.png" />
+
+			<figcaption >Dota 2</figcaption>
+
+		</figure>
+	
 		<figure class="card">
 
-			<img src="https://mrreiha.keybase.pub/codepen/hover-fx/4.jpg" />
+			<img src="https://i1.sndcdn.com/artworks-kb2KdSqUgEytRcfh-VkRYyg-t500x500.jpg" />
 
-			<figcaption>KoseBoz!</figcaption>
-
-		</figure><figure class="card">
-
-			<img src="https://mrreiha.keybase.pub/codepen/hover-fx/4.jpg" />
-
-			<figcaption>KoseBoz!</figcaption>
-
-		</figure><figure class="card">
-
-			<img src="https://mrreiha.keybase.pub/codepen/hover-fx/4.jpg" />
-
-			<figcaption>KoseBoz!</figcaption>
+			<figcaption>Stick Fight</figcaption>
 
 		</figure>
+
+		<figure class="card">
+
+			<img src="http://media.rockstargames.com/rockstargames/img/global/news/upload/actual_1364906194.jpg" />
+
+			<figcaption>Minion Masters</figcaption>
+
+		</figure>
+
 		</div>
-		<h2><strong>What's new?</strong></h2>
 		
+
 
 	@*<div class="news">
 
@@ -128,7 +163,23 @@
 
 	
 </div>
+
 </div>
+
 @code {
 
+	public GameService.Ordering Orderings{ get; set; }
+	
+	public string? SearchKey{ get; set; }
+	//[Parameter]
+	//public long? CatId{ get; set; }
+
+
+
+	List<Game> games = new List<Game>();
+	//protected override async Task OnInitializedAsync()
+	//{
+	//	var res = await gameServic.GetGames(GameService.Ordering.NotOrder, " ",0, 20, 1);
+	
+	//}
 }

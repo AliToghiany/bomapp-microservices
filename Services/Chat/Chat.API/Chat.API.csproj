@@ -7,11 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Controllers\MessageController.cs~RF953cc5.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="10.0.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <ProjectReference Include="..\Chat.Application\Chat.Application.csproj" />
+    <ProjectReference Include="..\Chat.Domain\Chat.Domain.csproj" />
   </ItemGroup>
 
 </Project>

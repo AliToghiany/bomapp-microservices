@@ -6,5 +6,6 @@
         public long UserId { get; set; }
         public virtual Game Game { get; set; }
         public long GameId { get; set; }
+        public int Voet { get; set; }
     }
 }

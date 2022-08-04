@@ -50,7 +50,7 @@ namespace Discount.Grpc.Repositories
             var updateResult = await _discountContext
                                       .Coupons
                                        .ReplaceOneAsync(filter: g => g.Id == coupon.Id, replacement: coupon);
-
+            
             return updateResult.IsAcknowledged
                     && updateResult.ModifiedCount > 0;
         }

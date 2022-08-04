@@ -52,6 +52,9 @@ body.dark {
     background: var(--sidebar-color);
     transition: var(--tran-05);
     z-index: 100;
+    box-shadow: 0 15px 25px rgb(0 0 0 / 60%);
+  
+
 }
 
     .sidebar.close {
@@ -209,6 +212,7 @@ body.dark .sidebar header .toggle {
 
     .sidebar li ::deep a.active {
         background-color: var(--primary-color-light);
+
     }
 
 

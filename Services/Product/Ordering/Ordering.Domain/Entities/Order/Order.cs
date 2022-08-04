@@ -13,7 +13,8 @@ namespace Ordering.Domain.Entities.Order
 
         public long UserId { get; set; }
         public long RequestPayId { get; set; }
-       
-      
+        public virtual List<OrderDetail> OrderDetail { get; set; }
+
+
     }
 }
