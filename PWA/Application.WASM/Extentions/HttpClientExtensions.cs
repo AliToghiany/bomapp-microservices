@@ -8,7 +8,7 @@ namespace Application.WASM.Extentions
         public static async Task<T> ReadContentAs<T>(this HttpResponseMessage response)
         {
             if (!response.IsSuccessStatusCode)
-                throw new ApplicationException($"Something went wrong calling the API: {response.ReasonPhrase}");
+                throw new ApplicationException($"Something went wrong calling the API: {response.StatusCode}=>{response.Content}");
 
             var dataAsString = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 

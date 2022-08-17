@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Identity.Application.Feature.Users.Command.EditUser
 {
-    internal class EditUserCommandHandler : IRequestHandler<EditUserCommand, ResultResponse>
+    internal class EditUserCommandHandler : IRequestHandler<EditUserCommand>
     {
        // private readonly ILogger _logger;
         // private readonly IMapper _mapper;
@@ -23,7 +23,7 @@ namespace Identity.Application.Feature.Users.Command.EditUser
             //_mapper = mapper;
             _userReposirory = userReposirory;
         }
-        public async Task<ResultResponse> Handle(EditUserCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(EditUserCommand request, CancellationToken cancellationToken)
         {
            var user = await _userReposirory.FindUserById(request.Id);
             if (user == null)
@@ -36,11 +36,8 @@ namespace Identity.Application.Feature.Users.Command.EditUser
             if(request.Description!=null)
                 user.Description = request.Description;
             await _userReposirory.EditUser(user);
-            return new ResultResponse
-            {
-                IsSucsse = true,
-                Message = $"user has sucssesfuled edit with ID:{user.Id}"
-            };
+            return Unit.Value;
+          
 
         }
     }

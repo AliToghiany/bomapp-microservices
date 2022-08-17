@@ -14,6 +14,10 @@ namespace Chat.Application.Contracts.Persisence
         Task<bool> ChckMessageForUser(long userId,string messageid);
         Task<Message> GetMessage(string messageid);
         Task<bool> RemoveMessage(string messageid);
+
+        Task<List<long>> GetAllPrivateRoom(long userId);
+        Task<List<Message>> GetGroupMessage(long userId);
+        Task<List<Message>> GetPrivateRoomMessage(long userId);
     }
   
 }

@@ -2,6 +2,7 @@
 @using Application.WASM.Services
 @inject IUserService userService
 @inject NavigationManager nav;
+@inject ILocalStorageService localStore
 <div style="background-image: url('/wallpaperflare.com_wallpaper.jpg');height:100%;">
   <div class="text">Login</div>
         <div class="login-box">
@@ -17,7 +18,7 @@
 <span > </span >
 <span > </span >
 Confirm
-</a >
+               </a >
             </form>
         </div>
        
@@ -31,5 +32,13 @@ Confirm
     async Task SendCode()
     {
         var res = await userService.ConfirmCode(CodeId, Code);
+        if (res.Success)
+        {
+            await localStore.SetItemAsync("token", res.Data.Token);
+            await localStore.SetItemAsync("identity", true);
+            nav.NavigateTo("/games");
+        }
+    
+        
     }
 }

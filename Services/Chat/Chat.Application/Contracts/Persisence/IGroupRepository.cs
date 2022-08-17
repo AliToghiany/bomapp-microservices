@@ -13,5 +13,8 @@ namespace Chat.Application.Contracts.Persisence
         Task<bool> CheckBanInGroup(long UserId, string GroupId);
         Task<long> GetCountOfMessageGroup(string GroupId);
         Task<bool> JoinInGroup(string groupId, long UserId);
+        Task<List<long>> GetMemberOfGroup(string groupId);
+        Task<List<Group>> GetAllGroupByUserId(long userId);
+ 
     }
 }

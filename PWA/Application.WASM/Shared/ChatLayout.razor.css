@@ -45,14 +45,14 @@
 
 .dark-mode {
     --body-bg-color: #1d1d1d;
-    --theme-bg-color: #27292d;
+    --theme-bg-color: #1c1d1f;
     --border-color: #323336;
     --body-color: #d1d1d2;
     --active-conversation-bg: linear-gradient( to right, rgba(47, 50, 56, 0.54), rgba(238, 242, 244, 0) 100% );
     --msg-hover-bg: rgba(47, 50, 56, 0.54);
     --chat-text-bg: #383b40;
     --chat-text-color: #b5b7ba;
-    --msg-date: #626466;
+    --msg-date: #fff;
     --msg-message: var(--msg-date);
     --overlay-bg: linear-gradient( to bottom, rgba(0, 0, 0, 0) 0%, #27292d 65%, #27292d 100% );
     --input-bg: #2f3236;
@@ -63,6 +63,7 @@
     --button-color: var(--body-color);
     --input-chat-color: #6f7073;
     --detail-font-color: var(--input-chat-color);
+    --theme-color: #6033CA;
 }
 
 .blue {
@@ -94,6 +95,7 @@ body {
     background-color: var(--body-bg-color);
     font-family: var(--body-font);
     color: var(--body-color);
+    
 }
 
 html {
@@ -137,15 +139,19 @@ html {
     border-left: 1px solid var(--border-color);
     margin-left: auto;
     padding: 30px 30px 0 30px;
-    display: flex;
+    display: none;
     flex-direction: column;
     overflow: auto;
 }
 
 .chat-area {
     flex-grow: 1;
+    background-image: url('/wallpaperflare.com_wallpaper_black.jpg');
+    height: 100%;
 }
-
+::-webkit-scrollbar {
+    width: 20px;
+}
 .search-bar {
     height: 80px;
     z-index: 3;
@@ -284,6 +290,7 @@ html {
     margin-bottom: 4px;
     font-weight: 600;
     font-size: 15px;
+    color: rgb(175 141 255);
 }
 
 .msg-detail {
@@ -442,7 +449,7 @@ html {
     }
 
     .owner .chat-msg-text {
-        background-color: var(--theme-color);
+        background-color: #6033CA;
         color: #fff;
         border-radius: 20px 20px 0 20px;
     }

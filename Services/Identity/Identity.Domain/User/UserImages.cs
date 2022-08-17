@@ -10,6 +10,7 @@ namespace Identity.Domain.User
     {
         public long Id { get; set; }
         public string Name { get; set; }
+        public string Path { get; set; }
         public virtual User User { get; set; }
         public long UserId { get; set; }
     }

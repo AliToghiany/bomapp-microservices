@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Identity.Application.Feature.Users.Command.EditUser
 {
-    public class EditUserCommand:IRequest<ResultResponse>
+    public class EditUserCommand:IRequest
     {
 
         public long Id { get; set; }

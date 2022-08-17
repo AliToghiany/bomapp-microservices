@@ -37,16 +37,12 @@ namespace Identity.Api.Controllers
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task< ActionResult<SignUserResponse>> ConfirmCode([FromBody] RequestConfirmCode requestConfirmCode)
         {
-            try
-            {
-                var res = await _mediator.Send(new SignUserCommand() { Code = requestConfirmCode.Code, ConfirmId = requestConfirmCode.Id });
-                res.Token =  _tokenService.BuildToken(res.UserId);
-                return Ok(res);
-            }
-            catch (NotFoundException ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            var res = await _mediator.Send(new SignUserCommand() { Code = requestConfirmCode.Code, ConfirmId = requestConfirmCode.Id });
+          ;
+            res.Token = _tokenService.BuildToken(res.UserId);
+            return Ok(res);
+
+
 
         }
         public class RequestConfirmCode

@@ -1,6 +1,5 @@
 ﻿@page "/login"
 @using Application.WASM.Services
-
 @inject IUserService userService
 @inject NavigationManager nav;
 <div style="background-image: url('/wallpaperflare.com_wallpaper.jpg');height:100%;">
@@ -27,14 +26,18 @@ Next
        
 </div>
 @code {
+   
     private string? Phone{ get; set; }
-    private async  void SendPhone()
+    private async Task SendPhone()
     {
+  
+    
         var res = await userService.SendCode(Phone);
 
         if (res.Success)
         {
             nav.NavigateTo($"/confirmcode/{res.Data}");
+           
         }
     }
 }

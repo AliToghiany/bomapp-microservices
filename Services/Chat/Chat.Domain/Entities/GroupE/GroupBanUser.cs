@@ -11,12 +11,12 @@ namespace Chat.Domain.Entities.GroupE
 {
     public class GroupBanUser:BaseEntity
     {
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
+       
         public string Id { get; set; }
-
+  
         public string Group_Id { get; set; }
-        public long User_Id { get; set; }
+    
+        public long UserId { get; set; }
 
     }
 }

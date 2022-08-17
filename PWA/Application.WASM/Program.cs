@@ -1,5 +1,9 @@
 using Application.WASM;
+using Application.WASM.Repository;
+using Application.WASM.Repository.Interface;
 using Application.WASM.Services;
+using Blazored.LocalStorage;
+using IndexedDB.Blazor;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Polly;
@@ -14,12 +18,18 @@ builder.Services.AddHttpClient<IUserService, UserService>(c =>
     c.BaseAddress = new Uri(builder.Configuration["ApiSettings:GatewayAddress"]));
 builder.Services.AddHttpClient<IGameService, GameService>(c =>
     c.BaseAddress = new Uri(builder.Configuration["ApiSettings:GatewayAddress"]));
+builder.Services.AddHttpClient<IChatService, ChatService>(c =>
+    c.BaseAddress = new Uri(builder.Configuration["ApiSettings:GatewayAddress"]));
+builder.Services.AddScoped<HubConnect>();
+builder.Services.AddScoped<IChatRepository, ChatRepository>();
+
 //.AddHttpMessageHandler<LoggingDelegatingHandler>()
 //.AddPolicyHandler(GetRetryPolicy())
 //.AddPolicyHandler(GetCircuitBreakerPolicy());
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
-
+builder.Services.AddBlazoredLocalStorage();
+builder.Services.AddSingleton<IIndexedDbFactory, IndexedDbFactory>();
 //builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
 await builder.Build().RunAsync();

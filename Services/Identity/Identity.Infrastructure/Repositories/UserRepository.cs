@@ -72,7 +72,7 @@ namespace Identity.Infrastructure.Repositories
 
         public async Task<User?> FindUserById(long id)
         {
-            var res= await _identityDBContext.Users.FindAsync(id);
+            var res = await _identityDBContext.Users.Include(p => p.UserImages).FirstOrDefaultAsync(p=>p.Id==id);
             return res;
         }
 

@@ -1,3 +1,4 @@
+using Common.Services.Exceptions;
 using Identity.Api.Utilities;
 using Identity.Application;
 using Identity.Infrastructure;
@@ -18,24 +19,31 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddApplicationServices();
 builder.Services.AddDbContext<IdentityDBContext>();
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<NotFoundExceptionFilterAttribute>();
+});
 builder.Services.AddAuthentication(options =>
              {
                  options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                  options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                
              })
               .AddJwtBearer(cfg =>
               {
+                
                   cfg.RequireHttpsMetadata = true;
                   cfg.SaveToken = true;
                   cfg.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
                   {
-                      IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("OurUserIdentity")),
+                      IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("OurUserIdentityService")),
                       ValidateAudience = false,
                       ValidateIssuer = false,
                       ValidateLifetime = false,
                       RequireExpirationTime = false,
                       ClockSkew = TimeSpan.Zero,
                       ValidateIssuerSigningKey = true
+                      
                   };
               });
 builder.Services.AddScoped<ITokenService, TokenService>();
@@ -50,6 +58,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

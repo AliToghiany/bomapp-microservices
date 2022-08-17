@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,14 +7,19 @@ using System.Threading.Tasks;
 
 namespace Chat.Domain.Common
 {
-    public abstract  class BaseEntity
+    public abstract class BaseEntity
     {
-      
-       
-            public DateTime CreatedDate { get; set; } = DateTime.Now;
-            public bool IsRemoved { get; set; }
-            public DateTime? RemoveDate { get; set; }
-            public DateTime? LastModifiedDate { get; set; }
-        
+
+
+        public string CreatedDate { get; set; } = DateTime.Now.ToString();
+
+        public bool IsRemoved { get; set; }
+
+        public string? RemoveDate { get; set; }
+
+        public string? LastModifiedDate { get; set; }
+
+        public bool IsEdited { get; set; }
+
     }
 }

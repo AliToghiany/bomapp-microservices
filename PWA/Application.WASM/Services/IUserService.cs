@@ -3,6 +3,9 @@ using Newtonsoft.Json;
 using System.Text;
 using System.Net.Http.Json;
 using Application.WASM.Model;
+using Application.WASM.Models;
+using System.Net.Http.Headers;
+using Blazored.LocalStorage;
 
 namespace Application.WASM.Services
 {
@@ -10,14 +13,17 @@ namespace Application.WASM.Services
     {
         Task<ResponseDto<Guid>> SendCode(string phone);
         Task<ResponseDto<ResponseConfirmCode>> ConfirmCode(Guid id, string code);
+        Task<ResponseUser> GetUser(long userId);
+        Task<bool> UpdateUser(RequestUpdateUser requestUpdateUser);
     }
     public class UserService : IUserService
     {
         private HttpClient _httpClient;
-
-        public UserService(HttpClient httpClient)
+        private readonly ILocalStorageService _localStore;
+        public UserService(HttpClient httpClient, ILocalStorageService localStore)
         {
             _httpClient = httpClient;
+            _localStore = localStore;
         }
 
         public async Task<ResponseDto<Guid>> SendCode(string phone)
@@ -57,6 +63,21 @@ namespace Application.WASM.Services
             };
 
         }
-      
+
+        public async Task<ResponseUser> GetUser(long userId)
+        {
+            
+            var res = await _httpClient.GetAsync("/User/GetUserById");
+            return await res.ReadContentAs<ResponseUser>();
+
+
+        }
+
+        public async Task<bool> UpdateUser(RequestUpdateUser requestUpdateUser)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer",await _localStore.GetItemAsync<string>("token"));
+            var res = await _httpClient.PostAsJsonAsync("/User/UpdateUser", requestUpdateUser);
+            return res.IsSuccessStatusCode;
+        }
     }
 }

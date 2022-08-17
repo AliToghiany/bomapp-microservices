@@ -37,7 +37,7 @@ namespace Chat.Application.Feature.Messages.Commands.CreateMessage
         {
             var group = await _groupRepository.GetGroupById(request.Group_Id);
             if (group == null)
-                throw new NotFoundException("Group", group.Id);
+                throw new NotFoundException("Group", request.Group_Id);
 
             if (await _groupRepository.CheckBanInGroup(request.User_Id, request.Group_Id))
             {
@@ -49,19 +49,16 @@ namespace Chat.Application.Feature.Messages.Commands.CreateMessage
             message.Message_Id = (await _groupRepository.GetCountOfMessageGroup(request.Group_Id) + 1).ToString();
             var result = await _messageRepository.AddNewMessage(message);
             List<File> files = new List<File>();
-
-
-
-
             foreach (var item in request.Files)
             {
                 files.Add(new File
                 {
-                    Message_Id = result.Id,
-                    Path = UploadFile(item.Upload).FileNameAddress,
+                    MessageId = result.Id,
+                    Path = UploadFile(item).FileNameAddress,
 
                 });
             }
+            await _messageRepository.AddNewFiles(files);
             return result.Id;
 
         }

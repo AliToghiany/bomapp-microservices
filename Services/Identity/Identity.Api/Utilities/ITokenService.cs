@@ -15,12 +15,13 @@ namespace Identity.Api.Utilities
         
             public string BuildToken(long id)
             {
-                var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("OurUserIdentity"));
+                var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("OurUserIdentityService"));
                 var signingCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
                 var claims = new Claim[]
                 {
                 new Claim(ClaimTypes.NameIdentifier,id.ToString() ),
                 new Claim(ClaimTypes.Role,"Costumer")
+
                 };
                 var jwt = new JwtSecurityToken(claims: claims, signingCredentials: signingCredentials);
                 var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
