@@ -49,7 +49,7 @@ namespace Chat.API.Controllers
                 var messagejson = JsonConvert.SerializeObject(message);
                 if (createNewMessageCommand.ToUser_Id != null || createNewMessageCommand.ToUser_Id != 0)
                 {
-                 var cid=  await _hubRepository.GetConnectionOrAddQueue(new List<long> { createNewMessageCommand.ToUser_Id.Value }, message);
+                 var cid=  await _hubRepository.GetConnectionOrAddQueue(new List<long> { createNewMessageCommand.ToUser_Id.Value },messagejson,"NewMessage");
                     if (cid.Count!=0)
                     {
                         foreach (var item in cid)
@@ -63,7 +63,7 @@ namespace Chat.API.Controllers
                 {
                     var users = await _mediator.Send<List<long>>(new GetGroupMemberQuery(createNewMessageCommand.Group_Id));
 
-                 var cid=  await _hubRepository.GetConnectionOrAddQueue(users, message);
+                 var cid=  await _hubRepository.GetConnectionOrAddQueue(users, messagejson,"NewMessage");
                     if (cid.Count != 0)
                     {
                         foreach (var item in cid)
@@ -79,6 +79,7 @@ namespace Chat.API.Controllers
             
             catch (Exception ex)
             {
+
                 if (ex is NotFoundException)
                 {
                  return NotFound(ex.Message);
@@ -93,5 +94,6 @@ namespace Chat.API.Controllers
 
 
         }
+        
     }
 }

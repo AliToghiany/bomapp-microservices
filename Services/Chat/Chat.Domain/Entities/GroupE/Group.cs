@@ -14,7 +14,7 @@ namespace Chat.Domain.Entities.GroupE
     {
 
         [Key]
-        public string Id { get; set; }
+        public long Id { get; set; }
 
         public string Name { get; set; }
 
@@ -24,6 +24,7 @@ namespace Chat.Domain.Entities.GroupE
         public virtual List<GroupProfile> GroupProfiles { get; set; }
         public virtual List<Join> Joins { get; set; }
         public virtual List<MessageE.Message> Messages { get; set; }
+        public virtual List<GroupBanUser> GroupBanUsers { get; set; }
 
     }
 }

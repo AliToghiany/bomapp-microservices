@@ -17,16 +17,11 @@ namespace Application.WASM.Services
             _localStore = localStore;
         }
 
-        public async Task BuildConnect()
+        public async Task BuildConnect(string usingAppSearch)
         {
             
             hubconncetion = new HubConnectionBuilder().WithAutomaticReconnect()
-              .WithUrl($"https://localhost:44374/recivehub?access_token={await _localStore.GetItemAsync<string>("token")}", option =>
-              {
-                  option.Headers.Add("app-search", "true");
-                  option.Headers.Add("clientId", Guid.NewGuid().ToString());
-                
-              })
+              .WithUrl($"https://localhost:44374/recivehub?access_token={await _localStore.GetItemAsync<string>("token")}&app-search={usingAppSearch}&clientId={await _localStore.GetItemAsync<string>("clientId")}")
               .Build();
         }
 

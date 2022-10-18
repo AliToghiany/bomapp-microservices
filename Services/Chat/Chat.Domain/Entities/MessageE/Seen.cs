@@ -11,9 +11,9 @@ namespace Chat.Domain.Entities.MessageE
     public class Seen
     {
       
-        public string Id { get; protected set; }
+        public long Id { get; set; }
        
-        public string MessageId { get; set; }
+        public long MessageId { get; set; }
 
         public long UserId { get; set; }
     }

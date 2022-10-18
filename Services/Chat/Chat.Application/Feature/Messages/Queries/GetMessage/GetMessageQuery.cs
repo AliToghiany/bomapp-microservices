@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Chat.Application.Feature.Messages.Queries.GetMessage
 {
-    public record GetMessageQuery(string MessageId) : IRequest<ResponseMessage> { }
+    public record GetMessageQuery(long MessageId) : IRequest<ResponseMessage> { }
     internal class GetMessageQueryHandler : IRequestHandler<GetMessageQuery, ResponseMessage>
     {
         private readonly IMessageRepository _messageRepository;

@@ -22,16 +22,19 @@ namespace Chat.Application.Feature.Messages.Commands.DeleteMessage
 
         public async Task<bool> Handle(RemoveMessageCommand request, CancellationToken cancellationToken)
         {
-            if (!await _messageRepository.ChckMessageForUser(request.User_Id,request.Message_Id))
+            var message =await _messageRepository.GetMessage(request.MessageId);
+            if (message.User_Id==request.UserId)
             {
-                throw new UnauthorizedAccessException($"User:{ request.User_Id } do not have acssess to this  { nameof(Message)}:{ request.Message_Id}");
+                throw new UnauthorizedAccessException($"User:{ request.UserId } do not have acssess to this  { nameof(Message)}:{ request.MessageId}");
 
             }
-            if ((await _messageRepository.GetMessage(request.Message_Id))==null)
+            //چک کردن ادمین دسترسی داره یا ن
+            if (message==null)
             {
-                throw new NotFoundException("Message",request.Message_Id);
+                throw new NotFoundException("Message",request.MessageId);
             }
-            return await _messageRepository.RemoveMessage(request.Message_Id);
+            message.IsRemoved = true;
+            return await _messageRepository.UpdateMessage(message);
         }
     }
 }

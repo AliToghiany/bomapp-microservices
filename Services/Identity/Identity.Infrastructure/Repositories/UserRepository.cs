@@ -18,6 +18,11 @@ namespace Identity.Infrastructure.Repositories
             _identityDBContext = identityDBContext;
         }
 
+        public Task<bool> BlockUser(long userId, long blockedUser)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<Confirm?> ConfirmCode(Guid id, string code)
         {
             var res = await _identityDBContext.Confirms.FindAsync(id);
@@ -39,9 +44,12 @@ namespace Identity.Infrastructure.Repositories
 
         public async Task<Confirm> CreateNewConfirm(Confirm confirm)
         {
-            var res=await _identityDBContext.Confirms.AddAsync(confirm);
-            await _identityDBContext.SaveChangesAsync();
-            return res.Entity;
+           
+                var res = await _identityDBContext.Confirms.AddAsync(confirm);
+                await _identityDBContext.SaveChangesAsync();
+                return res.Entity;
+           
+        
         }
 
         public async Task<long> CreateUserByPhone(string phone)
@@ -79,6 +87,7 @@ namespace Identity.Infrastructure.Repositories
         public async Task<User?> FindUserByPhone(string phone)
         {
             var res =await _identityDBContext.Users.FirstOrDefaultAsync(p=>p.PhoneNumber==phone);
+       
             return res;
         }
 

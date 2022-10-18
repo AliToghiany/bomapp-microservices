@@ -9,10 +9,12 @@
 
   <ItemGroup>
     <None Remove="Pages\login.razor.css" />
+    <None Remove="Pages\NewGroup.razor.css" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="Pages\Login.razor.css" />
+    <Content Include="Pages\NewGroup.razor.css" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,6 +28,7 @@
     <PackageReference Include="Polly.Extensions.Http" Version="3.0.0" />
     <PackageReference Include="Serilog" Version="2.11.0" />
 	  <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="6.0.8" />
+	  <PackageReference Include="Tewr.Blazor.FileReader" Version="3.3.1.21360" />
   </ItemGroup>
 
   <ItemGroup>

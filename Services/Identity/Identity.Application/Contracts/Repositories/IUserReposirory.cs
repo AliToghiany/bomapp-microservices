@@ -16,5 +16,6 @@ namespace Identity.Application.Contracts.Repositories
         Task<User?> FindUserById(long id);
         Task<bool> IsFreeUserName(string userName);
         Task EditUser(User user);
+        Task<bool> BlockUser(long userId, long blockedUser);
     }
 }

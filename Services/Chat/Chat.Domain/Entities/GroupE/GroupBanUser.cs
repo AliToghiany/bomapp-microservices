@@ -12,9 +12,10 @@ namespace Chat.Domain.Entities.GroupE
     public class GroupBanUser:BaseEntity
     {
        
-        public string Id { get; set; }
-  
-        public string Group_Id { get; set; }
+        public long Id { get; set; }
+
+        public virtual Group Group { get; set; }
+        public long GroupId { get; set; }
     
         public long UserId { get; set; }
 

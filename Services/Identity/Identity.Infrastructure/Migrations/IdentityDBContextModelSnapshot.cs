@@ -54,6 +54,33 @@ namespace Identity.Infrastructure.Migrations
                     b.ToTable("Confirms");
                 });
 
+            modelBuilder.Entity("Identity.Domain.User.Contact", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<string>("ContactName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("ForUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("WithUserId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ForUserId");
+
+                    b.HasIndex("WithUserId");
+
+                    b.ToTable("Contacts");
+                });
+
             modelBuilder.Entity("Identity.Domain.User.Role", b =>
                 {
                     b.Property<long>("Id")
@@ -87,19 +114,19 @@ namespace Identity.Infrastructure.Migrations
                         new
                         {
                             Id = 1L,
-                            ConcurrencyStamp = "45e5ff47-b921-413f-aef7-0bdc6419993c",
+                            ConcurrencyStamp = "ab1fa88f-9e4e-4b54-a510-a69ed841027d",
                             Name = "Admin"
                         },
                         new
                         {
                             Id = 2L,
-                            ConcurrencyStamp = "237271b8-5d5d-4e18-8a08-72710b8d9987",
+                            ConcurrencyStamp = "f64a3d4c-8632-428c-a1e1-3f2301df8629",
                             Name = "Operator"
                         },
                         new
                         {
                             Id = 3L,
-                            ConcurrencyStamp = "2ba1ddb0-c896-42e3-ae3c-24407f096e1c",
+                            ConcurrencyStamp = "2184006f-f73f-40d6-9be2-4573e43f5eb6",
                             Name = "Customer"
                         });
                 });
@@ -206,6 +233,10 @@ namespace Identity.Infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Path")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -322,10 +353,29 @@ namespace Identity.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Identity.Domain.User.Contact", b =>
+                {
+                    b.HasOne("Identity.Domain.User.User", "ForUser")
+                        .WithMany("MyContacts")
+                        .HasForeignKey("ForUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Identity.Domain.User.User", "WithUser")
+                        .WithMany("ToContacts")
+                        .HasForeignKey("WithUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ForUser");
+
+                    b.Navigation("WithUser");
+                });
+
             modelBuilder.Entity("Identity.Domain.User.UserImages", b =>
                 {
                     b.HasOne("Identity.Domain.User.User", "User")
-                        .WithMany()
+                        .WithMany("UserImages")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -382,6 +432,15 @@ namespace Identity.Infrastructure.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Identity.Domain.User.User", b =>
+                {
+                    b.Navigation("MyContacts");
+
+                    b.Navigation("ToContacts");
+
+                    b.Navigation("UserImages");
                 });
 #pragma warning restore 612, 618
         }

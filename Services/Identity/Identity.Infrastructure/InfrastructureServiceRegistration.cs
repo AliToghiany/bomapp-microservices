@@ -25,6 +25,7 @@ namespace Identity.Infrastructure
 
        
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IContactRepository, ContactRepository>();
 
           
 

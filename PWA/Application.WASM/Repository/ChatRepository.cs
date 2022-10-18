@@ -26,24 +26,25 @@ namespace Application.WASM.Repository
                 using (var db = await this.DbFactory.Create<ChatDb>())
                 {
                 
-                if (message.Group_Id != null)
-                {
-                    if (db.Messages.Where(p=>p.Group_Id==message.Group_Id).Count()==49)
-                    {
-                        db.Messages.Remove(db.Messages.First(p => p.Group_Id == message.Group_Id));
-                    }
+                //if (message.Group_Id != null)
+                //{
+                //    if (db.Messages.Where(p=>p.Group_Id==message.Group_Id).Count()==49)
+                //    {
+                //        db.Messages.Remove(db.Messages.First(p => p.Group_Id == message.Group_Id));
+                //    }
                    
-                }  
-                if (message.PrivateRoom_Id != null)
-                {
-                    if (db.Messages.Where(p=> p.PrivateRoom_Id == message.PrivateRoom_Id).Count()==49)
-                    {
-                        db.Messages.Remove(db.Messages.First(p => p.PrivateRoom_Id == message.PrivateRoom_Id));
-                    }
+                //}  
+                //if (message.PrivateRoom_Id != null)
+                //{
+                //    if (db.Messages.Where(p=> p.PrivateRoom_Id == message.PrivateRoom_Id).Count()==49)
+                //    {
+                //        db.Messages.Remove(db.Messages.First(p => p.PrivateRoom_Id == message.PrivateRoom_Id));
+                //    }
                    
-                } 
+                //} 
                     db.Messages.Add(message);
                     await db.SaveChanges();
+                message.Id = db.Messages.First(p => p.MessageId == message.MessageId).Id;
                 }
                 return message.Id;
           
@@ -83,7 +84,8 @@ namespace Application.WASM.Repository
                 
                 db.MyPrivateRooms.Add(privateRoom);
                     await db.SaveChanges();
-                }
+                privateRoom.Id= db.MyPrivateRooms.First(p => p.WithUserId == privateRoom.WithUserId).Id;
+            }
                 return privateRoom.Id;
         }
         public async Task<long?> CheckPrivateRoom(long withUserId)
@@ -91,6 +93,8 @@ namespace Application.WASM.Repository
             using (var db = await this.DbFactory.Create<ChatDb>())
             {
                 var res = db.MyPrivateRooms.FirstOrDefault(p => p.WithUserId == withUserId);
+                if (res == null)
+                    return null;
                 return res.Id;
             }
         }
@@ -165,39 +169,45 @@ namespace Application.WASM.Repository
                 messageidlcal = await NewMessage(messagelocal);
                 messagelocal.Id = messageidlcal;
             }
-
+          
             return messagelocal;
         }
 
         public async Task<List<RecentChat>> GetRecentChat()
         {
             List<RecentChat> recentChats = new List<RecentChat>();
-            using (var db = await this.DbFactory.Create<ChatDb>())
+            var db = await this.DbFactory.Create<ChatDb>();
+            var groups = db.Groups.AsEnumerable();
+            var privateRooms = db.MyPrivateRooms.AsEnumerable();
+            foreach (var privateRoom in privateRooms)
+                {
+               
+                var lastMessage = db.Messages.LastOrDefault(p => p.PrivateRoom_Id == privateRoom.Id);
+                if (lastMessage == null)
+                    continue;
+                recentChats.Add(new RecentChat
+                {
+
+                    Message = lastMessage,
+                    MyPrivateRoom = privateRoom,
+
+                });
+ 
+                }
+            foreach (var group in groups)
             {
-                var groups = db.Groups;
-                var privateRooms = db.MyPrivateRooms;
-                foreach (var group in groups)
+               
+                var lastMessage = db.Messages.LastOrDefault(p => p.Group_Id == group.GroupId);
+                if (lastMessage == null)
+                    continue;
+                recentChats.Add(new RecentChat
                 {
-                    var lastMessage = db.Messages.LastOrDefault(p => p.Group_Id == group.GroupId);
-                    recentChats.Add(new RecentChat
-                    {
-                        Group = group,
-                        Message = lastMessage,
+                    Group = group,
+                    Message = lastMessage,
 
-                    });
-                }
-                foreach (var privateRoom in privateRooms)
-                {
-                    var lastMessage = db.Messages.LastOrDefault(p => p.PrivateRoom_Id==privateRoom.Id);
-                    recentChats.Add(new RecentChat
-                    {
-                      
-                        Message = lastMessage,
-                        MyPrivateRoom = privateRoom,
-
-                    });
-                }
+                });
             }
+
             return recentChats.OrderBy(p => p.Message.CreatedDate).ToList();
         }
 

@@ -11,6 +11,7 @@ using Chat.API.Hubs;
 using Microsoft.AspNetCore.Builder;
 using Chat.API.Respositories.Interface;
 using Chat.API.Respositories;
+using Chat.Application.Contracts.EndPoint;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -26,6 +27,7 @@ builder.Services.AddApplicationServices();
 builder.Services.AddScoped<HubDbContext>(p => new HubDbContext(builder.Configuration));
 builder.Services.AddSignalR();
 builder.Services.AddScoped<IHubRepository, HubRepository>();
+builder.Services.AddScoped<IReciveHub, ReciveHub>();
 builder.Services.AddScoped<ReciveHub>();
 
 builder.Services.AddAuthentication(options =>
@@ -90,5 +92,5 @@ app.UseCors(x => x
           .AllowCredentials());
 app.MapHub<ReciveHub>("reciveHub");
 app.MapControllers();
-
+app.UseStaticFiles();
 app.Run();

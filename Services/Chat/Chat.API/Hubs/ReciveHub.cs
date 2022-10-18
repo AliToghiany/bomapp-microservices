@@ -1,7 +1,10 @@
 ﻿using Chat.API.Entities.Recives;
 using Chat.API.Respositories.Interface;
+using Chat.Application.Contracts.EndPoint;
+using Chat.Application.Contracts.Persisence;
 using Chat.Application.Feature.Messages.Queries.GetMessage;
 using Chat.Application.Feature.Messages.Queries.GetRecentMessage;
+using Chat.Domain.Entities.MessageE;
 using Common.Services.Utilities;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -11,7 +14,7 @@ using Newtonsoft.Json;
 namespace Chat.API.Hubs
 {
     [Authorize]
-    public class ReciveHub : Microsoft.AspNetCore.SignalR.Hub
+    public class ReciveHub : Microsoft.AspNetCore.SignalR.Hub,IReciveHub
     {
         private readonly IHubRepository _hubRepositorycs;
         private readonly IMediator _mediator;
@@ -27,25 +30,25 @@ namespace Chat.API.Hubs
             //online
             var userid = UserIdentity.GetID(Context.User);
             var roleid = UserIdentity.GetIRole(Context.User);
+            var clientId = Context.GetHttpContext().Request.Query["ClientId"];
             await _hubRepositorycs.AddConnection(new Connection
             {
                 Connected = true,
                 ConnectionID = Context.ConnectionId,
                 UserAgent = "",
                 User_Id = userid,
-                ClientId= Context.GetHttpContext().Request.Headers["clientId"]
+                ClientId= clientId
             });
-            var s = Context.GetHttpContext().Request.Headers.ToList();
-            var x = Context.GetHttpContext().Request.Query.ToList();
-            if (Context.GetHttpContext().Request.Headers["app-search"] == "true")
+          
+            if (Context.GetHttpContext().Request.Query["app-search"] == "true")
             {
                 var res = await _mediator.Send(new GetRecentMessageQuery(userid));
                 foreach (var item in res)
                 {
-                    await Clients.Caller.SendAsync("ReciveMessage", item);
+                    await Clients.Caller.SendAsync("ReciveMessage",JsonConvert.SerializeObject(item));
                 }
             }
-            foreach (var item in await _hubRepositorycs.GetMessagesQueue(userid, Context.GetHttpContext().Request.Headers["clientId"]))
+            foreach (var item in await _hubRepositorycs.GetMessagesQueue(userid, clientId))
             {
                
 
@@ -59,6 +62,9 @@ namespace Chat.API.Hubs
                         break;
                     case "EditMessage":
                         await Clients.Caller.SendAsync("EditMessage", item.DataNessage);
+                        break; 
+                    case "NewGroup":
+                        await Clients.Caller.SendAsync("NewGroup", item.DataNessage);
                         break;
                     default:
                         break;
@@ -74,5 +80,22 @@ namespace Chat.API.Hubs
             await _hubRepositorycs.DisableConnection(Context.ConnectionId);
             await base.OnDisconnectedAsync(exception);
         }
+
+        public async Task SendMessageNewGroup(long groupId, List<long> subescribesId, long cretedBy)
+        {
+            var cgn= JsonConvert.SerializeObject(new CreatedGroupNotif { CreatedBy = cretedBy, GroupId = groupId });
+         
+            var res = await _hubRepositorycs.GetConnectionOrAddQueue(subescribesId, JsonConvert.SerializeObject(cgn), "NewGroup");
+            foreach (var item in res)
+            {
+                await Clients.Client(item).SendAsync("NewGroup", cgn);
+            }
+        }
+        
+    }
+    class CreatedGroupNotif
+    {
+       public long GroupId { get; set; }
+       public long CreatedBy { get; set; }
     }
 }

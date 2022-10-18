@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Chat.Application.Feature.Groups.Queries.GetGroup
 {
-    public record GetGroupQuery(string GroupId) : IRequest<GroupResponse> { }
+    public record GetGroupQuery(long GroupId) : IRequest<GroupResponse> { }
 
     public class GetGroupQuesryHandler : IRequestHandler<GetGroupQuery, GroupResponse>
     {

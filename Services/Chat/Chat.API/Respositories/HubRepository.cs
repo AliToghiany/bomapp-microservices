@@ -63,10 +63,10 @@ namespace Chat.API.Respositories
             return messages;
         }
 
-        public async Task<List<string>> GetConnectionOrAddQueue(List<long> userId, ResponseMessage message)
+        public async Task<List<string>> GetConnectionOrAddQueue(List<long> userId, string dataMessage,string state)
         {
-            var datajson= JsonConvert.SerializeObject(message);
-            MessageQueue messageQueue = new MessageQueue { DataNessage = datajson, Satate = "NewMessage" };
+           
+            MessageQueue messageQueue = new MessageQueue { DataNessage = dataMessage, Satate = state };
             await  _dbContext.MessageQueues.InsertOneAsync(messageQueue);
             List<MessageQueueDetail> messageListUser = new List<MessageQueueDetail>();
             List<string> connectionsid = new List<string>();
@@ -78,8 +78,8 @@ namespace Chat.API.Respositories
                 {
                     User_Id = item,
                     MessageQueueId = messageQueue.Id,
-                    AsGroupId=message.Group_Id,
-                    AsUserId=message.ToUser_Id
+                    //AsGroupId=message.Group_Id,
+                    //AsUserId=message.ToUser_Id
 
                 };
                 foreach (var connectionUser in res)

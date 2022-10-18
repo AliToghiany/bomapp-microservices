@@ -24,31 +24,32 @@ namespace Identity.Api.Controllers
         [HttpPost]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task< ActionResult<Guid>> SendCode([FromBody]string phone)
+        public async Task<ActionResult<ResponseSendCode>> SendCode([FromBody] ConfirmUserCommand confirmUserCommand)
         {
-            var res = await _mediator.Send(new ConfirmUserCommand {Phone=phone,IP="192.168.42.27" });
-            return Ok(res);
+            confirmUserCommand.IP = "226.125.3.1";
+            var res = await _mediator.Send(confirmUserCommand);
+            return Ok(new ResponseSendCode { Code=res});
             
 
+        }
+        public class ResponseSendCode
+        {
+            public Guid Code { get; set; }
         }
         [Route("[action]")]
         [HttpPost]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task< ActionResult<SignUserResponse>> ConfirmCode([FromBody] RequestConfirmCode requestConfirmCode)
+        public async Task< ActionResult<SignUserResponse>> ConfirmCode([FromBody] SignUserCommand signUserCommand)
         {
-            var res = await _mediator.Send(new SignUserCommand() { Code = requestConfirmCode.Code, ConfirmId = requestConfirmCode.Id });
-          ;
+            var res = await _mediator.Send(signUserCommand);
             res.Token = _tokenService.BuildToken(res.UserId);
             return Ok(res);
 
 
 
         }
-        public class RequestConfirmCode
-        {
-            public Guid Id { get; set; }
-            public string Code { get; set; }
-        }
+      
+        
     }
 }

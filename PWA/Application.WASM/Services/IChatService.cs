@@ -7,6 +7,8 @@ namespace Application.WASM.Services
     public interface IChatService
     {
         public Task<GroupResponse> GetGroupById(string groupId);
+        public Task<GroupResponse> NewGroup(CreateGroupRequest createGroupRequest);
+        public Task<string> UploadImageGroup(MultipartFormDataContent content);
     }
     public class ChatService : IChatService
     {
@@ -23,6 +25,17 @@ namespace Application.WASM.Services
             return await res.ReadContentAs<GroupResponse>();
 
 
+        }
+
+        public Task<GroupResponse> NewGroup(CreateGroupRequest createGroupRequest)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<string> UploadImageGroup(MultipartFormDataContent content)
+        {
+            var res = await _httpClient.PostAsync("/Group/UploadImageGroup", content);
+            return await res.Content.ReadAsStringAsync();
         }
     }
 }

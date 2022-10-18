@@ -17,5 +17,9 @@ namespace Identity.Domain.User
         public string? LastName { get; set; }
         public string? Description { get; set; }
         public virtual List<UserImages> UserImages { get; set; }
+       public virtual List<Contact> MyContacts { get; set; }
+       public virtual List<Contact> ToContacts { get; set; }
+
+
     }
 }

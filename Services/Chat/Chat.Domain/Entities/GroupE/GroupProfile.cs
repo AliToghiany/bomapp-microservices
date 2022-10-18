@@ -12,12 +12,13 @@ namespace Chat.Domain.Entities.GroupE
     public class GroupProfile
     {
         [Key]
-        public string Id { get; set; }
+        public long Id { get; set; }
       
         public string Path { get; set; }
    
         public string Name { get; set; }
 
-        public string GroupeId { get; set; }
+        public long GroupId { get; set; }
+        public virtual Group Group { get; set; }
     }
 }

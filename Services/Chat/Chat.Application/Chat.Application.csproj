@@ -6,8 +6,6 @@
 
   <ItemGroup>
     <Folder Include="Contracts\Infrastructure\" />
-    <Folder Include="Feature\Groups\Commands\" />
-    <Folder Include="Feature\Messages\Commands\EditMessage\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -15,8 +13,6 @@
     <PackageReference Include="FluentValidation" Version="11.1.0" />
     <PackageReference Include="MediatR" Version="10.0.1" />
     <PackageReference Include="MediatR.Contracts" Version="1.0.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="2.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.17" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.1" />
 	  <PackageReference Include="FluentValidation" Version="11.1.0" />
 	  <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.1.0" />

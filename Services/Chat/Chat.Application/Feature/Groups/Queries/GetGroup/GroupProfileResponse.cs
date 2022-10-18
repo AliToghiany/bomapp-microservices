@@ -7,6 +7,6 @@
 
         public string Name { get; set; }
 
-        public long Groupe_Id { get; set; }
+        public long GroupeId { get; set; }
     }
 }

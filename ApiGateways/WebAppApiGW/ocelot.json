@@ -61,7 +61,7 @@
       "UpstreamHttpMethod": [ "Post" ]
     },
     {
-      "DownstreamPathTemplate": "/api/Group/",
+      "DownstreamPathTemplate": "/api/Group/GetGroup/{groupId}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -69,8 +69,44 @@
           "Port": 44374
         }
       ],
-      "UpstreamPathTemplate": "/Group/GetGroup",
+      "UpstreamPathTemplate": "/Group/GetGroup/{groupId}",
       "UpstreamHttpMethod": [ "Get" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Group/GetGroups/{searchkey}/{size}/{pagesize}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44374
+        }
+      ],
+      "UpstreamPathTemplate": "/Group/GetGroups/{searchkey}/{size}/{pagesize}",
+      "UpstreamHttpMethod": [ "Get" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Group/NewGroup",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44374
+        }
+      ],
+      "UpstreamPathTemplate": "/Group/NewGroup",
+      "UpstreamHttpMethod": [ "Post" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Group/UploadImageGroup",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44374
+        }
+      ],
+      "UpstreamPathTemplate": "/Group/UploadImageGroup",
+      "UpstreamHttpMethod": [ "Post" ]
     },
     {
       "DownstreamPathTemplate": "/Api/User/GetUserById",

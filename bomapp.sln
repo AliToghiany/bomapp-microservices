@@ -33,8 +33,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chat.Application", "Service
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chat.Domain", "Services\Chat\Chat.Domain\Chat.Domain.csproj", "{2B936EA1-15D9-43EC-86B9-BBEABF309988}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chat.Infrastructure", "Services\Chat\Chat.Interface\Chat.Infrastructure.csproj", "{71B38975-8DC3-496F-A188-1E45F6307806}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Identity.Api", "Services\Identity\Identity.Api\Identity.Api.csproj", "{4C223F1D-9FCA-4461-AD25-0318CC534D8C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Basket.Api", "Services\Product\Basket\Basket.Api\Basket.Api.csproj", "{17E60F7E-A39A-4461-B517-904546543AA7}"
@@ -60,11 +58,15 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.Services", "BuildingBlocks\Common.Services\Common.Services.csproj", "{12F96396-5F17-4F72-9391-394EAFD73C66}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PWA", "PWA", "{11F7C98D-8C0E-4081-BD3F-2F7428055193}"
+	ProjectSection(SolutionItems) = preProject
+		ReadMe.txt = ReadMe.txt
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3F23A09A-034D-400D-8664-D27BC9B3A5BB}"
 	ProjectSection(SolutionItems) = preProject
 		floatingbtn.css = floatingbtn.css
 		C:\Users\hassan\AppData\Local\Temp\Rar$DRa17816.33269\Sidebar Menu - Dark Light Mode\index.html = C:\Users\hassan\AppData\Local\Temp\Rar$DRa17816.33269\Sidebar Menu - Dark Light Mode\index.html
+		jh.html = jh.html
 		C:\Users\hassan\AppData\Local\Temp\Rar$DRa17816.33269\Sidebar Menu - Dark Light Mode\logo.png = C:\Users\hassan\AppData\Local\Temp\Rar$DRa17816.33269\Sidebar Menu - Dark Light Mode\logo.png
 		C:\Users\hassan\AppData\Local\Temp\Rar$DRa17816.33269\Sidebar Menu - Dark Light Mode\script.js = C:\Users\hassan\AppData\Local\Temp\Rar$DRa17816.33269\Sidebar Menu - Dark Light Mode\script.js
 		C:\Users\hassan\AppData\Local\Temp\Rar$DRa17816.33269\Sidebar Menu - Dark Light Mode\style.css = C:\Users\hassan\AppData\Local\Temp\Rar$DRa17816.33269\Sidebar Menu - Dark Light Mode\style.css
@@ -75,6 +77,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application.WASM", "PWA\Application.WASM\Application.WASM.csproj", "{5AA72BC5-9367-41C1-924B-C9FB2254727E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.Logging", "Common.Logging\Common.Logging.csproj", "{C3B020EA-1783-4C4B-8D2B-388E583127A0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chat.Infrastructure", "Services\Chat\Chat.Infrastructure\Chat.Infrastructure.csproj", "{B76854F3-D7A2-4181-BF8B-FAAAF5F2E3B8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FlutterEndPoint", "FlutterEndPoint", "{02062034-638F-4B78-A276-7E905EFD8807}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -102,10 +108,6 @@ Global
 		{2B936EA1-15D9-43EC-86B9-BBEABF309988}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2B936EA1-15D9-43EC-86B9-BBEABF309988}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2B936EA1-15D9-43EC-86B9-BBEABF309988}.Release|Any CPU.Build.0 = Release|Any CPU
-		{71B38975-8DC3-496F-A188-1E45F6307806}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{71B38975-8DC3-496F-A188-1E45F6307806}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{71B38975-8DC3-496F-A188-1E45F6307806}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{71B38975-8DC3-496F-A188-1E45F6307806}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4C223F1D-9FCA-4461-AD25-0318CC534D8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4C223F1D-9FCA-4461-AD25-0318CC534D8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4C223F1D-9FCA-4461-AD25-0318CC534D8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -166,6 +168,10 @@ Global
 		{C3B020EA-1783-4C4B-8D2B-388E583127A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C3B020EA-1783-4C4B-8D2B-388E583127A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C3B020EA-1783-4C4B-8D2B-388E583127A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B76854F3-D7A2-4181-BF8B-FAAAF5F2E3B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B76854F3-D7A2-4181-BF8B-FAAAF5F2E3B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B76854F3-D7A2-4181-BF8B-FAAAF5F2E3B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B76854F3-D7A2-4181-BF8B-FAAAF5F2E3B8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -182,7 +188,6 @@ Global
 		{D6A2AA48-F2E6-497E-B4F7-6231E32F9894} = {D3878518-0A35-41B8-986F-97E54B5A82F4}
 		{9BE69EF4-35BE-4102-9176-12E3FE4911FE} = {D3878518-0A35-41B8-986F-97E54B5A82F4}
 		{2B936EA1-15D9-43EC-86B9-BBEABF309988} = {D3878518-0A35-41B8-986F-97E54B5A82F4}
-		{71B38975-8DC3-496F-A188-1E45F6307806} = {D3878518-0A35-41B8-986F-97E54B5A82F4}
 		{4C223F1D-9FCA-4461-AD25-0318CC534D8C} = {D3D76C7C-100C-4D9E-8925-124DC050341A}
 		{17E60F7E-A39A-4461-B517-904546543AA7} = {7AAA21E3-BDBA-456E-A3E2-10E1CCCD4792}
 		{537C56EC-3C81-4658-8DA4-0160DFAF69C0} = {DB8C586C-FBF7-4F02-9237-ED29B519B4BD}
@@ -198,6 +203,7 @@ Global
 		{C6B828D7-9044-4A16-A414-0CFB884FA7BD} = {265BD1AA-7A33-48BF-93E6-2B9ECE346B01}
 		{5AA72BC5-9367-41C1-924B-C9FB2254727E} = {11F7C98D-8C0E-4081-BD3F-2F7428055193}
 		{C3B020EA-1783-4C4B-8D2B-388E583127A0} = {B290C4F3-E171-497F-9F97-8403CBFD9EA4}
+		{B76854F3-D7A2-4181-BF8B-FAAAF5F2E3B8} = {D3878518-0A35-41B8-986F-97E54B5A82F4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {31979013-196E-4C95-8C36-C348A8A59F32}

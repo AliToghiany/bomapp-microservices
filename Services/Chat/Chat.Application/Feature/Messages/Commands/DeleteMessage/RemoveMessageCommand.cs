@@ -9,7 +9,7 @@ namespace Chat.Application.Feature.Messages.Commands.DeleteMessage
 {
     public class RemoveMessageCommand:IRequest<bool>
     {
-        public long User_Id { get; set; }
-        public string Message_Id { get; set; }
+        public long UserId { get; set; }
+        public long MessageId { get; set; }
     }
 }

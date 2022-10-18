@@ -10,7 +10,7 @@ using Polly;
 using Polly.Extensions.Http;
 using Serilog;
 using System;
-
+using Tewr.Blazor.FileReader;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
@@ -22,7 +22,7 @@ builder.Services.AddHttpClient<IChatService, ChatService>(c =>
     c.BaseAddress = new Uri(builder.Configuration["ApiSettings:GatewayAddress"]));
 builder.Services.AddScoped<HubConnect>();
 builder.Services.AddScoped<IChatRepository, ChatRepository>();
-
+builder.Services.AddFileReaderService(o => o.UseWasmSharedBuffer = true);
 //.AddHttpMessageHandler<LoggingDelegatingHandler>()
 //.AddPolicyHandler(GetRetryPolicy())
 //.AddPolicyHandler(GetCircuitBreakerPolicy());

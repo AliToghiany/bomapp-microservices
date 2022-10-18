@@ -180,6 +180,11 @@ html {
             color: var(--input-chat-color);
         }
 
+
+    .search-bar-two input::placeholder {
+        color: var(--input-chat-color);
+    }
+
 .logo {
     color: var(--theme-color);
     width: 38px;

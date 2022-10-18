@@ -13,11 +13,17 @@ namespace Chat.Domain.Entities.GroupE
     public class Join:BaseEntity
     {
         [Key]
-        public string Id { get; set; }
+        public long Id { get; set; }
 
-        public string GroupId { get; set; }
+        public long GroupId { get; set; }
 
         public long UserId { get; set; }
+        public virtual Group Group { get; set; }
+        public RoleOfJoin RoleOfJoinSetting { get; set; }
+        public bool SendMessage { get; set; }
+        public bool SendMedia { get; set; }
+        public bool SendSticker { get; set; }
+        public bool SendGif { get; set; }
 
     }
 }

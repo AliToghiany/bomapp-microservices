@@ -11,9 +11,9 @@ namespace Chat.Application.Contracts.Persisence
     {
         Task<Message> AddNewMessage(Message message);
         Task AddNewFiles(List<File> files);
-        Task<bool> ChckMessageForUser(long userId,string messageid);
-        Task<Message> GetMessage(string messageid);
-        Task<bool> RemoveMessage(string messageid);
+        
+        Task<Message> GetMessage(long messageid);
+        Task<bool> UpdateMessage(Message message);
 
         Task<List<long>> GetAllPrivateRoom(long userId);
         Task<List<Message>> GetGroupMessage(long userId);

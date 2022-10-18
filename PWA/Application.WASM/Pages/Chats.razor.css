@@ -31,10 +31,10 @@
 }
 
 .search-bar {
-    height: 80px;
+    height: 60px;
     z-index: 3;
     position: relative;
-    margin-left: 280px;
+
 }
 
     .search-bar input {
@@ -198,6 +198,7 @@
         content: "•";
         margin-right: 2px;
     }
+    
 
 .add {
     position: sticky;

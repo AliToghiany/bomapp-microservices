@@ -36,10 +36,10 @@ namespace Catalog.Api.Controllers
             return Ok(product);
 
         }
-        [Route("[action]/{ordering}/{SearchKey}/{catid}/{pagesize}/{page}", Name = "GetGames")]
+        [Route("[action]", Name = "GetGames")]
         [HttpGet]
         [ProducesResponseType(typeof(ProductListResult), (int)HttpStatusCode.OK)]
-        public ActionResult<ProductListResult> GetGames(Ordering ordering, string SearchKey, long? catid, int pagesize = 20, int page = 1)
+        public ActionResult<ProductListResult> GetGames([FromQuery] Ordering ordering, [FromQuery] string SearchKey, [FromQuery] long? catid, [FromQuery] int pagesize = 20, [FromQuery] int page = 1)
         {
             return Ok(_productRepository.GetGames(ordering, SearchKey, pagesize, page, catid));
         }

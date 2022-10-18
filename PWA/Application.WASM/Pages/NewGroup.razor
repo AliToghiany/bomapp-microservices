@@ -1,0 +1,199 @@
+﻿@using Application.WASM.Model
+@using System.Net.Http.Headers
+@using Application.WASM.Models
+@using Tewr.Blazor.FileReader
+@inject IChatService _chatSerivce;
+<div class="modal" style="display:@DispalyType;">
+    <div class="modal-content" style="height:700px;background-color:transparent;">
+        <span class="close" @onclick="CloseModal">&times;</span>
+
+        <div class="modal-body">
+<div id='settings' ontouchstart >
+  <input checked class='nav' name='nav' type='radio'>
+  <span class='nav'>Profile</span>
+  <input class='nav' name='nav' type='radio'>
+  <span class='nav'>Account</span>
+  <input class='nav' name='nav' type='radio'>
+  <span class='nav'>Privacy</span>
+  <input class='nav' name='nav' type='radio'>
+  <span class='nav'>Advanced</span>
+  <main class='content'>
+    <section id='profile'>
+      <form>
+        <ul>
+          <li class='large padding avatar'>
+              @if (CreateGroupRequest.ImageGroupUrl!=null)
+              {
+              <span style="background-image: url('@CreateGroupRequest.ImageGroupUrl');    border-radius: 50%;"></span>
+              }
+             else{
+                  <span style="background-color:var(--theme-color);    border-radius: 50%;"></span>
+             }
+         
+            <div>
+              
+              <fieldset class='material-button'>
+                <div>
+       <UploadImageGroup OnChange="UploadImage"/>
+                </div>
+              </fieldset>
+            </div>
+          </li>
+          <li>
+            <fieldset class='material'>
+              <div>
+                <input type='text' @bind-value="CreateGroupRequest.Name"/>
+                <label>Group Name</label>
+                <hr>
+              </div>
+            </fieldset>
+          </li>
+         
+         
+          <li class='large'>
+            <fieldset class='material'>
+              <div>
+                <input  type='text' @bind-value="CreateGroupRequest.Description" >
+                <label>About</label>
+                <hr>
+              </div>
+            </fieldset>
+          </li>
+          <li class='large padding'>
+            <fieldset class='material-button center'>
+              <div>
+                <input class='save' @onclick="async()=>await CreatGroup()" value='Create'>
+              </div>
+            </fieldset>
+          </li>
+        </ul>
+      </form>
+    </section>
+    <section id='account'>
+      <form>
+        <ul>
+          <li>
+            <fieldset class='material'>
+              <div>
+                <input required type='text' value='email@domain.com'>
+                <label>Email</label>
+                <hr>
+              </div>
+            </fieldset>
+          </li>
+          <li>
+            <fieldset class='material'>
+              <div>
+                <input required type='text'>
+                <label>Username</label>
+                <hr>
+              </div>
+            </fieldset>
+          </li>
+          <li>
+            <fieldset class='material'>
+              <div>
+                <input required type='password'>
+                <label>Password</label>
+                <hr>
+              </div>
+            </fieldset>
+          </li>
+          <li>
+            <fieldset class='material'>
+              <div>
+                <input required type='password'>
+                <label>Confirm Password</label>
+                <hr>
+              </div>
+            </fieldset>
+          </li>
+          <li class='padding'>
+            <fieldset class='material-button'>
+              <div>
+                <button class='connect gh connected'>
+                  <span>Unlink Github Account</span>
+                </button>
+              </div>
+            </fieldset>
+          </li>
+          <li class='padding'>
+            <fieldset class='material-button'>
+              <div>
+                <button class='connect tw'>
+                  <span>Link Twitter Account</span>
+                </button>
+              </div>
+            </fieldset>
+          </li>
+          <li class='padding'>
+            <fieldset class='material-button'>
+              <div>
+                <button class='connect fb'>
+                  <span>Link Facebook Account</span>
+                </button>
+              </div>
+            </fieldset>
+          </li>
+          <li class='padding'>
+            <fieldset class='material-button'>
+              <div>
+                <button class='connect li'>
+                  <span>Link LinkedIn Account</span>
+                </button>
+              </div>
+            </fieldset>
+          </li>
+          <li class='large padding'>
+            <fieldset class='material-button center'>
+              <div>
+                <input class='save' type='submit' value='Save'>
+              </div>
+            </fieldset>
+          </li>
+        </ul>
+      </form>
+    </section>
+    <section class='upcoming' id='privacy'>
+      <h1>Coming&nbsp;soon!</h1>
+    </section>
+    <section class='upcoming' id='advanced'>
+      <h1>Coming&nbsp;soon!</h1>
+    </section>
+  </main>
+</div>
+</div/>
+</div>
+</div>
+
+@code {
+    CreateGroupRequest CreateGroupRequest { get; set; } = new CreateGroupRequest();
+    void UploadImage(string arg){
+        CreateGroupRequest.ImageGroupUrl = arg;
+    }
+    string DispalyType = "none";
+
+    public void OpenNewGroupModal()
+    {
+        DispalyType = "block";
+        StateHasChanged();
+
+    }
+    void CloseModal()
+    {
+        DispalyType = "none";
+        StateHasChanged();
+    }
+    async Task CreatGroup(){
+        var res = await _chatSerivce.NewGroup(CreateGroupRequest);
+        if (res!=null)
+        {
+            this.CloseModal();
+            //show message
+        }
+        //add to db
+    }
+   
+
+   
+}

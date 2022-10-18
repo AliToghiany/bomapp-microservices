@@ -18,5 +18,6 @@ namespace Application.WASM.Models
         public string Sticker_Id { get; set; }
         public string Gif_Id { get; set; }
         public List<FileDto> Files { get; set; }
+       
     }
 }

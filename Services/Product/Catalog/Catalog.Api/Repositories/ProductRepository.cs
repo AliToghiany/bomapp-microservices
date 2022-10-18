@@ -143,13 +143,11 @@ namespace Catalog.Api.Repositories
             var products = productquery.ToPaged(Page, PageSize, out totalRow).Select(p=>new GamesResponse
             {
                 Name = p.Name,
-      
                 CategoryName=p.Category.Name,
-               
                 Price=p.Price,
                 CategoryId=p.CategoryId,
-                Voet=(p.Votes.Sum(t=>t.Voet))/p.Votes.Count,
-
+                Voet=p.Votes.Count>0? (p.Votes.Sum(t=>t.Voet))/p.Votes.Count:0,
+                Image=p.Images.FirstOrDefault().ImagePath
                
 
             }).ToList();

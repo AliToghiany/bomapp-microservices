@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Chat.Application.Feature.Groups.Queries.GetGroupMember
 {
-    public record GetGroupMemberQuery(string GroupId) : IRequest<List<long>> { }
+    public record GetGroupMemberQuery(long GroupId) : IRequest<List<long>> { }
     public class GetGroupMemberQueryHandler : IRequestHandler<GetGroupMemberQuery, List<long>>
     {
         private readonly IGroupRepository _groupRepository;

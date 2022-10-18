@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Chat.Application.Feature.Groups.Commands.NewGroup;
 using Chat.Application.Feature.Groups.Queries.GetGroup;
 using Chat.Application.Feature.Messages.Commands;
 using Chat.Application.Feature.Messages.Commands.CreateMessage;
@@ -22,6 +23,7 @@ namespace Chat.Application.Profiler
             CreateMap<GroupProfile, GroupProfileResponse>().ReverseMap();
             CreateMap<Message, ResponseMessage>().ReverseMap();
             CreateMap<File, FileDto>().ReverseMap();
+            CreateMap<Group, NewGroupCommand>().ReverseMap();
         }
     }
 }

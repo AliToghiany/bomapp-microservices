@@ -4,8 +4,6 @@ using Chat.Domain.Entities.GroupE;
 using Chat.Domain.Entities.MessageE;
 using Common.Services.Exceptions;
 using MediatR;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -18,22 +16,21 @@ using File = Chat.Domain.Entities.MessageE.File;
 
 namespace Chat.Application.Feature.Messages.Commands.CreateMessage
 {
-    public class CreateNewMessageCommandHandler : IRequestHandler<CreateNewMessageCommand, string>
+    public class CreateNewMessageCommandHandler : IRequestHandler<CreateNewMessageCommand, long>
     {
         private readonly IMessageRepository _messageRepository;
         private readonly IGroupRepository _groupRepository;
-
         private readonly IMapper _mapper;
-        private readonly IHostingEnvironment _environment;
 
-        public CreateNewMessageCommandHandler(IMapper Mapper, IMessageRepository messageRepository, IGroupRepository groupRepository, IHostingEnvironment environment)
+
+        public CreateNewMessageCommandHandler(IMapper Mapper, IMessageRepository messageRepository, IGroupRepository groupRepository)
         {
             _messageRepository = messageRepository ?? throw new ArgumentNullException(nameof(messageRepository));
             _mapper = Mapper ?? throw new ArgumentNullException(nameof(Mapper));
-            _environment = environment ?? throw new ArgumentNullException(nameof(environment));
+           
             _groupRepository = groupRepository ?? throw new ArgumentNullException(nameof(groupRepository));
         }
-        public async Task<string> Handle(CreateNewMessageCommand request, CancellationToken cancellationToken)
+        public async Task<long> Handle(CreateNewMessageCommand request, CancellationToken cancellationToken)
         {
             var group = await _groupRepository.GetGroupById(request.Group_Id);
             if (group == null)
@@ -54,7 +51,7 @@ namespace Chat.Application.Feature.Messages.Commands.CreateMessage
                 files.Add(new File
                 {
                     MessageId = result.Id,
-                    Path = UploadFile(item).FileNameAddress,
+                    Path = item,
 
                 });
             }
@@ -62,52 +59,9 @@ namespace Chat.Application.Feature.Messages.Commands.CreateMessage
             return result.Id;
 
         }
-        private UploadDto UploadFile(IFormFile file)
-        {
-            if (file != null)
-            {
-                string folder = $@"File\Chat\";
-                var uploadsRootFolder = Path.Combine(_environment.WebRootPath, folder);
-                if (!Directory.Exists(uploadsRootFolder))
-                {
-                    Directory.CreateDirectory(uploadsRootFolder);
-                }
 
 
-                if (file == null || file.Length == 0)
-                {
-                    return new UploadDto()
-                    {
-                        Status = false,
-                        FileNameAddress = "",
-                    };
-                }
 
-                string fileName = Guid.NewGuid().ToString();
-                var filePath = Path.Combine(uploadsRootFolder, fileName);
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    file.CopyTo(fileStream);
-                }
-
-                return new UploadDto()
-                {
-                    FileNameAddress = folder + fileName,
-                    Status = true,
-                };
-            }
-            return null;
-        }
     }
-
-
-
-    public class UploadDto
-    {
-        public long Id { get; set; }
-        public bool Status { get; set; }
-        public string FileNameAddress { get; set; }
-    }
-
 }
 

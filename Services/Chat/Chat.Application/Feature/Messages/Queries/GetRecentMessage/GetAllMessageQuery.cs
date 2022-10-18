@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Chat.Application.Contracts.Persisence;
+using Chat.Application.Feature.Groups.Queries.GetGroup;
 using Chat.Application.Feature.Messages.Queries.GetMessage;
 using Chat.Domain.Entities.MessageE;
 using MediatR;
@@ -32,13 +33,19 @@ namespace Chat.Application.Feature.Messages.Queries.GetRecentMessage
         {
             List<Message> messages = new List<Message>();
             messages.AddRange(await _messageRepository
+               .GetPrivateRoomMessage(request.UserId));
+            messages.AddRange(await _messageRepository
                 .GetGroupMessage(request.UserId));
-            messages.AddRange( await _messageRepository
-                .GetPrivateRoomMessage(request.UserId));
-            return messages
-                .Select(p=>_mapper.Map<ResponseMessage>(p))
-                .OrderBy(p=>p.CreatedDate)
-                .ToList();
+            List<ResponseMessage> result = new List<ResponseMessage>();
+            foreach (var message in messages)
+            {
+                var responsemessage = _mapper.Map<ResponseMessage>(message);
+                responsemessage.Files = message.Files.Select(p => _mapper.Map<FileDto>(p)).ToList();
+                result.Add(responsemessage);
+                
+            }
+            return result;
+
          
       
 

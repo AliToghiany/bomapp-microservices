@@ -1,4 +1,5 @@
 ﻿using Common.Services.Utilities;
+using Identity.Application.Feature.Users.Command.BlockUser;
 using Identity.Application.Feature.Users.Command.EditUser;
 using Identity.Application.Feature.Users.Queries.GetUser;
 using MediatR;
@@ -21,11 +22,11 @@ namespace Identity.Api.Controllers
         }
         [HttpPost]
         [Authorize]
-        [ProducesResponseType( (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> UpdateUser([FromBody]EditUserCommand editUserCommand)
+        public async Task<IActionResult> UpdateUser([FromBody] EditUserCommand editUserCommand)
         {
             editUserCommand.Id = UserIdentity.GetID(HttpContext.User);
             await _mediator.Send(editUserCommand);
@@ -45,5 +46,29 @@ namespace Identity.Api.Controllers
             return Ok(res);
 
         }
+        [HttpPost]
+        [ProducesResponseType(typeof(bool), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        [Authorize]
+        public async Task<ActionResult<bool>> BlockUser([FromBody]BlockUserCommand blockUserCommand)
+        { 
+            //blockUserCommand.UserId=
+          return await _mediator.Send(blockUserCommand);
+        }
+        //[HttpGet]
+        //[ProducesResponseType(typeof(List<ResponseUser>), (int)HttpStatusCode.OK)]
+        //[ProducesResponseType((int)HttpStatusCode.NotFound)]
+        //[ProducesResponseType((int)HttpStatusCode.Unauthorized)]
+        //[ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        //[Authorize]
+        //[HttpGet("{userId}", Name = "GetUserById")]
+        //public async Task<ActionResult<List<ResponseUser>>> GetUsers(string searchKey,int take)
+        //{
+        //    var res = await _mediator.Send(new GetUserByIdQuery(userId));
+        //    return Ok(res);
+
+        //}
     }
 }

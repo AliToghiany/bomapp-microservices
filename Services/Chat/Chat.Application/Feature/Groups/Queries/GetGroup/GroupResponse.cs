@@ -4,7 +4,7 @@ namespace Chat.Application.Feature.Groups.Queries.GetGroup
 {
     public class GroupResponse
     {
-        public string Id { get; set; }
+        public long Id { get; set; }
 
         public string Name { get; set; }
 
