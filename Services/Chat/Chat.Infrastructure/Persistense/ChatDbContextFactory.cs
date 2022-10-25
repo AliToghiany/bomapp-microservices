@@ -13,7 +13,7 @@ namespace Chat.Infrastructure.Persistense
         public ChatDbContext CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<ChatDbContext>();
-            optionsBuilder.UseSqlServer("Data Source=.\\SQLEXPRESS;Initial Catalog=chatdb;Integrated Security=True;User Instance=True");
+            optionsBuilder.UseSqlServer("Data Source=127.0.0.1,1433;Initial Catalog=chatdb;User Id=SA;Password=774078haT&");
 
             return new ChatDbContext(optionsBuilder.Options);
         }

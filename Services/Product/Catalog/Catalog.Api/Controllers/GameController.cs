@@ -23,9 +23,9 @@ namespace Catalog.Api.Controllers
             _logger=logger?? throw new ArgumentNullException(nameof(logger));
         }
         [HttpGet("{id}",Name ="GetProduct")]
-        [ProducesResponseType(typeof(Game), (int)HttpStatusCode.OK)]
-        [ProducesResponseType(typeof(Game), (int)HttpStatusCode.NotFound)]
-        public async Task<ActionResult<Game>> GetGame(long id)
+        [ProducesResponseType(typeof(GameResponse), (int)HttpStatusCode.OK)]
+        [ProducesResponseType( (int)HttpStatusCode.NotFound)]
+        public async Task<ActionResult<GameResponse>> GetGame(long id)
         {
             var product = await _productRepository.GetGame(id);
             if (product==null)

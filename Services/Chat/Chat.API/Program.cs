@@ -43,9 +43,10 @@ builder.Services.AddAuthentication(options =>
                   cfg.SaveToken = true;
                   cfg.Events = new JwtBearerEvents
                   {
-                      OnMessageReceived = context => {
+                      OnMessageReceived = context =>
+                      {
                           var acssesToken = context.Request.Query["access_token"];
-                          if (string.IsNullOrEmpty(acssesToken)==false)
+                          if (string.IsNullOrEmpty(acssesToken) == false)
                           {
                               context.Token = acssesToken;
                           }

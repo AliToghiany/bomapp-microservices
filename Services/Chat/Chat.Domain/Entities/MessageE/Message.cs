@@ -28,10 +28,10 @@ namespace Chat.Domain.Entities.MessageE
 
         public string Text { get; set; }
 
-        public long Sticker_Id { get; set; }
+        public long StickerId { get; set; }
         public long JoinGroupId { get; set; }
         public virtual JoinGroup JoinGroup { get; set; }
-        public long Gif_Id { get; set; }
+        public long GifId { get; set; }
         public virtual List<File> Files { get; set; }
         public virtual GroupE.Group Group { get; set; }
        

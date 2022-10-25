@@ -26,7 +26,7 @@ namespace Chat.API.Hubs
 
         public override async Task OnConnectedAsync()
         {
-           
+
             //online
             var userid = UserIdentity.GetID(Context.User);
             var roleid = UserIdentity.GetIRole(Context.User);
@@ -37,20 +37,20 @@ namespace Chat.API.Hubs
                 ConnectionID = Context.ConnectionId,
                 UserAgent = "",
                 User_Id = userid,
-                ClientId= clientId
+                ClientId = clientId
             });
-          
+
             if (Context.GetHttpContext().Request.Query["app-search"] == "true")
             {
                 var res = await _mediator.Send(new GetRecentMessageQuery(userid));
                 foreach (var item in res)
                 {
-                    await Clients.Caller.SendAsync("ReciveMessage",JsonConvert.SerializeObject(item));
+                    await Clients.Caller.SendAsync("ReciveMessage", JsonConvert.SerializeObject(item));
                 }
             }
             foreach (var item in await _hubRepositorycs.GetMessagesQueue(userid, clientId))
             {
-               
+
 
                 switch (item.Satate)
                 {
@@ -62,7 +62,7 @@ namespace Chat.API.Hubs
                         break;
                     case "EditMessage":
                         await Clients.Caller.SendAsync("EditMessage", item.DataNessage);
-                        break; 
+                        break;
                     case "NewGroup":
                         await Clients.Caller.SendAsync("NewGroup", item.DataNessage);
                         break;

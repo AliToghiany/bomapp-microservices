@@ -96,9 +96,19 @@ namespace Catalog.Api.Repositories
             }
         }
 
-        public async Task<Game> GetGame(long id)
+        public async Task<GameResponse> GetGame(long id)
         {
-            return await _dbContext.Games.FindAsync(id);
+          var game=  await _dbContext.Games.Include(p => p.Category).Include(p => p.Votes).Include(p => p.Images).FirstOrDefaultAsync(p => p.Id == id);
+            return new GameResponse
+            {
+                Name = game.Name,
+                CategoryName = game.Category.Name,
+                Price = game.Price,
+                CategoryId = game.CategoryId,
+                Voet = game.Votes.Count > 0 ? (game.Votes.Sum(t => t.Voet)) / game.Votes.Count : 0,
+                Images = game.Images.Select(p=>p.ImagePath).ToList(),
+                Decription=game.Description,
+            };
         }
 
       
@@ -147,14 +157,15 @@ namespace Catalog.Api.Repositories
                 Price=p.Price,
                 CategoryId=p.CategoryId,
                 Voet=p.Votes.Count>0? (p.Votes.Sum(t=>t.Voet))/p.Votes.Count:0,
-                Image=p.Images.FirstOrDefault().ImagePath
+                Image=p.Images.FirstOrDefault().ImagePath,
+                Id=p.Id
                
 
             }).ToList();
            
             return new ProductListResult
             {
-                Products = products,
+                games = products,
                 Row = totalRow
             };
 
@@ -223,7 +234,7 @@ namespace Catalog.Api.Repositories
     }
     public class ProductListResult
     {
-        public List<GamesResponse> Products { get; set; }
+        public List<GamesResponse> games { get; set; }
         public int Row { get; set; }
     }
     public enum Ordering
@@ -238,12 +249,14 @@ namespace Catalog.Api.Repositories
     }
     public class GamesResponse
     {
+        public long Id { get; set; }
         public string Name { get; set; }
         public string Image { get; set; }
         public decimal Price { get; set; }
         public string CategoryName { get; set; }
         public long CategoryId{ get; set; }
         public decimal Voet { get; set; }
+     
     }
     public class GameResponse
     {

@@ -24,16 +24,22 @@ namespace Chat.API.Controllers
     {
         private readonly IMediator _mediator;
         private readonly IHubRepository _hubRepository;
-        private readonly ReciveHub _reciveHub;
-        public MessageController(IMediator mediator, IHubRepository hubRepository, ReciveHub reciveHub)
+        private readonly IHubContext<ReciveHub>  _reciveHub;
+        public MessageController(IMediator mediator, IHubRepository hubRepository, IHubContext<ReciveHub> reciveHub)
         {
             _mediator = mediator;
             _hubRepository = hubRepository;
             _reciveHub = reciveHub;
 
         }
+        [HttpGet]
+        public async Task<ActionResult> ddd()
+        {
+            await _reciveHub.Clients.All.SendAsync("ReciveMessage", "data");
+            return Ok();
+        }
 
-        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ResponseMessage),(int)HttpStatusCode.OK) ]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]

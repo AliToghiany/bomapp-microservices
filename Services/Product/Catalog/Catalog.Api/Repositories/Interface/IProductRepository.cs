@@ -11,7 +11,7 @@ namespace Catalog.Api.Repositories.Interface
     {
         ProductListResult GetGames(Ordering ordering, string SearchKey, int PageSize, int Page, long? Catid);
      
-        Task<Game> GetGame(long id);
+        Task<GameResponse> GetGame(long id);
 
       
 

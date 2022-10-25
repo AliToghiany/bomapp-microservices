@@ -1,3 +1,5 @@
+import 'package:bomapp/services/ApiSetting.dart';
+
 class ListGames {
   List<Games>? games;
   int? row;
@@ -25,6 +27,7 @@ class ListGames {
 }
 
 class Games {
+  int? id;
   String? name;
   String? image;
   int? price;
@@ -38,15 +41,17 @@ class Games {
       this.price,
       this.categoryName,
       this.categoryId,
-      this.voet});
+      this.voet,
+      this.id});
 
   Games.fromJson(Map<String, dynamic> json) {
     name = json['name'];
-    image = json['image'];
+    image = ApiSetting.GAMEIMGURL + json['image'];
     price = json['price'];
     categoryName = json['categoryName'];
     categoryId = json['categoryId'];
     voet = json['voet'];
+    id = json['id'];
   }
 
   Map<String, dynamic> toJson() {
@@ -57,6 +62,7 @@ class Games {
     data['categoryName'] = this.categoryName;
     data['categoryId'] = this.categoryId;
     data['voet'] = this.voet;
+    data['id'] = this.id;
     return data;
   }
 }
