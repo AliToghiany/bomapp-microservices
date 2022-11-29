@@ -224,10 +224,10 @@ namespace Chat.Infrastructure.Migrations
                     b.Property<string>("CreatedDate")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("Gif_Id")
+                    b.Property<long?>("GifId")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("GroupId")
+                    b.Property<long?>("GroupId")
                         .HasColumnType("bigint");
 
                     b.Property<bool>("IsEdited")
@@ -236,7 +236,7 @@ namespace Chat.Infrastructure.Migrations
                     b.Property<bool>("IsRemoved")
                         .HasColumnType("bit");
 
-                    b.Property<long>("JoinGroupId")
+                    b.Property<long?>("JoinGroupId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("LastModifiedDate")
@@ -248,10 +248,10 @@ namespace Chat.Infrastructure.Migrations
                     b.Property<string>("RemoveDate")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("ReplyMessageId")
+                    b.Property<long?>("ReplyMessageId")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("Sticker_Id")
+                    b.Property<long?>("StickerId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Text")
@@ -339,21 +339,15 @@ namespace Chat.Infrastructure.Migrations
                 {
                     b.HasOne("Chat.Domain.Entities.GroupE.Group", "Group")
                         .WithMany("Messages")
-                        .HasForeignKey("GroupId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("GroupId");
 
                     b.HasOne("Chat.Domain.Entities.MessageE.JoinGroup", "JoinGroup")
                         .WithMany("Messages")
-                        .HasForeignKey("JoinGroupId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("JoinGroupId");
 
                     b.HasOne("Chat.Domain.Entities.MessageE.Message", "ReplyMessage")
                         .WithMany()
-                        .HasForeignKey("ReplyMessageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ReplyMessageId");
 
                     b.Navigation("Group");
 

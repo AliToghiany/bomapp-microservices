@@ -1,4 +1,4 @@
-import 'dart:ffi';
+
 
 import 'package:bomapp/models/ResponseMessage.dart';
 import 'package:floor/floor.dart';
@@ -16,7 +16,7 @@ class Message {
   String? text;
   int? stickerId;
   int? gifId;
-
+Message();
  
   Message.fromResponseMessage(ResponseMessage responseMessage) {
 orginalId=responseMessage.id;

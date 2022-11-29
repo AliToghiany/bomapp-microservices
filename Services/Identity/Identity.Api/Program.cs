@@ -22,6 +22,7 @@ builder.Services.AddDbContext<IdentityDBContext>();
 builder.Services.AddControllers(options =>
 {
     options.Filters.Add<NotFoundExceptionFilterAttribute>();
+    options.Filters.Add<BadRequestExceptionFilterAttribute>();
 });
 builder.Services.AddAuthentication(options =>
              {

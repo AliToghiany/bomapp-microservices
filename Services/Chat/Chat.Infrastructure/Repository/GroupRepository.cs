@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using Microsoft.EntityFrameworkCore;
 namespace Chat.Infrastructure.Repository
 {
@@ -73,6 +72,11 @@ namespace Chat.Infrastructure.Repository
         }
 
         public Task<Group> NewGroup(Group group)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<List<Join>> IGroupRepository.GetMemberOfGroup(long groupId)
         {
             throw new NotImplementedException();
         }

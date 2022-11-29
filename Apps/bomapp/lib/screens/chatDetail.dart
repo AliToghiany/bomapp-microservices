@@ -1,23 +1,25 @@
+import 'package:bomapp/controller/chat_controller.dart';
+import 'package:bomapp/widgets/message.dart';
 import 'package:flutter/material.dart';
 import 'package:bomapp/models/chatMessageModel.dart';
 
 class ChatDetail extends StatefulWidget {
-  const ChatDetail({Key? key}) : super(key: key);
-
+  ChatDetail({Key? key, this.privateId, this.groupId}) : super(key: key);
+  int? privateId;
+  int? groupId;
   @override
   State<ChatDetail> createState() => _ChatDetailState();
 }
 
 class _ChatDetailState extends State<ChatDetail> {
-  List<ChatMessage> messages = [];
+  final ChatController _chatController=ChatController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.green[100],
         appBar: AppBar(
           elevation: 0,
           automaticallyImplyLeading: false,
-          backgroundColor: Colors.white,
+          backgroundColor: Color.fromRGBO(38, 37, 44, 1.0),
           toolbarHeight: 65,
           flexibleSpace: SafeArea(
             child: Container(
@@ -30,7 +32,7 @@ class _ChatDetailState extends State<ChatDetail> {
                     },
                     icon: Icon(
                       Icons.arrow_back,
-                      color: Colors.black,
+                      color: Colors.white54,
                     ),
                   ),
                   SizedBox(
@@ -52,7 +54,9 @@ class _ChatDetailState extends State<ChatDetail> {
                         Text(
                           "Kriss Benwat",
                           style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w600),
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600),
                         ),
                         SizedBox(
                           height: 6,
@@ -87,64 +91,12 @@ class _ChatDetailState extends State<ChatDetail> {
                   padding: EdgeInsets.only(bottom: 60),
                   child: SingleChildScrollView(
                       child: ListView.builder(
-                    itemCount: messages.length,
+                    itemCount: _chatController.messages.length,
                     shrinkWrap: true,
                     padding: EdgeInsets.only(top: 10, bottom: 10),
                     physics: NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index) {
-                      return Container(
-                        padding: EdgeInsets.only(
-                            left: 14, right: 14, top: 10, bottom: 10),
-                        child: Align(
-                          alignment: (messages[index].messageType == "receiver"
-                              ? Alignment.topLeft
-                              : Alignment.topRight),
-                          child: Container(
-                              width: 150,
-                              decoration: BoxDecoration(
-                                borderRadius:
-                                    (messages[index].messageType == "receiver"
-                                        ? BorderRadius.only(
-                                            bottomLeft: Radius.circular(0),
-                                            bottomRight: Radius.circular(15),
-                                            topLeft: Radius.circular(15),
-                                            topRight: Radius.circular(15))
-                                        : BorderRadius.only(
-                                            bottomLeft: Radius.circular(15),
-                                            topLeft: Radius.circular(15),
-                                            topRight: Radius.circular(15))),
-                                color:
-                                    (messages[index].messageType == "receiver"
-                                        ? Colors.grey.shade200
-                                        : Colors.blue[200]),
-                              ),
-                              padding: EdgeInsets.all(2),
-                              child: Column(children: [
-                                Align(
-                                    child: ClipRRect(
-                                        borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(15),
-                                            topRight: Radius.circular(15)),
-                                        child: Image(
-                                          image: Image.asset(
-                                                  "images/profile-1.jpg")
-                                              .image,
-                                        )),
-                                    alignment: Alignment.centerLeft),
-                                Padding(
-                                    padding: EdgeInsets.all(2),
-                                    child: Align(
-                                        child: Text(
-                                            messages[index].messageContent,
-                                            style: TextStyle(fontSize: 15)),
-                                        alignment: Alignment.centerLeft)),
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [],
-                                )
-                              ])),
-                        ),
-                      );
+                     return MessageWidget(_chatController.messages[index]);
                     },
                   ))),
               Align(
@@ -153,7 +105,7 @@ class _ChatDetailState extends State<ChatDetail> {
                   padding: EdgeInsets.only(left: 5, bottom: 10, top: 10),
                   height: 60,
                   width: double.infinity,
-                  color: Colors.white,
+                  color: Color.fromRGBO(38, 37, 44, 1.0),
                   child: Row(
                     children: <Widget>[
                       GestureDetector(
@@ -162,13 +114,13 @@ class _ChatDetailState extends State<ChatDetail> {
                           height: 30,
                           width: 30,
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: Color.fromRGBO(38, 37, 44, 1.0),
                             borderRadius: BorderRadius.circular(30),
                           ),
                           child: Padding(
                             child: Icon(
                               Icons.gif,
-                              color: Colors.black,
+                              color: Colors.grey.shade600,
                               size: 35,
                             ),
                             padding: EdgeInsets.only(bottom: 9),
@@ -183,7 +135,7 @@ class _ChatDetailState extends State<ChatDetail> {
                           style: TextStyle(fontSize: 15),
                           decoration: InputDecoration(
                               hintText: "Write message...",
-                              hintStyle: TextStyle(color: Colors.black54),
+                              hintStyle: TextStyle(color: Colors.black),
                               border: InputBorder.none),
                         ),
                       ),
@@ -194,10 +146,10 @@ class _ChatDetailState extends State<ChatDetail> {
                         onPressed: () {},
                         child: Icon(
                           Icons.file_present,
-                          color: Colors.black,
+                          color: Colors.grey.shade600,
                           size: 25,
                         ),
-                        backgroundColor: Colors.white,
+                        backgroundColor: Color.fromRGBO(38, 37, 44, 1.0),
                         elevation: 0,
                         heroTag: "btn1",
                       ),
@@ -205,10 +157,10 @@ class _ChatDetailState extends State<ChatDetail> {
                         onPressed: () {},
                         child: Icon(
                           Icons.send,
-                          color: Colors.black,
+                          color: Colors.grey.shade600,
                           size: 25,
                         ),
-                        backgroundColor: Colors.white,
+                        backgroundColor: Color.fromRGBO(38, 37, 44, 1.0),
                         elevation: 0,
                         heroTag: "btn2",
                       ),

@@ -13,10 +13,9 @@ namespace Chat.API.Entities.Recives
         public long User_Id { get; set; }
         [BsonElement("messageQueueId")]
         public string MessageQueueId { get; set; }
-        [BsonElement("clientId")]
-        public List<string> ClientId { get; set; }
-        public string AsGroupId { get; set; }
-        public long AsUserId { get; set; }
+        [BsonElement("clientsId")]
+        public List<string> ClientsId { get; set; }
+
    
          
 

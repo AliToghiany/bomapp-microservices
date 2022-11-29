@@ -2,10 +2,12 @@
 
 import 'package:bomapp/contracts/messageDao.dart';
 import 'package:bomapp/controller/listen_message.dart';
+import 'package:bomapp/database/database.dart';
 import 'package:flutter/material.dart';
 import 'package:bomapp/models/chatUsersModel.dart';
 import 'package:bomapp/widgets/conversationList.dart';
 import 'package:get/get.dart';
+import 'package:sqflite/sqflite.dart';
 
 class ChatPage extends StatefulWidget {
   const ChatPage({Key? key}) : super(key: key);
@@ -32,9 +34,14 @@ class _ChatPageState extends State<ChatPage> {
         "images/profile-7.jpg", "24 Feb"),
     ChatUsers("John Wick", "How are you?", "images/profile-8.jpg", "18 Feb"),
   ];
-   final ListenMessageController gc = Get.put(ListenMessageController());
+  _ChatPageState(){
+     
+ 
+  }
+
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
        backgroundColor: Color.fromRGBO(38, 37, 44, 1.0),
         appBar: AppBar(
@@ -47,6 +54,8 @@ class _ChatPageState extends State<ChatPage> {
           backgroundColor: Color.fromRGBO(38, 37, 44, 1.0),
           elevation: 0,
           actions: <Widget>[
+          
+
             IconButton(
               icon: Icon(
                 Icons.camera_alt,

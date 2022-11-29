@@ -73,9 +73,10 @@ namespace Identity.Infrastructure.Repositories
             }
         }
 
-        public Task EditUser(User user)
+        public async Task EditUser(User user)
         {
-            throw new NotImplementedException();
+            _identityDBContext.Users.Update(user);
+          await  _identityDBContext.SaveChangesAsync();
         }
 
         public async Task<User?> FindUserById(long id)
@@ -91,9 +92,15 @@ namespace Identity.Infrastructure.Repositories
             return res;
         }
 
-        public Task<bool> IsFreeUserName(string userName)
+        public IQueryable<User> GetUserBySearchKey(string searchKey)
         {
-            throw new NotImplementedException();
+            return _identityDBContext.Users.Where(p => p.UserName.Contains(searchKey));
+        }
+
+        public async Task<bool> IsFreeUserName(string userName,long userId)
+        {
+            return
+              ! (await _identityDBContext.Users.AnyAsync(p => p.UserName == userName && p.Id != userId));
         }
     }
 }

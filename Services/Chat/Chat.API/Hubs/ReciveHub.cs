@@ -1,7 +1,10 @@
 ﻿using Chat.API.Entities.Recives;
+using Chat.API.Respositories;
 using Chat.API.Respositories.Interface;
 using Chat.Application.Contracts.EndPoint;
 using Chat.Application.Contracts.Persisence;
+using Chat.Application.Feature.Groups.Queries.GetGroupMember;
+using Chat.Application.Feature.Messages.Commands.CreateMessage;
 using Chat.Application.Feature.Messages.Queries.GetMessage;
 using Chat.Application.Feature.Messages.Queries.GetRecentMessage;
 using Chat.Domain.Entities.MessageE;
@@ -18,6 +21,7 @@ namespace Chat.API.Hubs
     {
         private readonly IHubRepository _hubRepositorycs;
         private readonly IMediator _mediator;
+        
         public ReciveHub(IHubRepository hubRepositorycs, IMediator mediator)
         {
             _hubRepositorycs = hubRepositorycs;
@@ -79,6 +83,37 @@ namespace Chat.API.Hubs
             var userid = UserIdentity.GetID(Context.User);
             await _hubRepositorycs.DisableConnection(Context.ConnectionId);
             await base.OnDisconnectedAsync(exception);
+        }
+
+        public async Task SendMessage(ResponseMessage message)
+        {
+            var messagejson = JsonConvert.SerializeObject(message);
+            if (message.ToUser_Id != null || message.ToUser_Id != 0)
+            {
+                var cid = await _hubRepositorycs.GetConnectionOrAddQueue(new List<long> { message.ToUser_Id }, messagejson, "NewMessage");
+                if (cid.Count != 0)
+                {
+                    foreach (var item in cid)
+                    {
+                        await Clients.Client(item).SendAsync("ReciveMessage", messagejson);
+                    }
+
+                }
+            }
+            else if (message.GroupId != null)
+            {
+                var users = await _mediator.Send(new GetGroupMemberQuery(message.GroupId));
+
+                var cid = await _hubRepositorycs.GetConnectionOrAddQueue(users.Select(p=>p.UserId).ToList(), messagejson, "NewMessage");
+                if (cid.Count != 0)
+                {
+                    foreach (var item in cid)
+                    {
+                        await Clients.Client(item).SendAsync("ReciveMessage", messagejson);
+                    }
+
+                }
+            }
         }
 
         public async Task SendMessageNewGroup(long groupId, List<long> subescribesId, long cretedBy)

@@ -10,7 +10,14 @@ namespace Identity.Domain.User
     {
         public long Id { get; set; }
         public string ContactName { get; set; }
+        public string LastName { get; set; }
+        /// <summary>
+        /// my id
+        /// </summary>
         public long ForUserId { get; set; }
+        /// <summary>
+        /// contact
+        /// </summary>
         public long WithUserId { get; set; }
         public virtual User ForUser { get; set; }
         public virtual User WithUser { get; set; }

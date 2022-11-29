@@ -4,7 +4,7 @@ import 'package:bomapp/entities/message.dart';
 @dao
 abstract class MessageDao {
 
-   @Query('SELECT * FROM Message WHERE id = :id')
+  @Query('SELECT * FROM Message WHERE id = :id')
   Future<Message?> findMessageById(int id);
 
   @Query('SELECT * FROM Message')
@@ -13,7 +13,7 @@ abstract class MessageDao {
   @Query('SELECT * FROM Message')
   Stream<List<Message>> findAllMessagesAsStream();
 
-   @insert
+  @insert
   Future<void> insertMessage(Message message);
 
   @insert

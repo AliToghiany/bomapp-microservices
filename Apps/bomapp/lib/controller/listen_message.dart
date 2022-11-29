@@ -8,16 +8,19 @@ import 'package:signalr_netcore/signalr_client.dart';
 import 'package:get/get.dart';
 
 class ListenMessageController extends GetxController {
- final MessageDao messageDao;
- 
+
+
   final serverUrl = "https://localhost:44374/recivehub";
-  ListenMessageController(this.messageDao) {
-    final hubConnection = HubConnectionBuilder().withUrl(serverUrl).build();
-    
+  ListenMessageController() {
+    final httpConnectionOptions = new HttpConnectionOptions(
+         
+          accessTokenFactory: () => Future.value('AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUejRCOuH5E6I8xnZz4puTs%3D1Zv7ttfk8LF81IUq16cHjhLTvJu4FA33AGWWjCpTnA'),
+        
+          logMessageContent: true,
+       );
+    final hubConnection = HubConnectionBuilder().withUrl(serverUrl,options: httpConnectionOptions).build();
     hubConnection.start();
-    
     hubConnection.on("ReciveMessage", handleReciveMessage);
-    
   }
   void handleReciveMessage(List<Object?>? data)
   {

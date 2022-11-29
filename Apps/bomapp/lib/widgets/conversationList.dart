@@ -93,7 +93,7 @@ class _ConversationListState extends State<ConversationList> {
             height: 5,
           ),
           Container(
-            color: Colors.grey[800],
+            color: Colors.grey[900],
             height: 1,
           )
         ]),

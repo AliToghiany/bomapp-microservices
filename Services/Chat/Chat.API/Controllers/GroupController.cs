@@ -1,7 +1,9 @@
 ﻿using Chat.Application.Feature.Groups.Commands.NewGroup;
 using Chat.Application.Feature.Groups.Queries.GetGroup;
+using Chat.Application.Feature.Groups.Queries.GetGroupMember;
 using Chat.Application.Feature.Groups.Queries.GetGroups;
 using Chat.Application.Feature.Messages.Commands.CreateMessage;
+using Common.Services.Utilities;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
@@ -33,7 +35,7 @@ namespace Chat.API.Controllers
         [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [Authorize]
-        [HttpGet("{groupId}", Name = "GetGroup")]
+        [HttpGet("[action]/{groupId}", Name = "GetGroup")]
         public async Task<ActionResult<GroupResponse>> GetGroup(long groupId)
         {
             var res = await _mediator.Send(new GetGroupQuery(groupId));
@@ -54,7 +56,7 @@ namespace Chat.API.Controllers
         [HttpPost("NewGroup")]
         public async Task<ActionResult<GroupResponse>> NewGroup([FromBody] NewGroupCommand newGroupCommand)
         {
-
+            newGroupCommand.Owner= UserIdentity.GetID(HttpContext.User);
             var res = await _mediator.Send(newGroupCommand);
             return Ok(res);
         }
@@ -102,6 +104,14 @@ namespace Chat.API.Controllers
             {
                 return StatusCode(500, $"Internal server error: {ex}");
             }
+        }
+        [ProducesResponseType(typeof(string), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [HttpGet("{groupId}",Name = "GetMembers")]
+        public async Task<ActionResult<List<JoinRsponse>>> GetMembers(long GroupId)
+        {
+            return
+                await _mediator.Send(new GetGroupMemberQuery(GroupId));
         }
 
     }

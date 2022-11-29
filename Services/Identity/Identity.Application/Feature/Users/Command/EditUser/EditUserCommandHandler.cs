@@ -28,13 +28,12 @@ namespace Identity.Application.Feature.Users.Command.EditUser
            var user = await _userReposirory.FindUserById(request.Id);
             if (user == null)
                 throw new NotFoundException(nameof(User),request.Id);
-            if(request.UserName!=null)
-                if(await _userReposirory.IsFreeUserName(request.UserName))
-                 user.UserName = request.UserName;
-            if(request.FirstName!=null&& request.FirstName != null)
+            user.UserName = request.UserName;
+            user.FirstName= request.FirstName; 
+               
+            if (request.LastName != null)
                 user.FirstName = request.FirstName;
-            if(request.Description!=null)
-                user.Description = request.Description;
+          
             await _userReposirory.EditUser(user);
             return Unit.Value;
           

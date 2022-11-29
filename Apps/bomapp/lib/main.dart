@@ -2,6 +2,7 @@ import 'package:bomapp/screens/gameDeail.dart';
 
 import 'package:bomapp/screens/login.dart';
 import 'package:bomapp/screens/welcomePage.dart';
+import 'package:bomapp/utils/tokentUtil.dart';
 import 'package:flutter/material.dart';
 import 'package:bomapp/screens/homePage.dart';
 import 'package:flutter/services.dart';
@@ -29,12 +30,15 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      home: firstPage(),
       builder: EasyLoading.init(),
     );
   }
 
   Widget firstPage() {
+    if(TokenUtilities.GetToken()!=null){
+      return HomePage();
+    }
     return WellcomePage();
   }
 }

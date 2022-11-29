@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Identity.Application.Feature.Users.Command.ConfirmUser;
+using Identity.Application.Feature.Users.Queries.GetMyUserProfile;
 using Identity.Application.Feature.Users.Queries.GetUser;
 using Identity.Domain.User;
 using System;
@@ -16,6 +17,7 @@ namespace Identity.Application.Profiler
         {
             CreateMap<Confirm, ConfirmUserCommand>().ReverseMap();
             CreateMap<User, ResponseUser>();
+            CreateMap<User, GetMyUserProfileResponse>();
         }
     }
 }

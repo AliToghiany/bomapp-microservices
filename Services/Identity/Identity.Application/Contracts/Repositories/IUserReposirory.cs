@@ -14,8 +14,9 @@ namespace Identity.Application.Contracts.Repositories
         Task<User?> FindUserByPhone(string phone);
         Task<long> CreateUserByPhone(string phone);
         Task<User?> FindUserById(long id);
-        Task<bool> IsFreeUserName(string userName);
+        Task<bool> IsFreeUserName(string userName,long userId);
         Task EditUser(User user);
         Task<bool> BlockUser(long userId, long blockedUser);
+        IQueryable<User> GetUserBySearchKey(string searchKey);
     }
 }

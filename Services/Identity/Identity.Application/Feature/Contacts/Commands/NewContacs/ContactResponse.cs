@@ -4,8 +4,11 @@ namespace Identity.Application.Feature.Contacts.Commands.NewContacs
 {
     public class ContactResponse
     {
-        public User Contact { get; set; }
+        public long UserId { get; set; }
         public string Name { get; set; }
+        public string Phone { get; set; }
+        public string? Image { get; set; }
 
     }
+    
 }

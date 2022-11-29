@@ -19,6 +19,7 @@ namespace Identity.Domain.User
         public virtual List<UserImages> UserImages { get; set; }
        public virtual List<Contact> MyContacts { get; set; }
        public virtual List<Contact> ToContacts { get; set; }
+        public bool ShowPhoneNumber { get; set; }
 
 
     }

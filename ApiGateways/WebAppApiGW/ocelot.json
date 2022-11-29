@@ -25,6 +25,30 @@
       ]
     },
     {
+      "UpstreamPathTemplate": "/user/getmyprofile",
+      "UpstreamHttpMethod": [ "Get" ],
+      "DownstreamPathTemplate": "/user/getmyprofile",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44317
+        }
+      ]
+    },
+    {
+      "UpstreamPathTemplate": "/user/checkusername/{username}",
+      "UpstreamHttpMethod": [ "Get" ],
+      "DownstreamPathTemplate": "/user/checkusername/{username}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44317
+        }
+      ]
+    },
+    {
       "DownstreamPathTemplate": "/api/Game/GetGames/",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
@@ -61,12 +85,12 @@
       "UpstreamHttpMethod": [ "Post" ]
     },
     {
-      "DownstreamPathTemplate": "/api/Message/",
+      "DownstreamPathTemplate": "/Message/NewMessage",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 44374
+          "Port": 44382
         }
       ],
       "UpstreamPathTemplate": "/Message/NewMessage",
@@ -133,7 +157,7 @@
       "UpstreamHttpMethod": [ "Get" ]
     },
     {
-      "DownstreamPathTemplate": "/Api/User/UpdateUser",
+      "DownstreamPathTemplate": "/User/UpdateUser",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -143,6 +167,42 @@
       ],
       "UpstreamPathTemplate": "/User/UpdateUser",
       "UpstreamHttpMethod": [ "Post" ]
+    },
+    {
+      "DownstreamPathTemplate": "/User/UpdateAboutUser",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44317
+        }
+      ],
+      "UpstreamPathTemplate": "/User/UpdateAboutUser",
+      "UpstreamHttpMethod": [ "Post" ]
+    },
+    {
+      "DownstreamPathTemplate": "/Contact/NewContact",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44317
+        }
+      ],
+      "UpstreamPathTemplate": "/Contact/NewContact",
+      "UpstreamHttpMethod": [ "Post" ]
+    },
+    {
+      "DownstreamPathTemplate": "/Contact/GetContacts",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 44317
+        }
+      ],
+      "UpstreamPathTemplate": "/Contact/GetContacts",
+      "UpstreamHttpMethod": [ "Get" ]
     }
   ],
   "GlobalConfiguration": {

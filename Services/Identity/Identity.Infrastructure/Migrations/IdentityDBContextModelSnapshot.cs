@@ -69,6 +69,10 @@ namespace Identity.Infrastructure.Migrations
                     b.Property<long>("ForUserId")
                         .HasColumnType("bigint");
 
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<long>("WithUserId")
                         .HasColumnType("bigint");
 
@@ -114,19 +118,19 @@ namespace Identity.Infrastructure.Migrations
                         new
                         {
                             Id = 1L,
-                            ConcurrencyStamp = "ab1fa88f-9e4e-4b54-a510-a69ed841027d",
+                            ConcurrencyStamp = "4cc0656b-f1ff-497a-b23f-b002d32286b7",
                             Name = "Admin"
                         },
                         new
                         {
                             Id = 2L,
-                            ConcurrencyStamp = "f64a3d4c-8632-428c-a1e1-3f2301df8629",
+                            ConcurrencyStamp = "42881be2-0c0d-4490-ae94-7c816147555e",
                             Name = "Operator"
                         },
                         new
                         {
                             Id = 3L,
-                            ConcurrencyStamp = "2184006f-f73f-40d6-9be2-4573e43f5eb6",
+                            ConcurrencyStamp = "643d7dc9-48be-4cf9-883a-d990769b5b74",
                             Name = "Customer"
                         });
                 });
@@ -196,6 +200,9 @@ namespace Identity.Infrastructure.Migrations
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("ShowPhoneNumber")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");

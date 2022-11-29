@@ -1,5 +1,7 @@
 ﻿using Identity.Application.Contracts.Repositories;
 using Identity.Domain.User;
+using Identity.Infrastructure.Context;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,16 +10,36 @@ using System.Threading.Tasks;
 
 namespace Identity.Infrastructure.Repositories
 {
-    internal class ContactRepository : IContactRepository
+    public class ContactRepository : IContactRepository
     {
-        public Task<IEnumerable<Contact>> GetContacts(long userId)
+        private readonly IdentityDBContext _identityDBContext;
+
+        public ContactRepository(IdentityDBContext identityDBContext)
         {
-            throw new NotImplementedException();
+            _identityDBContext = identityDBContext;
         }
 
-        public Task<List<Contact>> NewRangeContacts(List<Contact> contacts)
+        public async Task<Contact> GetContact(long For, long With)
         {
-            throw new NotImplementedException();
+           
+                return await _identityDBContext.Contacts.FirstAsync(p => p.ForUserId == For && p.WithUserId == With);
+         }
+         
+            
+
+        public IEnumerable<Contact> GetContacts(long userId)
+        {
+            return _identityDBContext.Contacts
+                .Include(p=>p.WithUser)
+                .ThenInclude(p=>p.UserImages)
+                .Where(p => p.ForUserId == userId).ToList();
+        }
+
+        public async Task NewRangeContacts(List<Contact> contacts)
+        {
+            await _identityDBContext.Contacts.AddRangeAsync(contacts);
+            await _identityDBContext.SaveChangesAsync();
+            
         }
     }
 }

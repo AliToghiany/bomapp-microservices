@@ -9,7 +9,8 @@ namespace Identity.Application.Contracts.Repositories
 {
     public interface IContactRepository
     {
-        public Task<List<Contact>> NewRangeContacts(List<Contact> contacts);
-        Task<IEnumerable<Contact>> GetContacts(long userId);
+        public Task NewRangeContacts(List<Contact> contacts);
+        IEnumerable<Contact> GetContacts(long userId);
+        Task<Contact> GetContact(long For, long With);
     }
 }

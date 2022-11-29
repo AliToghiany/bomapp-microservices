@@ -1,5 +1,6 @@
 ﻿using Identity.Application.Contracts.Repositories;
 using Identity.Application.Feature.Users.Queries.GetUser;
+using Identity.Domain.User;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -9,18 +10,25 @@ using System.Threading.Tasks;
 
 namespace Identity.Application.Feature.Users.Queries.GetUsers
 {
-    public class GetUsersQueryHandler : IRequestHandler<GetUsersQuery, List<ResponseUser>>
+    public class GetUsersQueryHandler : IRequestHandler<GetUsersQuery, GetUsersResponse>
     {
         private readonly IUserRepository _userRepository;
+        private readonly IMediator _mediator;
 
-        public GetUsersQueryHandler(IUserRepository userRepository)
+        public GetUsersQueryHandler(IUserRepository userRepository, IMediator mediator)
         {
             _userRepository = userRepository;
+            _mediator = mediator;
         }
 
-        public Task<List<ResponseUser>> Handle(GetUsersQuery request, CancellationToken cancellationToken)
+        public async Task<GetUsersResponse> Handle(GetUsersQuery request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+           var users = _userRepository.GetUserBySearchKey(request.SearchKey);
+           users = users.Take(request.Take);
+            return new GetUsersResponse
+            {
+                Users = await _mediator.Send(new GetUsersById.GetUsersByUsersQuery(users, request.UserId))
+            };
         }
     }
 }

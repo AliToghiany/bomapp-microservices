@@ -13,15 +13,15 @@ class AddingMember extends StatefulWidget {
 
 class _AddingMemberState extends State<AddingMember> {
   List<UserForList> users = [
-    UserForList("Jane Russel", "online", "images/profile-1.jpg"),
-    UserForList("Jane Russel", "online", "images/profile-1.jpg"),
-    UserForList("Jane Russel", "online", "images/profile-1.jpg"),
-    UserForList("Jane Russel", "online", "images/profile-1.jpg"),
-    UserForList("Jane Russel", "online", "images/profile-1.jpg"),
-    UserForList("Jane Russel", "online", "images/profile-1.jpg"),
-    UserForList("Jane Russel", "online", "images/profile-1.jpg"),
-    UserForList("Jane Russel", "online", "images/profile-1.jpg"),
-    UserForList("Jane Russel", "online", "images/profile-1.jpg"),
+    UserForList("Jane Russel","Jane Russel", "online", "images/profile-1.jpg"),
+    UserForList("Jane Russel","Jane Russel", "online", "images/profile-1.jpg"),
+    UserForList("Jane Russel","Jane Russel", "online", "images/profile-1.jpg"),
+    UserForList("Jane Russel","Jane Russel", "online", "images/profile-1.jpg"),
+    UserForList("Jane Russel","Jane Russel", "online", "images/profile-1.jpg"),
+    UserForList("Jane Russel","Jane Russel", "online", "images/profile-1.jpg"),
+    UserForList("Jane Russel","Jane Russel", "online", "images/profile-1.jpg"),
+    UserForList("Jane Russel", "Jane Russel","online", "images/profile-1.jpg"),
+    UserForList("Jane Russel","Jane Russel", "online", "images/profile-1.jpg"),
   ];
   @override
   Widget build(BuildContext context) {
@@ -139,6 +139,34 @@ final kFinalHeight = Get.height;
 class SampleJSON {
   static const user = [
     {
+      "id": 0,
+      "name": "Add Status",
+      "view": true,
+      "image":
+          "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+    },
+     {
+      "id": 0,
+      "name": "Add Status",
+      "view": true,
+      "image":
+          "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+    },
+     {
+      "id": 0,
+      "name": "Add Status",
+      "view": true,
+      "image":
+          "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+    },
+     {
+      "id": 0,
+      "name": "Add Status",
+      "view": true,
+      "image":
+          "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+    },
+     {
       "id": 0,
       "name": "Add Status",
       "view": true,

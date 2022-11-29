@@ -20,18 +20,18 @@ namespace Chat.Domain.Entities.MessageE
 
         public long? User_Id { get; set; }
 
-        public long GroupId { get; set; }
+        public long? GroupId { get; set; }
 
         public long? ToUser_Id { get; set; }
         public virtual Message ReplyMessage { get; set; }
-        public long ReplyMessageId { get; set; }
+        public long? ReplyMessageId { get; set; }
 
         public string Text { get; set; }
 
-        public long StickerId { get; set; }
-        public long JoinGroupId { get; set; }
+        public long? StickerId { get; set; }
+        public long? JoinGroupId { get; set; }
         public virtual JoinGroup JoinGroup { get; set; }
-        public long GifId { get; set; }
+        public long? GifId { get; set; }
         public virtual List<File> Files { get; set; }
         public virtual GroupE.Group Group { get; set; }
        

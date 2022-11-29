@@ -13,7 +13,7 @@ namespace Chat.Application.Contracts.Persisence
         Task<bool> CheckBanInGroup(long UserId, long GroupId);
         Task<long> GetCountOfMessageGroup(long GroupId);
         Task<bool> JoinInGroup(long groupId, long UserId);
-        Task<List<long>> GetMemberOfGroup(long groupId);
+        Task<List<Join>> GetMemberOfGroup(long groupId);
         Task<List<Group>> GetAllGroupByUserId(long userId);
         IQueryable<Group> GetGroups();
         Task<bool> CheckGroupName(string GroupName);

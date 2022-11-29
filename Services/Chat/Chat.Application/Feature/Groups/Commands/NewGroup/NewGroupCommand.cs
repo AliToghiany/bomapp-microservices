@@ -13,6 +13,7 @@ namespace Chat.Application.Feature.Groups.Commands.NewGroup
         public string Name { get; set; }
         public string Description { get; set; }
         public string GroupName { get; set; }
+        
         public List<long> DefualtUser { get; set; }
         public string ImageGroupUrl { get; set; }
         public long Owner { get; set; }

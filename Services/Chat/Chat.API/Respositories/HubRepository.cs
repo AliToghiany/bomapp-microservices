@@ -50,7 +50,7 @@ namespace Chat.API.Respositories
 
         public async Task<List<MessageQueue>> GetMessagesQueue(long userId,string clientId)
         {
-            var mqd = await _dbContext.MessageQueueDetails.FindAsync(p => p.User_Id == userId&&!p.ClientId.Any(p=>p==clientId));
+            var mqd = await _dbContext.MessageQueueDetails.FindAsync(p => p.User_Id == userId&&!p.ClientsId.Any(p=>p==clientId));
             List<MessageQueue> messages = new List<MessageQueue>();
             foreach (var item in await mqd.ToListAsync())
             {
@@ -85,7 +85,7 @@ namespace Chat.API.Respositories
                 foreach (var connectionUser in res)
                 {
                     connectionsid.Add(connectionUser.ConnectionID);
-                    messagequedeatil.ClientId.Add(connectionUser.ClientId);
+                    messagequedeatil.ClientsId.Add(connectionUser.ClientId);
                 }
                 messageListUser.Add(messagequedeatil);
                

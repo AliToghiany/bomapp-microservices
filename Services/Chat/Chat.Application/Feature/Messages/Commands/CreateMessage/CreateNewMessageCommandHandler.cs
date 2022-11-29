@@ -21,41 +21,40 @@ namespace Chat.Application.Feature.Messages.Commands.CreateMessage
         private readonly IMessageRepository _messageRepository;
         private readonly IGroupRepository _groupRepository;
         private readonly IMapper _mapper;
+        private readonly IMediator _mediator;
 
-
-        public CreateNewMessageCommandHandler(IMapper Mapper, IMessageRepository messageRepository, IGroupRepository groupRepository)
+        public CreateNewMessageCommandHandler(IMapper Mapper, IMessageRepository messageRepository, IGroupRepository groupRepository,IMediator mediator)
         {
             _messageRepository = messageRepository ?? throw new ArgumentNullException(nameof(messageRepository));
             _mapper = Mapper ?? throw new ArgumentNullException(nameof(Mapper));
            
             _groupRepository = groupRepository ?? throw new ArgumentNullException(nameof(groupRepository));
+            _mediator=mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
         public async Task<long> Handle(CreateNewMessageCommand request, CancellationToken cancellationToken)
         {
-            var group = await _groupRepository.GetGroupById(request.Group_Id);
-            if (group == null)
-                throw new NotFoundException("Group", request.Group_Id);
-
-            if (await _groupRepository.CheckBanInGroup(request.User_Id, request.Group_Id))
+            string messageid="1";
+            if (request.GroupId != null)
             {
-                throw new UnauthorizedAccessException($"User:{request.User_Id} do not have acssess to this  {nameof(Group)}:{request.Group_Id} because banned");
+                var group = await _groupRepository.GetGroupById(request.GroupId.Value);
+                if (group == null)
+                    throw new NotFoundException("Group", request.GroupId);
+
+                if (await _groupRepository.CheckBanInGroup(request.User_Id, request.GroupId.Value))
+                {
+                    throw new UnauthorizedAccessException($"User:{request.User_Id} do not have acssess to this  {nameof(Group)}:{request.GroupId} because banned");
+                }
+                if (await _groupRepository.JoinInGroup(request.GroupId.Value, request.User_Id))
+                    throw new UnauthorizedAccessException($"User:{request.User_Id} do not have acssess to this {nameof(Group)}:{request.GroupId} beacuse not joined");
+                messageid = (await _groupRepository.GetCountOfMessageGroup(request.GroupId.Value) + 1).ToString();
             }
-            if (await _groupRepository.JoinInGroup(request.Group_Id, request.User_Id))
-                throw new UnauthorizedAccessException($"User:{request.User_Id} do not have acssess to this {nameof(Group)}:{request.Group_Id} beacuse not joined");
             var message = _mapper.Map<Message>(request);
-            message.Message_Id = (await _groupRepository.GetCountOfMessageGroup(request.Group_Id) + 1).ToString();
+            message.Message_Id = messageid;
             var result = await _messageRepository.AddNewMessage(message);
             List<File> files = new List<File>();
-            foreach (var item in request.Files)
-            {
-                files.Add(new File
-                {
-                    MessageId = result.Id,
-                    Path = item,
-
-                });
-            }
+          
             await _messageRepository.AddNewFiles(files);
+            await _mediator.Publish(new NewMessageNotification(result.Id));
             return result.Id;
 
         }
