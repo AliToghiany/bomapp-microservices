@@ -13,6 +13,6 @@ namespace Chat.Application.Contracts.EndPoint
         
         Task SendMessageNewGroup(long groupId, List<long> subescribesId,long cretedBy);
         Task SendMessage(ResponseMessage message);
-
+        Task SendMessageForCaller(string connectionId, List<ResponseMessage> responseMessages);
     }
 }

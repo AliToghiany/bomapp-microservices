@@ -25,8 +25,8 @@ namespace Chat.Application.Feature.Messages.Commands.CreateMessage
 
         public async Task Handle(NewMessageNotification notification, CancellationToken cancellationToken)
         {
-            var message =await _mediator.Send(new GetMessageQuery(notification.MessageId));
-            await _reciveHub.SendMessage(message);
+            //var message =await _mediator.Send(new GetMessageQuery(notification.MessageId));
+            //await _reciveHub.SendMessage(message);
 
 
         }

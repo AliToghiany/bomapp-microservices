@@ -1,4 +1,5 @@
 ﻿using Common.Services.Utilities;
+using Identity.Api.GrpcSerivces;
 using Identity.Application.Feature.Users.Command.BlockUser;
 using Identity.Application.Feature.Users.Command.EditAbout;
 using Identity.Application.Feature.Users.Command.EditUser;
@@ -20,12 +21,14 @@ namespace Identity.Api.Controllers
     public class UserController : ControllerBase
     {
         private readonly IMediator _mediator;
+        private readonly InviteLinkService _inviteLinkService;
 
-        public UserController(IMediator mediator)
+        public UserController(IMediator mediator, InviteLinkService inviteLinkService)
         {
             _mediator = mediator;
+            _inviteLinkService = inviteLinkService;
         }
-        
+
         [Authorize]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
@@ -36,7 +39,28 @@ namespace Identity.Api.Controllers
         public async Task<IActionResult> UpdateUser([FromBody] EditUserCommand editUserCommand)
         {
             editUserCommand.Id = UserIdentity.GetID(HttpContext.User);
+            var username = await _inviteLinkService.CheckUserName(editUserCommand.UserName);
+           
             var res = await _mediator.Send(new CheckUserNameQuery(editUserCommand.Id, editUserCommand.UserName));
+            if (!string.IsNullOrEmpty( username.InviteLinkName) )
+            {
+                if (username.Serivce != "Identity")
+                {
+                    return BadRequest("This UserName is taken");
+                }
+
+            }
+            else
+            {
+                if (res.Checked)
+                {
+                  var nusername= await _inviteLinkService.NewUserName(editUserCommand.UserName);
+                    if (nusername == null)
+                    {
+                        return BadRequest("UserName Service Stop"); ;
+                    }
+                }
+            }
             if (!res.Checked)
             {
                 return BadRequest(res.Message);
@@ -96,7 +120,11 @@ namespace Identity.Api.Controllers
         [HttpGet]
         public async Task<ActionResult<GetUsersResponse>> GetUsersBySearch(string shearchKey)
         {
-            var res =await _mediator.Send(new GetUsersQuery(shearchKey,3, UserIdentity.GetID(HttpContext.User)));
+            var userSearch=await _inviteLinkService.SearchUserName(shearchKey);
+            var res =await _mediator.Send
+                (new GetUsersQuery
+                (shearchKey,userSearch.Listresponse.Select(p=>p.InviteLinkName).ToList(),3, UserIdentity.GetID(HttpContext.User)));
+          
             return Ok(res);
         }
         [Authorize]

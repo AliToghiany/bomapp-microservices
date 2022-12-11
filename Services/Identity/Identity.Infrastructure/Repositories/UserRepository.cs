@@ -57,7 +57,7 @@ namespace Identity.Infrastructure.Repositories
             try
             {
                 var user = new User { PhoneNumber = phone };
-                await _identityDBContext.Users.AddAsync(user);
+               user=( await _identityDBContext.Users.AddAsync(user)).Entity;
                 await _identityDBContext.SaveChangesAsync();
                 await _identityDBContext.UserRoles.AddAsync(new Microsoft.AspNetCore.Identity.IdentityUserRole<long>
                 {
@@ -94,7 +94,21 @@ namespace Identity.Infrastructure.Repositories
 
         public IQueryable<User> GetUserBySearchKey(string searchKey)
         {
-            return _identityDBContext.Users.Where(p => p.UserName.Contains(searchKey));
+            return _identityDBContext.Users.Include(p=>p.UserImages).Where(p => (p.FirstName +" "+p.LastName).Contains(searchKey));
+        }
+
+        public async Task< IEnumerable<User>> GetUsersByUserName(List<string> userName)
+        {
+            List<User> users = new List<User>();
+            foreach (var q in userName)
+            {
+                users.Add(await _identityDBContext.Users.FirstAsync(p => p.UserName == q));
+            }
+               
+                
+            
+             
+            return users;
         }
 
         public async Task<bool> IsFreeUserName(string userName,long userId)

@@ -1,4 +1,6 @@
-﻿namespace Identity.Application.Feature.Users.Command.SignUser
+﻿using MediatR;
+
+namespace Identity.Application.Feature.Users.Command.SignUser
 {
     public class SignUserResponse
     {
@@ -6,5 +8,6 @@
         public bool IsNew { get; set; }
         public string? Token { get; set; }
     }
+
 
 }

@@ -1,4 +1,5 @@
 using Common.Services.Exceptions;
+using Identity.Api.GrpcSerivces;
 using Identity.Api.Utilities;
 using Identity.Application;
 using Identity.Infrastructure;
@@ -6,6 +7,7 @@ using Identity.Infrastructure.Context;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using IniviteLink.Grpc.Protos;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,6 +21,10 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddApplicationServices();
 builder.Services.AddDbContext<IdentityDBContext>();
+builder.Services.AddGrpcClient<ProtoIniviteLink.ProtoIniviteLinkClient>
+                      (o => o.Address = new Uri(builder.Configuration["GrpcSettings:InviteLinkUrl"]));
+builder.Services.AddScoped<InviteLinkService>();
+
 builder.Services.AddControllers(options =>
 {
     options.Filters.Add<NotFoundExceptionFilterAttribute>();

@@ -8,5 +8,5 @@ using System.Threading.Tasks;
 
 namespace Identity.Application.Feature.Users.Queries.GetUsers
 {
-    public record GetUsersQuery(string SearchKey, int Take, long UserId) :IRequest<GetUsersResponse>;
+    public record GetUsersQuery(string SearchKey,List<string> UserName, int Take, long UserId) :IRequest<GetUsersResponse>;
 }

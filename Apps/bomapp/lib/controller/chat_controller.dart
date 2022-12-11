@@ -17,7 +17,7 @@ final messages=<Message>[].obs;
       return res;
     
   }
-  Future loadMessage() async{
+  Future loadMessage(int? groupId,int? toUserId,int lastMessageId,int startMessageId) async{
 
   }
 }

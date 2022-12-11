@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+option csharp_namespace = "IniviteLink.Grpc.Protos";
+
+service ProtoIniviteLink{
+   rpc NewInviteLink(NewInviteLinkRequest) returns (NewInviteLinkResponse);
+   rpc RemoveInviteLink(RemoveInviteLinkRequest) returns (RemoveInviteLinkResponse);
+   rpc FindInviteLink(FindInviteLinkRequest) returns (InviteLinkResponse);
+ 
+   rpc SearchByInviteLinkName(SearchByInviteLinkNameRequest) returns (SearchByInviteLinkNameResonse);
+}
+message NewInviteLinkRequest{
+    string name=1;
+    string serivce=2;
+}
+message NewInviteLinkResponse{
+    string InviteName=1;
+}
+message RemoveInviteLinkRequest{
+    string InviteName=1;
+}
+message RemoveInviteLinkResponse{
+    bool IsSuccess=1;
+}
+message FindInviteLinkRequest{
+    string InviteLinkName=1;
+}
+message InviteLinkResponse{
+    string InviteLinkName=1;
+    string Serivce=2;
+}
+
+message SearchByInviteLinkNameRequest{
+    string searchkey=1;
+    string Service=2;
+}
+message SearchByInviteLinkNameResonse{
+    repeated SearchInviteLinkResponse listresponse=1;
+}
+message SearchInviteLinkResponse{
+    
+    string InviteLinkName=2;
+    
+}

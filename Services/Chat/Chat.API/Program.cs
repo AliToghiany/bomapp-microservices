@@ -27,7 +27,7 @@ builder.Services.AddApplicationServices();
 builder.Services.AddScoped<HubDbContext>(p => new HubDbContext(builder.Configuration));
 builder.Services.AddSignalR();
 builder.Services.AddScoped<IHubRepository, HubRepository>();
-builder.Services.AddScoped<IReciveHub, ReciveHub>();
+builder.Services.AddScoped<IReciveHub, NotificationReciveHub>();
 builder.Services.AddScoped<ReciveHub>();
 
 builder.Services.AddAuthentication(options =>

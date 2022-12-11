@@ -4,15 +4,12 @@ using Chat.Domain.Entities.GroupE;
 using Chat.Domain.Entities.MessageE;
 using Common.Services.Exceptions;
 using MediatR;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using File = Chat.Domain.Entities.MessageE.File;
+using UnauthorizedAccessException = Common.Services.Exceptions.UnauthorizedAccessException;
 
 namespace Chat.Application.Feature.Messages.Commands.CreateMessage
 {

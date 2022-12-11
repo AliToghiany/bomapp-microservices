@@ -15,7 +15,7 @@ namespace Common.Services.Exceptions
         {
             if (context == null)
                 throw new ArgumentNullException("context");
-            if (context.Exception is UnauthorizedAccessException httpResponseException)
+            if (context.Exception is UnauthorizedAccessException httpResponseException  )
             {
                 context.Result = new ObjectResult(httpResponseException.Message)
                 {
@@ -23,7 +23,8 @@ namespace Common.Services.Exceptions
                 };
 
                 context.ExceptionHandled = true;
-            }
+            } 
+           
         }
     }
 

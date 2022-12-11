@@ -41,9 +41,12 @@ namespace Chat.Infrastructure.Repository
             throw new NotImplementedException();
         }
 
-        public async Task<Message> GetMessage(long messageid)
+        public async Task<Message?> GetMessage(long messageid)
         {
-            return await _chatContext.Messages.Include(p=>p.Files).FirstOrDefaultAsync(p=>p.Id==messageid);
+            return await _chatContext
+                .Messages
+                .Include(p=>p.Files)
+                .FirstOrDefaultAsync(p=>p.Id==messageid);
 
         }
         
@@ -80,7 +83,7 @@ namespace Chat.Infrastructure.Repository
                           .Include(p => p.Files)
                           .Include(p => p.Group)
                     .Include(p=>p.JoinGroup)
-                        .LastOrDefaultAsync(p => p.GroupId == group));
+                        .LastAsync(p => p.GroupId == group));
                 }
                 return messages;
            
@@ -89,8 +92,7 @@ namespace Chat.Infrastructure.Repository
 
         public async Task<List<Message>> GetPrivateRoomMessage(long userId)
         {
-            try
-            {
+           
                 var privatromsId = await _chatContext.Messages
 
                     .Where(p => p.User_Id == userId && p.ToUser_Id != null)
@@ -102,19 +104,72 @@ namespace Chat.Infrastructure.Repository
                     messages.Add(await _chatContext.Messages
                               .Include(p => p.Files)
                               .OrderBy(p=>p.CreatedDate)
-                      .FirstOrDefaultAsync(p => p.ToUser_Id == item));
+                      .LastAsync(p => p.ToUser_Id == item));
                 }
                 return messages;
-            }
-            catch(Exception ex)
-            {
-                throw;
-            }
+           
+           
         }
 
         public Task<bool> UpdateMessage(Message message)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<List<Message>?> GetMessageLastMessage(long lastMessageId)
+        {
+           var message=await _chatContext.Messages.FindAsync(lastMessageId);
+            if (message!.GroupId!=null)
+            {
+                return await _chatContext
+                    .Messages
+                    .Where(p =>int.Parse(p.Message_Id) > int.Parse(message.Message_Id)).ToListAsync();
+            }
+            if (message.ToUser_Id != null)
+            {
+                return await _chatContext
+                   .Messages
+                   .Where(p=>p.ToUser_Id==message.User_Id||p.ToUser_Id==message.Id)
+                   .Where(p => int.Parse(p.Message_Id) > int.Parse(message.Message_Id)).ToListAsync();
+            }
+            return null;
+        }
+
+        public async Task<List<Message>?> GetMessageFirstMessage(long lastMessageId)
+        {
+
+            var message = await _chatContext.Messages.FindAsync(lastMessageId);
+            if (message!.GroupId != null)
+            {
+                return await _chatContext
+                    .Messages
+                    .Where(p=>p.GroupId==message.GroupId)
+                    .Where(p => int.Parse(p.Message_Id) < int.Parse(message.Message_Id)).Take(300).ToListAsync();
+            }
+            if (message.ToUser_Id != null)
+            {
+                return await _chatContext
+                   .Messages
+                   .Where(p => (p.ToUser_Id == message.ToUser_Id && p.User_Id == message.User_Id)|| (p.User_Id == message.ToUser_Id && p.ToUser_Id == message.User_Id))
+                   .Where(p => int.Parse(p.Message_Id) < int.Parse(message.Message_Id)).Take(300).ToListAsync();
+            }
+            return null;
+        }
+
+        public async Task<List<Message>> GetMessageFromGroup(long id)
+        {
+            return await _chatContext
+                   .Messages
+                   .Where(p => p.GroupId == id)
+                   .Take(300).ToListAsync();
+        }
+
+        public async Task<List<Message>> GetMessageFromPrivate(long userId, long toUserId)
+        {
+            return await _chatContext
+                   .Messages
+                   .Where(p => (p.ToUser_Id == toUserId && p.User_Id == userId) || (p.User_Id == toUserId && p.ToUser_Id == userId))
+                   .Take(300).ToListAsync();
         }
     }
 }

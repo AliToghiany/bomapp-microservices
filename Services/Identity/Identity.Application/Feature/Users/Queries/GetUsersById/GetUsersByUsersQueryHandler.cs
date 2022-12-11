@@ -34,29 +34,43 @@ namespace Identity.Application.Feature.Users.Queries.GetUsersById
 
             foreach (var user in request.Users)
             {
-              
-                var contact = await _contactRepository.GetContact(request.UserId, user.Id);
-                if (!user.ShowPhoneNumber)
-                    if (contact==null)
-                        user.PhoneNumber = "";
-                if (contact != null)
+                if (user.Id == request.UserId)
                 {
-                    user.FirstName = contact.ContactName;
-                    user.LastName = contact.LastName;
-                   
-                }
+                    var responseUser = _mapper.Map<ResponseUser>(user);
+                    responseUser.ImagesProfileResponses = user.UserImages.Select(p => new ImagesProfileResponse
+                    {
+                        Name = p.Name,
+                        Path = p.Path,
 
-               
-                var responseUser = _mapper.Map<ResponseUser>(user);
-                
-                responseUser.ImagesProfileResponses = user.UserImages.Select(p => new ImagesProfileResponse
+
+                    }).ToList();
+                    response.Add(responseUser);
+                }
+                else
                 {
-                    Name = p.Name,
-                    Path = p.Path,
-                    
-                 
-                }).ToList();
-               response.Add(responseUser);
+                    var contact = await _contactRepository.GetContact(request.UserId, user.Id);
+                    if (!user.ShowPhoneNumber)
+                        if (contact == null)
+                            user.PhoneNumber = "";
+                    if (contact != null)
+                    {
+                        user.FirstName = contact.ContactName;
+                        user.LastName = contact.LastName;
+
+                    }
+
+
+                    var responseUser = _mapper.Map<ResponseUser>(user);
+
+                    responseUser.ImagesProfileResponses = user.UserImages.Select(p => new ImagesProfileResponse
+                    {
+                        Name = p.Name,
+                        Path = p.Path,
+
+
+                    }).ToList();
+                    response.Add(responseUser);
+                }
             }
             return response;
         }

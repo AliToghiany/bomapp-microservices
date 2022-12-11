@@ -1,12 +1,10 @@
 ﻿using Chat.API.Entities.Recives;
 using Chat.API.Respositories;
 using Chat.API.Respositories.Interface;
-using Chat.Application.Contracts.EndPoint;
 using Chat.Application.Contracts.Persisence;
-using Chat.Application.Feature.Groups.Queries.GetGroupMember;
 using Chat.Application.Feature.Messages.Commands.CreateMessage;
-using Chat.Application.Feature.Messages.Queries.GetMessage;
 using Chat.Application.Feature.Messages.Queries.GetRecentMessage;
+using Chat.Application.Feature.Messages.Queries.LoadingMessage;
 using Chat.Domain.Entities.MessageE;
 using Common.Services.Utilities;
 using MediatR;
@@ -17,7 +15,7 @@ using Newtonsoft.Json;
 namespace Chat.API.Hubs
 {
     [Authorize]
-    public class ReciveHub : Microsoft.AspNetCore.SignalR.Hub,IReciveHub
+    public class ReciveHub : Microsoft.AspNetCore.SignalR.Hub
     {
         private readonly IHubRepository _hubRepositorycs;
         private readonly IMediator _mediator;
@@ -34,7 +32,7 @@ namespace Chat.API.Hubs
             //online
             var userid = UserIdentity.GetID(Context.User);
             var roleid = UserIdentity.GetIRole(Context.User);
-            var clientId = Context.GetHttpContext().Request.Query["ClientId"];
+            var clientId = Context.GetHttpContext()!.Request.Query["ClientId"];
             await _hubRepositorycs.AddConnection(new Connection
             {
                 Connected = true,
@@ -44,7 +42,7 @@ namespace Chat.API.Hubs
                 ClientId = clientId
             });
 
-            if (Context.GetHttpContext().Request.Query["app-search"] == "true")
+            if (Context.GetHttpContext()!.Request.Query["app-search"] == "true")
             {
                 var res = await _mediator.Send(new GetRecentMessageQuery(userid));
                 foreach (var item in res)
@@ -85,52 +83,18 @@ namespace Chat.API.Hubs
             await base.OnDisconnectedAsync(exception);
         }
 
-        public async Task SendMessage(ResponseMessage message)
+        public async Task LoadMessage(long? firstMessage,long? lastMessage,long? groupId,long? toUserId)
         {
-            var messagejson = JsonConvert.SerializeObject(message);
-            if (message.ToUser_Id != null || message.ToUser_Id != 0)
+            await _mediator.Send(new LoadMessageQuery
             {
-                var cid = await _hubRepositorycs.GetConnectionOrAddQueue(new List<long> { message.ToUser_Id }, messagejson, "NewMessage");
-                if (cid.Count != 0)
-                {
-                    foreach (var item in cid)
-                    {
-                        await Clients.Client(item).SendAsync("ReciveMessage", messagejson);
-                    }
-
-                }
-            }
-            else if (message.GroupId != null)
-            {
-                var users = await _mediator.Send(new GetGroupMemberQuery(message.GroupId));
-
-                var cid = await _hubRepositorycs.GetConnectionOrAddQueue(users.Select(p=>p.UserId).ToList(), messagejson, "NewMessage");
-                if (cid.Count != 0)
-                {
-                    foreach (var item in cid)
-                    {
-                        await Clients.Client(item).SendAsync("ReciveMessage", messagejson);
-                    }
-
-                }
-            }
+                FirstMessageId = firstMessage,
+                LastMessageId = lastMessage,
+                GroupId = groupId,
+                ConnectionId = Context.ConnectionId,
+                UserId = UserIdentity.GetID(Context.User),
+                PrivateUserId = toUserId
+            });
         }
 
-        public async Task SendMessageNewGroup(long groupId, List<long> subescribesId, long cretedBy)
-        {
-            var cgn= JsonConvert.SerializeObject(new CreatedGroupNotif { CreatedBy = cretedBy, GroupId = groupId });
-         
-            var res = await _hubRepositorycs.GetConnectionOrAddQueue(subescribesId, JsonConvert.SerializeObject(cgn), "NewGroup");
-            foreach (var item in res)
-            {
-                await Clients.Client(item).SendAsync("NewGroup", cgn);
-            }
-        }
-        
-    }
-    class CreatedGroupNotif
-    {
-       public long GroupId { get; set; }
-       public long CreatedBy { get; set; }
     }
 }

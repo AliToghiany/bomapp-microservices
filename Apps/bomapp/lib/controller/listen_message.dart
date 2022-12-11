@@ -10,7 +10,7 @@ import 'package:get/get.dart';
 class ListenMessageController extends GetxController {
 
 
-  final serverUrl = "https://localhost:44374/recivehub";
+  final serverUrl = "https://localhost:44382/recivehub";
   ListenMessageController() {
     final httpConnectionOptions = new HttpConnectionOptions(
          
@@ -21,6 +21,8 @@ class ListenMessageController extends GetxController {
     final hubConnection = HubConnectionBuilder().withUrl(serverUrl,options: httpConnectionOptions).build();
     hubConnection.start();
     hubConnection.on("ReciveMessage", handleReciveMessage);
+    
+   
   }
   void handleReciveMessage(List<Object?>? data)
   {

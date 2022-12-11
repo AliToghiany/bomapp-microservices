@@ -23,8 +23,10 @@ namespace Identity.Application.Feature.Users.Queries.GetUsers
 
         public async Task<GetUsersResponse> Handle(GetUsersQuery request, CancellationToken cancellationToken)
         {
-           var users = _userRepository.GetUserBySearchKey(request.SearchKey);
-           users = users.Take(request.Take);
+           var users = _userRepository.GetUserBySearchKey(request.SearchKey).ToList();
+           users = users.Take(request.Take).ToList();
+           users.AddRange(await _userRepository.GetUsersByUserName(request.UserName));
+//delete again inserts
             return new GetUsersResponse
             {
                 Users = await _mediator.Send(new GetUsersById.GetUsersByUsersQuery(users, request.UserId))

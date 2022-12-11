@@ -30,7 +30,7 @@ namespace Identity.Application.Feature.Users.Command.SignUser
             {
                 throw new NotFoundException(nameof(Confirm),request.Code );
             }
-            var user =await _userReposirory.FindUserByPhone(confirmRes.Code);
+            var user =await _userReposirory.FindUserByPhone(confirmRes.Phone);
             if(user == null)
             {
                 var userId = await _userReposirory.CreateUserByPhone(confirmRes.Phone);

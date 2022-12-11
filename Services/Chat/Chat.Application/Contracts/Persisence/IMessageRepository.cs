@@ -18,6 +18,10 @@ namespace Chat.Application.Contracts.Persisence
         Task<List<long>> GetAllPrivateRoom(long userId);
         Task<List<Message>> GetGroupMessage(long userId);
         Task<List<Message>> GetPrivateRoomMessage(long userId);
+        Task<List<Message>> GetMessageLastMessage(long lastMessageId);
+        Task<List<Message>> GetMessageFirstMessage(long lastMessageId);
+        Task<List<Message>> GetMessageFromGroup(long id);
+        Task<List<Message>> GetMessageFromPrivate(long userId,long toUserId);
     }
   
 }

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using UnauthorizedAccessException = Common.Services.Exceptions.UnauthorizedAccessException;
 
 namespace Chat.Application.Feature.Messages.Commands.DeleteMessage
 {

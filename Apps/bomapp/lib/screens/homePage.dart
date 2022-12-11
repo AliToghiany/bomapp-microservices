@@ -1,4 +1,5 @@
 import 'package:bomapp/controller/home_controller.dart';
+import 'package:bomapp/controller/listen_message.dart';
 import 'package:bomapp/controller/member_controller.dart';
 import 'package:bomapp/database/database.dart';
 import 'package:bomapp/entities/user.dart';
@@ -24,6 +25,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final Homecontroller _homecontroller = Get.put(Homecontroller());
+  final ListenMessageController _sss = Get.put(ListenMessageController());
   GlobalKey<RippleLocationState> rippleController = GlobalKey();
   @override
   void initState() {

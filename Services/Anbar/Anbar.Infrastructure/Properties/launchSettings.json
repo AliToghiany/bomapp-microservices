@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "Anbar.Infrastructure": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:62860;http://localhost:62863"
+    }
+  }
+}

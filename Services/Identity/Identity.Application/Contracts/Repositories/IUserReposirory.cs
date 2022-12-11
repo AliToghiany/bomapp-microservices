@@ -18,5 +18,6 @@ namespace Identity.Application.Contracts.Repositories
         Task EditUser(User user);
         Task<bool> BlockUser(long userId, long blockedUser);
         IQueryable<User> GetUserBySearchKey(string searchKey);
+        Task<IEnumerable<User>> GetUsersByUserName(List<string> userName);
     }
 }
