@@ -9,6 +9,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -21,9 +22,30 @@ namespace bomapp.Views.Pages
     /// </summary>
     public partial class ChatPage : UiPage
     {
-        public ChatPage()
+        private readonly SearchChat _searchChat;
+        private readonly ChatDetailPage _chatDetail;
+        public ChatPage(SearchChat searchChat, ChatDetailPage chatDetail)
         {
             InitializeComponent();
+
+            _searchChat = searchChat;
+            _chatDetail = chatDetail;
+
+            _NavigationFrame.Navigate(_chatDetail);
+          
+            _searchChat.BackButtonClicked += _searchChat_BackButtonClicked;
+        }
+        
+    
+
+        private void _searchChat_BackButtonClicked(object? sender, EventArgs e)
+        {
+            _NavigationFrame.Navigate(_chatDetail);
+        }
+
+        private void Search_Click(object sender, RoutedEventArgs e)
+        {
+            _NavigationFrame.Navigate(_searchChat);
         }
     }
 }

@@ -7,23 +7,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Wpf.Ui.Common.Interfaces;
+using wpf_lib.Interface;
 
-namespace bomapp.ViewModels
+namespace wpf_lib.ViewModels
 {
-    public class MyProfileViewModel:ObservableObject
+    public class MyProfileViewModel: ObservableObject
     {
-
+        private readonly IUserRepository _userRepository;
         private readonly IUserService _userService;
 
-        public MyProfileViewModel(IUserService userService)
+        public MyProfileViewModel(IUserRepository userRepository, IUserService userService)
         {
+            _userRepository = userRepository;
             _userService = userService;
-           
         }
+        private GetMyUserProfileResponse _myProfile = new GetMyUserProfileResponse();
 
-        private GetMyUserProfileResponse _myProfile=new GetMyUserProfileResponse();
-       
         public GetMyUserProfileResponse MyProfile
         {
             get => _myProfile;
@@ -31,17 +30,20 @@ namespace bomapp.ViewModels
         }
         public async Task SetMyProfile()
         {
-            
+            var resOffline =await _userRepository.GetMyUserProfile();
+            if (resOffline.IsSuccess)
+                MyProfile = resOffline.Data!;
             if (ServerUtilities.CheckForInternetConnection())
             {
                 var resOnlline = await _userService.GetMyUserProfileResponseAsync();
                 if (resOnlline.IsSuccess)
                     MyProfile = resOnlline.Data!;
+                    await _userRepository.UpdateUser(MyProfile);
 
             }
-          
 
-           
+
+
         }
     }
 }

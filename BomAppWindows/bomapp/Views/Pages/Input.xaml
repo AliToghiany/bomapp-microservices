@@ -316,7 +316,9 @@
         <ui:AutoSuggestBox
             Margin="0,8,0,0"
             ItemsSource="{Binding ViewModel.AutoSuggestCollection, Mode=OneWay}"
-            PlaceholderText="So you choose Cat, Black Blood or Enhanced Thunderbolt?" />
+            PlaceholderText="So you choose Cat, Black Blood or Enhanced Thunderbolt?"  >
+            
+        </ui:AutoSuggestBox>
         <ui:CodeBlock Margin="0,8,0,0">
             &lt;ui:AutoSuggestBox ItemsSource=&quot;{Binding MyData}&quot; PlaceholderText=&quot;Search...&quot; /&gt;
         </ui:CodeBlock>

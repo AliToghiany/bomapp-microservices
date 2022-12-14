@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Wpf.Ui.Common.Interfaces;
+using wpf_lib.ViewModels;
 
 namespace bomapp.Views.Pages
 {

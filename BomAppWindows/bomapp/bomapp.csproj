@@ -65,6 +65,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\SharedLibrary\dotnet-lib\dotnet-lib.csproj" />
+    <ProjectReference Include="..\..\SharedLibrary\wpf-lib\wpf-lib.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -20,6 +20,8 @@ using System.Windows;
 using System.Windows.Threading;
 using Wpf.Ui.Mvvm.Contracts;
 using Wpf.Ui.Mvvm.Services;
+using wpf_lib;
+using wpf_lib.ViewModels;
 
 namespace bomapp;
 
@@ -66,12 +68,12 @@ public partial class App
             services.AddSingleton<INavigationService, NavigationService>();
             //DataLayer Service
             
-            services.RegisterLibraryApp();
+            services.RegisterWpfLibraryService();
             
 
             // Main window container with navigation
             services.AddScoped<INavigationWindow, LoginWindow>();
-            //services.AddScoped<INavigationWindow, Container>();
+          // services.AddScoped<INavigationWindow, Container>();
          
           
             services.AddScoped<ContainerViewModel>();
@@ -107,7 +109,12 @@ public partial class App
 
             services.AddScoped<ProfilePage>();
             services.AddScoped<MyProfileViewModel>();
-            
+
+            services.AddScoped<ChatPage>();
+
+            services.AddScoped<SearchChat>();
+
+            services.AddScoped<ChatDetailPage>();
             // Test windows
             services.AddTransient<bomapp.Views.Windows.TaskManagerWindow>();
             services.AddTransient<TaskManagerViewModel>();

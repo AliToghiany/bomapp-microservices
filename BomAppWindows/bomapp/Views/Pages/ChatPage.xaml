@@ -10,7 +10,7 @@
       Title="ChatPage">
 
     <Grid>
-
+       
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="*"/>
@@ -18,12 +18,14 @@
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="0" Width="1" Opacity="0.1" Background="{DynamicResource SystemFillColorNeutralBrush}" HorizontalAlignment="Right"/>
         <StackPanel Margin="10,0"   Grid.Column="0" Width="300" Orientation="Vertical" >
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0" >
+                <ui:Button Icon="Search32" Margin="60,0,5,0" Name="Search" Click="Search_Click"/>
                 <ui:Button Icon="MoreVertical32"  />
+
             </StackPanel>
-            <ui:TextBox Icon="Search24" PlaceholderText="Search here ..." Margin="0,20,0,10" />
-            <StackPanel  Height="1" Opacity="0.1" Background="{DynamicResource SystemFillColorNeutralBrush}"  />
-           
+
+            <StackPanel Margin="10" Height="1" Opacity="0.1" Background="{DynamicResource SystemFillColorNeutralBrush}"  />
+
             <ui:CardControl Margin="0,8,0,0" >
                 <ui:CardControl.Header>
                     <StackPanel Grid.Column="0" Orientation="Horizontal">
@@ -32,19 +34,20 @@
                                 <ImageBrush ImageSource="/Resources/alit.jpg"  />
                             </Ellipse.Fill>
                         </Ellipse>
-                        
+
                         <StackPanel  VerticalAlignment="Center" Margin="10,0">
-                        
-                        <TextBlock
+
+                            <TextBlock
                         FontSize="13"
                         FontWeight="Medium"
                         Text="Ali Toghiany" />
-                        <TextBlock
+                            <TextBlock
                         FontSize="12"
                         Foreground="{DynamicResource TextFillColorTertiaryBrush}"
                         Text="سلام رسیدی خونه؟" />
-                    </StackPanel></StackPanel>
-                  
+                        </StackPanel>
+                    </StackPanel>
+
                 </ui:CardControl.Header>
                 <StackPanel Orientation="Vertical">
                     <TextBlock
@@ -53,7 +56,7 @@
                         Text="دوشنبه"
                         HorizontalAlignment="Right"
                         />
-                   
+
                 </StackPanel>
             </ui:CardControl>
             <ui:CardControl Margin="0,8,0,0" >
@@ -90,29 +93,10 @@
                 </StackPanel>
             </ui:CardControl>
         </StackPanel>
-        <Grid Grid.Column="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <Border Grid.Row="2" BorderBrush="Black"
-            BorderThickness="2"
-            VerticalAlignment="Center"
-            CornerRadius="5">
-
-                <StackPanel Margin="5"
-                    Orientation="Horizontal">
-
-                    <Image Source="C:\SourceOfTheImage\Path\Image.png" 
-                   Height="18"/>
-                    <TextBlock Text="Hello, I am a text block!"
-                       Margin="3 0 0 0"/>
-
-                </StackPanel>
-
-
-            </Border>
-        </Grid>
+       
+        <DockPanel Grid.Column="1">
+            <Frame x:Name="_NavigationFrame" NavigationUIVisibility="Hidden" />
+        </DockPanel>
+     
     </Grid>
 </ui:UiPage>

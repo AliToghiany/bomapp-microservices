@@ -18,7 +18,7 @@ namespace wpf_lib.Context
         {
             var folder = Environment.SpecialFolder.LocalApplicationData;
             var path = Environment.GetFolderPath(folder);
-            DbPath = System.IO.Path.Join(path, "blogging.db");
+            DbPath = System.IO.Path.Join(path, "bomappDB.db");
         }
         public DbSet<Message> Messages { get; set; }
         public DbSet<User> Users { get; set; }

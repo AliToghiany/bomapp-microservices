@@ -13,4 +13,11 @@ namespace dotnet_lib.Models
         public bool IsSuccess { get; set; } = true;
         public T? Data { get; set; }
     }
+    public class ResultDto
+    {
+        public string? Message { get; set; }
+        public int StatusCode { get; set; }
+        public bool IsSuccess { get; set; } = true;
+       
+    }
 }

@@ -11,13 +11,16 @@ namespace dotnet_lib.Utitlities
     public static class ServerUtilities
     {
         public static string GATEWAYURL = "http://localhost:5050";
+
+        public static string HUB = "";
+
         public static bool CheckForInternetConnection(int timeoutMs = 10000)
         {
             try
             {
                
 
-                var request = (HttpWebRequest)WebRequest.Create(GATEWAYURL);
+                var request = (HttpWebRequest)WebRequest.Create(GATEWAYURL+ "/swagger/index.html");
                 request.KeepAlive = false;
                 request.Timeout = timeoutMs;
                 using (var response = (HttpWebResponse)request.GetResponse())

@@ -37,7 +37,7 @@ if (app.Environment.IsDevelopment())
 app.UseCors(maso);
 app.UseOcelot().Wait();
 app.UseHttpsRedirection();
-
+app.UseStaticFiles();
 app.UseAuthorization();
 
 app.MapControllers();

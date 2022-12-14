@@ -40,10 +40,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Protobuf Include="..\..\InviteLink\IniviteLink.Grpc\Protos\protoinvitelink.proto" GrpcServices="Server">
       <Link>Protos\protoinvitelink.proto</Link>
     </Protobuf>
