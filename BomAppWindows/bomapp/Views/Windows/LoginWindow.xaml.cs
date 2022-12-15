@@ -56,6 +56,7 @@ namespace bomapp.Views.Windows
                 _testWindowService.Show<StoreWindow>();
                 this.Visibility = Visibility.Hidden;
                 dotnet_lib.App.Token = Properties.Settings.Default.Token;
+                dotnet_lib.App.UserId = Properties.Settings.Default.UserID;
             }
         }
 
@@ -91,9 +92,11 @@ namespace bomapp.Views.Windows
             else
             {
                 Properties.Settings.Default.Token = res.Data!.Token;
+                Properties.Settings.Default.UserID = res.Data!.UserId;
                 Properties.Settings.Default.Save();
                 _testWindowService.Show<StoreWindow>();
-                dotnet_lib.App.Token = res.Data!.Token;
+                dotnet_lib.App.Token = res.Data!.Token!;
+                dotnet_lib.App.UserId = res.Data!.UserId;
 
 
             }

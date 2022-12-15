@@ -145,7 +145,7 @@
       "UpstreamHttpMethod": [ "Post" ]
     },
     {
-      "DownstreamPathTemplate": "/Api/User/GetUserById",
+      "DownstreamPathTemplate": "/Api/User/GetUserById/{userId}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -153,7 +153,7 @@
           "Port": 44317
         }
       ],
-      "UpstreamPathTemplate": "/User/GetUserById",
+      "UpstreamPathTemplate": "/User/GetUserById/{userId}",
       "UpstreamHttpMethod": [ "Get" ]
     },
     {

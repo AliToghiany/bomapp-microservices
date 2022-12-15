@@ -113,8 +113,10 @@ public partial class App
             services.AddScoped<ChatPage>();
 
             services.AddScoped<SearchChat>();
+            services.AddScoped<SearchChatViewModel>();
 
             services.AddScoped<ChatDetailPage>();
+            services.AddScoped<ChatDetailViewModel>();
             // Test windows
             services.AddTransient<bomapp.Views.Windows.TaskManagerWindow>();
             services.AddTransient<TaskManagerViewModel>();

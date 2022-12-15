@@ -34,5 +34,10 @@ namespace dotnet_lib.Services
            
         }
 
+        public async Task<ResultDto<ResponseUser>> GetUser(long Id)
+        {
+            var res = await _httpClient.GetAsync($"/user/getuserbyid/{Id}");
+            return await res.ToResultdto<ResponseUser>();
+        }
     }
 }

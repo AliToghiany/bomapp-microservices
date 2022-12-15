@@ -14,8 +14,8 @@ namespace wpf_lib.Profiler
         public AppProfiler()
         {
            
-            CreateMap<User, ResponseUser>();
-            CreateMap<User, GetMyUserProfileResponse>();
+            CreateMap<User, ResponseUser>().ReverseMap();
+            CreateMap<User, GetMyUserProfileResponse>().ReverseMap();
         }
     }
 }

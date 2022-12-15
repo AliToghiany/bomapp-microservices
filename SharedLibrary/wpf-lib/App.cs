@@ -23,6 +23,7 @@ namespace wpf_lib
         {
             services.RegisterLibraryApp();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ISearchRepository, SearchRepository>();
             services.AddScoped<ApplicationDbContext>();
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
         }

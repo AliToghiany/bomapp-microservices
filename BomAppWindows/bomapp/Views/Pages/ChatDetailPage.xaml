@@ -33,6 +33,43 @@
 
 
             </Border>
+            <Grid  Grid.Row="0" Height="60" Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal" Grid.Column="0" >
+                    <ui:Button Icon="ArrowLeft48"/>
+                    <Ellipse Margin="15,0,0,0" Height="50" Width="50">
+                        <Ellipse.Fill>
+                            <ImageBrush ImageSource="/Resources/alit.jpg"  />
+                        </Ellipse.Fill>
+                    </Ellipse>
+
+                    <StackPanel  VerticalAlignment="Center" Margin="10,0">
+
+                        <TextBlock
+                        FontSize="13"
+                        FontWeight="Medium"
+                        Text="{Binding ChatHeader.Title}"
+                            Foreground="White"
+                            />
+                        <TextBlock
+                        FontSize="12"
+                        Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+                        Text="{Binding ChatHeader.SubTitle}" />
+                    </StackPanel>
+               
+
+                </StackPanel>
+                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                    <ui:Button Icon="MoreVertical48"/>
+                </StackPanel>
+            </Grid>
+            <StackPanel Height="1" Grid.Row="0" Opacity="0.1" Background="{DynamicResource SystemFillColorNeutralBrush}" VerticalAlignment="Bottom"/>
+            <StackPanel Grid.Row="1">
+                
+            </StackPanel>
         </Grid>
     </Grid>
 </Page>

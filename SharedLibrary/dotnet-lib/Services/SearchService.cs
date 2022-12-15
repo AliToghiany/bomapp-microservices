@@ -33,10 +33,14 @@ namespace dotnet_lib.Services
                 IsSuccess = true,
                 Data = new AppResponseChatSearch
                 {
-                    ResponseUsers = JsonConvert.DeserializeObject<List<ResponseUser>>(responseDto.Data.User.UserResponse)
+                    ResponseUsers = JsonConvert.DeserializeObject<RR>(responseDto.Data.User.UserResponse).Users
                 }
             };
 
         }
+    }
+    class RR
+    {
+        public List<ResponseUser> Users { get; set; }
     }
 }

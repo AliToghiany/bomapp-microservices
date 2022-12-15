@@ -1,4 +1,5 @@
-﻿using System;
+﻿using dotnet_lib.Connection;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,16 @@ namespace wpf_lib
 {
     public class ChatViewModel
     {
-       // private readonly 
+        private readonly ChatConnect _chatConnect;
+
+        public ChatViewModel(ChatConnect chatConnect)
+        {
+            _chatConnect = chatConnect;
+            _chatConnect.ReciveMessage(ReciveMessage);
+        }
+        void ReciveMessage(string data)
+        {
+
+        }
     }
 }

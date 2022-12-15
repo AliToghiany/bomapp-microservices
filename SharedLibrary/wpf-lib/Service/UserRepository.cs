@@ -65,9 +65,30 @@ namespace wpf_lib.Service
 
         }
 
-        public Task<ResultDto<ResponseUser>> GetUser(long Id)
+        public async Task<ResultDto<ResponseUser>> GetUser(long Id)
         {
-            throw new NotImplementedException();
+            var res= await _applicationDbContext.Users.Include(p => p.ImageProfiles)
+                .FirstOrDefaultAsync(p => p.Id == Id);
+            if (res == null)
+            {
+                return new ResultDto<ResponseUser>
+                {
+                    IsSuccess = false,
+                    Message = "Not Found",
+                   
+                };
+            }
+            var responsRes=_mapper.Map<ResponseUser>(res);
+            responsRes.ImagesProfileResponses = res.ImageProfiles.Select(p => new ImagesProfileResponse
+            {
+                Name = p.Name,
+                Path = p.Path
+            }).ToList();
+            return new ResultDto<ResponseUser>
+            {
+                IsSuccess = true,
+                Data = responsRes
+            };
         }
         public async Task<ResultDto> NewUser(User user)
         {
@@ -127,6 +148,7 @@ namespace wpf_lib.Service
             res.FirstName = responseUser.FirstName;
             res.UserName = responseUser.UserName;
             res.Description = responseUser.Description;
+            _applicationDbContext.Users.Update(res);
            
             foreach (var item in responseUser.ImagesProfileResponses)
             {

@@ -36,7 +36,7 @@ namespace dotnet_lib.Connection
                 return false;
             }
         }
-        public async Task ReciveMessage(Action<string> action)
+        public void ReciveMessage(Action<string> action)
         {
             connection.On<string>("ReciveMessage", action);
         }

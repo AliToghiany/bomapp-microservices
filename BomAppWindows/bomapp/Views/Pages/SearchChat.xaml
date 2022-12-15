@@ -7,16 +7,54 @@
       mc:Ignorable="d" 
       xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="SearchChat" >
+      Title="SearchChat"
+     
+      >
 
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid >
+        <Grid Grid.Row="0">
             <ui:Button Name="Back" Icon="ArrowCircleLeft48" Margin="3,0,0,0" Click="Back_Click"/>
-            <ui:TextBox Icon="Search24" Margin="46,0,0,0"/>
+            <ui:TextBox TextChanged="TextBox_TextChanged" Icon="Search24" Margin="46,0,0,0"/>
         </Grid>
+        <ui:ProgressRing Grid.Row="1" Grid.Column="1" IsIndeterminate="True" Visibility="{Binding IsVisable}" />
+            <ListView Grid.Row="1" ItemsSource="{Binding SearchChatModels,Mode=OneWay}">
+               
+                <ListView.ItemTemplate >
+                    <DataTemplate >
+                    <ui:CardControl Name="CardSearch" Click="CardSearch_Click" Margin="0,8,0,0"  >
+                            <ui:CardControl.Header>
+                                <StackPanel Grid.Column="0" Orientation="Horizontal">
+                                    <Ellipse Height="50" Width="50">
+                                        <Ellipse.Fill>
+                                            <ImageBrush ImageSource="/Resources/alit.jpg"  />
+                                        </Ellipse.Fill>
+                                    </Ellipse>
+
+                                    <StackPanel  VerticalAlignment="Center" Margin="10,0">
+
+                                        <TextBlock
+                        FontSize="13"
+                        FontWeight="Medium"
+                        Text="{Binding Name}" />
+                                        <TextBlock
+                        FontSize="12"
+                        Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+                        Text="{Binding InviteName}"/>
+                                    </StackPanel>
+                                </StackPanel>
+
+                            </ui:CardControl.Header>
+
+                        </ui:CardControl>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+           
+            
+    
     </Grid>
 </Page>

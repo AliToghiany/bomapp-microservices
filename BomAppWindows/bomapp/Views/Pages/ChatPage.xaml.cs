@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Wpf.Ui.Controls;
+using wpf_lib.ViewModels;
 
 namespace bomapp.Views.Pages
 {
@@ -34,12 +35,19 @@ namespace bomapp.Views.Pages
             _NavigationFrame.Navigate(_chatDetail);
           
             _searchChat.BackButtonClicked += _searchChat_BackButtonClicked;
+            _searchChat.Selected += _searchChat_Selected;
         }
-        
-    
+
+        private void _searchChat_Selected(object? sender, EventArgs e)
+        {
+            var chat = sender as SearchChatModel;
+            _NavigationFrame.Navigate(_chatDetail);
+            _chatDetail.SetChatDetail(chat.Type, chat.ID);
+        }
 
         private void _searchChat_BackButtonClicked(object? sender, EventArgs e)
         {
+           
             _NavigationFrame.Navigate(_chatDetail);
         }
 

@@ -8,6 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using wpf_lib.Interface;
+using static Humanizer.In;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace wpf_lib.ViewModels
 {
@@ -28,6 +30,8 @@ namespace wpf_lib.ViewModels
             get => _myProfile;
             set => SetProperty(ref _myProfile, value);
         }
+     
+
         public async Task SetMyProfile()
         {
             var resOffline =await _userRepository.GetMyUserProfile();
@@ -45,5 +49,7 @@ namespace wpf_lib.ViewModels
 
 
         }
+       
     }
 }
+ 

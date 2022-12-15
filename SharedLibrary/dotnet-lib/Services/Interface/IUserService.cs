@@ -11,6 +11,7 @@ namespace dotnet_lib.Services.Interface
     public interface IUserService
     {
         Task<ResultDto<GetMyUserProfileResponse>> GetMyUserProfileResponseAsync();
+        Task<ResultDto<ResponseUser>> GetUser(long Id);
 
     }
 }
