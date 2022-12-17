@@ -31,9 +31,11 @@ namespace Chat.Infrastructure.Repository
 
         public async Task<Message> AddNewMessage(Message message)
         {
-            await _chatContext.Messages.AddAsync(message);
-            await _chatContext.SaveChangesAsync();
-            return message;
+         
+                await _chatContext.Messages.AddAsync(message);
+                await _chatContext.SaveChangesAsync();
+                return message;
+           
         }
 
         public Task<bool> ChckMessageForUser(long userId, long messageid)

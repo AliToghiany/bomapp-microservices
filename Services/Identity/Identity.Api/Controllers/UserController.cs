@@ -87,14 +87,15 @@ namespace Identity.Api.Controllers
         }
         
 
-        [HttpGet]
+
         [ProducesResponseType(typeof(ResponseUser), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [Authorize]
-        [HttpGet("{userId}", Name = "GetUserById")]
-        public async Task<ActionResult<ResponseUser>> GetUser(long userId)
+        [Route("[action]/{userId}")]
+        [HttpGet]
+        public async Task<ActionResult<ResponseUser>> GetUserById(long userId)
         {
             var res = await _mediator.Send(new GetUserByIdQuery( UserIdentity.GetID(HttpContext.User),userId));
             return Ok(res);

@@ -11,6 +11,6 @@ namespace Identity.Application.Contracts.Repositories
     {
         public Task NewRangeContacts(List<Contact> contacts);
         IEnumerable<Contact> GetContacts(long userId);
-        Task<Contact> GetContact(long For, long With);
+        Task<Contact?> GetContact(long For, long With);
     }
 }

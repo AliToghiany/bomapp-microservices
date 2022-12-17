@@ -23,5 +23,6 @@ namespace Chat.Infrastructure.Persistense
         public DbSet<GroupProfile> GroupProfiles { get; set; }
         public DbSet<Join> Joins { get; set; }
         public DbSet<Seen> Seens { get; set; }
+        public DbSet<JoinGroup> JoinGroups { get; set; }
     }
 }

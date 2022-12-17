@@ -14,7 +14,11 @@ namespace dotnet_lib.Connection
         public ChatConnect()
         {
             connection = new HubConnectionBuilder()
-                .WithUrl($"{ServerUtilities.HUB}/ReciveHub")
+                .WithUrl($"{ServerUtilities.HUB}/ReciveHub", option =>
+                {
+
+                })
+               
                 .Build();
             connection.Closed += async (error) =>
             {
@@ -40,6 +44,11 @@ namespace dotnet_lib.Connection
         {
             connection.On<string>("ReciveMessage", action);
         }
-      
+        public async Task LoadMessage(long? firstMessage, long? lastMessage, long? groupId, long? toUserId)
+        {
+           await connection.InvokeAsync("LoadMessage", firstMessage, lastMessage, groupId, toUserId);
+        }
+
+
     }
 }

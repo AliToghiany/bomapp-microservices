@@ -17,28 +17,36 @@ namespace Chat.Application.Feature.Messages.Queries.GetMessage
 
         private readonly IMapper _mapper;
 
+        public GetMessageQueryHandler(IMessageRepository messageRepository, IGroupRepository groupRepository, IMapper mapper)
+        {
+            _messageRepository = messageRepository;
+            _groupRepository = groupRepository;
+            _mapper = mapper;
+        }
 
         public async Task<ResponseMessage> Handle(GetMessageQuery request, CancellationToken cancellationToken)
         {
             var message = await _messageRepository.GetMessage(request.MessageId);
             if (message == null)
                 throw new NotFoundException("Message", $"{request.MessageId}");
-            if (message.GroupId != null)
-            {
-                var isJoined = await _groupRepository.JoinInGroup(message.GroupId.Value, request.UserId);
-                if (!isJoined)
+        
+                if (message.GroupId != null)
                 {
-                    throw new UnauthorizedAccessException("Cannot Access to this Message Because not joined on group");
-                }
+                    var isJoined = await _groupRepository.JoinInGroup(message.GroupId.Value, request.UserId);
+                    if (!isJoined)
+                    {
+                        throw new UnauthorizedAccessException("Cannot Access to this Message Because not joined on group");
+                    }
 
-            }
-            if (message.ToUser_Id!=null)
-            {
-                if (message.User_Id!=request.UserId|| message.ToUser_Id != request.UserId)
-                {
-                    throw new UnauthorizedAccessException("Cannot Access to this Message Because is Private");
                 }
-            }
+                if (message.ToUser_Id != null)
+                {
+                    if (!(message.User_Id != request.UserId || message.ToUser_Id != request.UserId))
+                    {
+                        throw new UnauthorizedAccessException("Cannot Access to this Message Because is Private");
+                    }
+                }
+           
             var response = _mapper.Map<ResponseMessage>(message);
             response.Files = message.Files.Select(p => new FileDto
             {

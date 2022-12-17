@@ -19,10 +19,10 @@ namespace Identity.Infrastructure.Repositories
             _identityDBContext = identityDBContext;
         }
 
-        public async Task<Contact> GetContact(long For, long With)
+        public async Task<Contact?> GetContact(long For, long With)
         {
            
-                return await _identityDBContext.Contacts.FirstAsync(p => p.ForUserId == For && p.WithUserId == With);
+                return await _identityDBContext.Contacts.FirstOrDefaultAsync(p => p.ForUserId == For && p.WithUserId == With);
          }
          
             
